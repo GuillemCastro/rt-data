@@ -1,5 +1,5 @@
 /**
- * <one line to give the program's name and a brief idea of what it does.>
+ * rt-data
  * Copyright (C) 2019 Guillem Castro
  *
  * This program is free software: you can redistribute it and/or modify
