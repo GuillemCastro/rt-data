@@ -10,6 +10,14 @@ cmake ..
 make
 ```
 
+# Build instructions for cross compilation for ARMv7+ (armhf)
+
+```
+mkdir build && cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE:PATH="..\toolchain.cmake"
+make
+```
+
 # License
 
 Copyright (C) 2019 Guillem Castro
