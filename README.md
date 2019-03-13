@@ -2,7 +2,7 @@
 
 rt-data is a data acquisition framework for embedded systems.
 
-# Build instructions
+## Build instructions
 
 ```
 mkdir build && cd build
@@ -10,7 +10,7 @@ cmake ..
 make
 ```
 
-# Build instructions for cross compilation for ARMv7+ (armhf)
+## Build instructions for cross compilation for ARMv7+ (armhf)
 
 ```
 mkdir build && cd build
@@ -18,7 +18,7 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE:PATH="..\toolchain.cmake"
 make
 ```
 
-# License
+## License
 
 Copyright (C) 2019 Guillem Castro
 
