@@ -53,11 +53,13 @@ void SensorsManager::stop() {
         }
     }
     stopped = true;
+    fetch_thread.join();
 }
 
 void SensorsManager::run() {
 
     while (!stopped) {
+        std::unique_lock<std::mutex> lck(sensor_mtx);
         for (auto& sensor : sensors) {
             std::vector<double> res;
             sensor->fetch(res);

@@ -16,30 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "Sensor.h"
 
-#include <vector>
-
-class Sensor {
+class SensorStub : public Sensor {
 
 public:
 
-    virtual void start() {}
-
-    virtual void stop() {}
-
-    virtual bool isStarted() {
-        return true;
+    virtual void fetch(std::vector<double>& res) override {
+        res.push_back(23.0);
     }
-
-    virtual bool isStopped() {
-        return false;
-    }
-
-    virtual void fetch(std::vector<double>& res) = 0;
 
 private:
 
-    virtual void read() = 0;
+    virtual void read() override {
+        
+    }
 
 };
