@@ -19,27 +19,41 @@
 #pragma once
 
 #include <vector>
+#include <atomic>
+#include <thread>
+#include "concurrent/ConcurrentQueue.h"
 
 class Sensor {
 
 public:
 
-    virtual void start() {}
+    Sensor() : started(false), stopped(false) {
 
-    virtual void stop() {}
-
-    virtual bool isStarted() {
-        return true;
     }
 
-    virtual bool isStopped() {
-        return false;
-    }
+    virtual void start();
 
-    virtual void fetch(std::vector<double>& res) = 0;
+    virtual void stop();
+
+    virtual bool isStarted();
+
+    virtual bool isStopped();
+
+    virtual void fetch(std::vector<double>& res);
+
+protected:
+
+    virtual void read() = 0;
+
+    ConcurrentQueue<double> queue;
 
 private:
 
-    virtual void read() = 0;
+    void run();
+
+    std::atomic<bool> started;
+    std::atomic<bool> stopped;
+
+    std::thread sensor_thread;
 
 };
