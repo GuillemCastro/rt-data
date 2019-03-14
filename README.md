@@ -1,5 +1,7 @@
 # rt-data
 
+[![Build Status](http://jenkins.rt-data.org:8080/job/rt-data/badge/icon)](http://jenkins.rt-data.org:8080/job/rt-data/)
+
 rt-data is a data acquisition framework for embedded systems.
 
 ## Build instructions
