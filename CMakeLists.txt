@@ -14,11 +14,11 @@ set(SOURCE_FILES main.cpp)
 
 include_directories(src)
 
-file(GLOB SRC_FILES  src/*.cpp)
+file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp)
 
 include_directories(test)
 
-file(GLOB TEST_FILES test/*.cpp src/*.cpp)
+file(GLOB TEST_FILES test/*.cpp src/*.cpp src/concurrent/*.cpp)
 
 list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
