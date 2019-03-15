@@ -67,12 +67,14 @@ void SensorsManager::stop() {
 
 void SensorsManager::run() {
 
+    std::unique_lock<std::mutex> lck(sensor_mtx);
     while (!stopped) {
-        std::unique_lock<std::mutex> lck(sensor_mtx);
+        lck.lock();
         for (auto& sensor : sensors) {
             std::vector<double> res;
             sensor->fetch(res);
         }
+        lck.unlock();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
