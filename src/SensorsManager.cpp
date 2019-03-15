@@ -80,10 +80,10 @@ void SensorsManager::run() {
 
 }
 
-void SensorsManager::isStarted() {
+bool SensorsManager::isStarted() {
     return started;
 }
 
-void SensorsManager::isStopped() {
+bool SensorsManager::isStopped() {
     return stopped;
 }
