@@ -30,6 +30,15 @@ void SensorsManager::addSensor(std::shared_ptr<Sensor> sensor) {
     }
 }
 
+void SensorsManager::removeSensor(std::shared_ptr<Sensor> sensor) {
+    std::unique_lock<std::mutex> lck(sensor_mtx);
+    for (int i = 0; i < sensors.size(); ++i) {
+        if (sensors[i] == sensor) {
+            sensors.erase(sensors.begin() + i);
+        }
+    }
+}
+
 void SensorsManager::start() {
     if (started || stopped) {
         throw std::runtime_error("Cannot start already started or stopped SensorsManager");
@@ -67,4 +76,12 @@ void SensorsManager::run() {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
+}
+
+void SensorsManager::isStarted() {
+    return started;
+}
+
+void SensorsManager::isStopped() {
+    return stopped;
 }

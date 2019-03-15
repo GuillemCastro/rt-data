@@ -24,31 +24,68 @@
 #include <mutex>
 #include <stdexcept>
 #include <thread>
-#include <condition_variable>
 #include <chrono>
 
 #include "Sensor.h"
 
+/**
+ * A manager for Sensors. Responsible of the correct life-cycle management
+ * of the sensors. Will start, stop and fetch data from the sensors.
+ */
 class SensorsManager {
 
 public:
 
+    /**
+     * Default constructor
+     */
     SensorsManager() : started(false), stopped(false) {
 
     }
 
+    /**
+     * Start the manager. It starts the internal thread, and the sensors
+     * @throws std::runtime_error If the manager is stopped or already started
+     */
     void start();
 
+    /**
+     * Stops the manager. It stops and joins the internal thread, and the sensors
+     * @throws std::runtime_error If the manager is already stopped or not started
+     */
     void stop();
 
+    /**
+     * Is the manager started?
+     * @returns Whether or not the manager has been started
+     */
     bool isStarted();
 
+    /**
+     * Is the manager stopped?
+     * @returns Whether or not the manager has been stopped
+     */
     bool isStopped();
 
+    /**
+     * Add a new sensor and if the manager is already started, start the sensor
+     * @params sensor A pointer to the sensor to be added
+     * @throws std::runtime_error If the manager is stopped
+     */
     void addSensor(std::shared_ptr<Sensor> sensor);
+
+    /**
+     * Remove a sensor from the manager
+     * @params sensor A pointer to the sensor to be removed
+     * Note: No exception is thrown if the manager is stopped
+     */
+    void removeSensor(std::shared_ptr<Sensor> sensor);
 
 private:
 
+    /**
+     * Internal thread function. Fetch the read data by the sensors.
+     */
     void run();
 
     std::vector<std::shared_ptr<Sensor> > sensors;
