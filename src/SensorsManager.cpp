@@ -67,7 +67,7 @@ void SensorsManager::stop() {
 
 void SensorsManager::run() {
 
-    std::unique_lock<std::mutex> lck(sensor_mtx);
+    std::unique_lock<std::mutex> lck(sensor_mtx, std::defer_lock);
     while (!stopped) {
         lck.lock();
         for (auto& sensor : sensors) {
@@ -77,13 +77,12 @@ void SensorsManager::run() {
         lck.unlock();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-
 }
 
-bool SensorsManager::isStarted() {
+bool SensorsManager::isStarted() const {
     return started;
 }
 
-bool SensorsManager::isStopped() {
+bool SensorsManager::isStopped() const {
     return stopped;
 }

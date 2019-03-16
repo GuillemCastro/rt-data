@@ -59,13 +59,13 @@ public:
      * Is the manager started?
      * @returns Whether or not the manager has been started
      */
-    bool isStarted();
+    bool isStarted() const;
 
     /**
      * Is the manager stopped?
      * @returns Whether or not the manager has been stopped
      */
-    bool isStopped();
+    bool isStopped() const;
 
     /**
      * Add a new sensor and if the manager is already started, start the sensor

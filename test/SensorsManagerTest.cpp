@@ -20,7 +20,7 @@
 #include <iostream>
 
 void SensorsManagerTest::setUp() {
-    manager = new SensorsManager();
+    manager = std::make_shared<SensorsManager>();
 }
 
 void SensorsManagerTest::tearDown() {
@@ -32,7 +32,6 @@ void SensorsManagerTest::tearDown() {
     catch (const std::exception) {
         //Either already stopped or not started
     }
-    delete manager;
 }
 
 void SensorsManagerTest::addSensorTest() {
@@ -61,9 +60,21 @@ void SensorsManagerTest::addSensorTestStopped() {
     }
 }
 
+void SensorsManagerTest::removeSensorTest() {
+    try {
+        auto sensor = std::make_shared<SensorStub>();
+        manager->addSensor(sensor);
+        manager->removeSensor(sensor);
+    }
+    catch (const std::exception) {
+        CPPUNIT_FAIL("No exception expected");
+    }
+}
+
 void SensorsManagerTest::startTest() {
     try {
         manager->start();
+        CPPUNIT_ASSERT(manager->isStarted());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -88,6 +99,7 @@ void SensorsManagerTest::stopTest() {
     try {
         manager->start();
         manager->stop();
+        CPPUNIT_ASSERT(manager->isStopped());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");

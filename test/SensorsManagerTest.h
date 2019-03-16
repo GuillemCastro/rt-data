@@ -27,6 +27,7 @@ class SensorsManagerTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(SensorsManagerTest);
     CPPUNIT_TEST(addSensorTest);
     CPPUNIT_TEST(addSensorTestStopped);
+    CPPUNIT_TEST(removeSensorTest);
     CPPUNIT_TEST(startTest);
     CPPUNIT_TEST(startTestTwoTimes);
     CPPUNIT_TEST(stopTest);
@@ -44,6 +45,8 @@ public:
 
     void addSensorTestStopped();
 
+    void removeSensorTest();
+
     void startTest();
 
     void startTestTwoTimes();
@@ -56,7 +59,7 @@ public:
 
 private:
 
-    SensorsManager* manager;
+    std::shared_ptr<SensorsManager> manager;
 
 };
 

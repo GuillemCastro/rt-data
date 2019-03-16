@@ -20,16 +20,11 @@
 
 class SensorStub : public Sensor {
 
-public:
-
-    virtual void fetch(std::vector<double>& res) override {
-        res.push_back(23.0);
-    }
-
 private:
 
     virtual void read() override {
-        
+        double item = 23.0;
+        this->queue.push(item);
     }
 
 };
