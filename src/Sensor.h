@@ -23,32 +23,73 @@
 #include <thread>
 #include "concurrent/ConcurrentQueue.h"
 
+/**
+ * A class to interface with a sensor. Provides methods
+ * to manage sensor readings in background.
+ */
 class Sensor {
 
 public:
 
+    /**
+     * Default constructor
+     */
     Sensor() : started(false), stopped(false) {
 
     }
 
+    /**
+     * Starts the sensor and the internal reading thread.
+     * Shall be overriden to configure the sensor.
+     * @throws std::runtime_error if the sensor has been already started or if it was stopped.
+     */
     virtual void start();
 
+    /**
+     * Stops the sensor and the internal reading thread.
+     * Shall be overriden to release the sensor's resources.
+     * @throws std::runtime_error if the sensor has been already stopped or if it was never started.
+     */
     virtual void stop();
 
+    /**
+     * Is the sensor started?
+     * @returns Whether or not the sensor has been started
+     */
     virtual bool isStarted();
 
+    /**
+     * Is the sensor stopped?
+     * @returns Whether or not the sensor has been stopped
+     */
     virtual bool isStopped();
 
+    /**
+     * Fetch the read data by the sensor.
+     * This interface allows sensors to perform "burst" reads, or
+     * sensors that generate more than one data value.
+     * @params res The vector where the fetched data will be stored.
+     */
     virtual void fetch(std::vector<double>& res);
 
 protected:
 
+    /**
+     * Internal read method. Must be overriden by a subclass.
+     * THe results of the read must be saved to the `queue`.
+     */
     virtual void read() = 0;
 
+    /**
+     * Internal thread-safe queue where the read data is stored. 
+     */
     ConcurrentQueue<double> queue;
 
 private:
 
+    /**
+     * Internal thread function. Calls the read() method periodically.
+     */
     void run();
 
     std::atomic<bool> started;

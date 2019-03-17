@@ -66,7 +66,7 @@ void SensorsManager::stop() {
 }
 
 void SensorsManager::run() {
-
+    //Defer to avoid deadlock
     std::unique_lock<std::mutex> lck(sensor_mtx, std::defer_lock);
     while (!stopped) {
         lck.lock();

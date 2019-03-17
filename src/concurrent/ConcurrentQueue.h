@@ -21,13 +21,23 @@
 #include <queue>
 #include <mutex>
 
+/**
+ * A thread-safe (blocking) queue.
+ */
 template <typename T>
 class ConcurrentQueue {
 
 public:
 
+    /**
+     * Default constructor.
+     */
     ConcurrentQueue() = default;
 
+    /**
+     * Delete and return the first element from the queue.
+     * @returns the first element of the queue.
+     */
     T& pop() {
         std::unique_lock<std::mutex> lck(mtx);
         T& item = q.front();
@@ -35,15 +45,25 @@ public:
         return item;
     }
 
+    /**
+     * Add a new item to the back of the queue.
+     * @params item An item to be stored in the queue.
+     */
     void push(T& item) {
         std::unique_lock<std::mutex> lck(mtx);
         q.push(item);
     }
 
+    /**
+     * Is the queue empty?
+     * @returns Whether the queue is empty or not.
+     */
     bool empty() {
         std::unique_lock<std::mutex> lck(mtx);
         return q.empty();
     }
+
+    //Do not allow copy or assignment.
 
     ConcurrentQueue(const ConcurrentQueue&) = delete;
     
