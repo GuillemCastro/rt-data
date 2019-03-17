@@ -32,6 +32,7 @@ void SensorsManagerTest::tearDown() {
     catch (const std::exception) {
         //Either already stopped or not started
     }
+    manager.reset();
 }
 
 void SensorsManagerTest::addSensorTest() {

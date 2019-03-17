@@ -20,11 +20,18 @@
 
 class SensorStub : public Sensor {
 
+public:
+
+    const static double TEST_VALUE;
+
+    void fetch(std::vector<double>& res);
+
+
 private:
 
     virtual void read() override {
-        double item = 23.0;
-        this->queue.push(item);
+        double value = TEST_VALUE;
+        this->queue.push(value);
     }
 
 };
