@@ -1,0 +1,12 @@
+@startuml
+actor Actor
+Actor -> SensorsManager : start()
+activate SensorsManager
+loop for each sensor in sensors
+SensorsManager -> "sensor :: Sensor" : start()
+activate "sensor :: Sensor"
+return
+end
+SensorsManager -> SensorsManager : started = true
+return
+@enduml

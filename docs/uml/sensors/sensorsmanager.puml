@@ -1,0 +1,19 @@
+@startuml
+abstract Sensor {
+    start()
+    stop()
+    isStarted()
+    isStopped()
+    {abstract} fetch()
+}
+class SensorsManager {
+    start()
+    stop()
+    isStarted()
+    isStopped()
+    addSensor(Sensor)
+    - run()
+}
+SensorsManager "1" --> "*" Sensor
+
+@enduml

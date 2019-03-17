@@ -1,0 +1,12 @@
+@startuml
+actor Actor
+Actor -> SensorsManager : addSensor(sensor :: Sensor)
+activate SensorsManager
+SensorsManager -> SensorsManager : add sensor to sensors list
+alt started == true
+SensorsManager -> "sensor::Sensor" : start()
+activate "sensor::Sensor"
+return
+end 
+return
+@enduml
