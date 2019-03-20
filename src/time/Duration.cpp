@@ -16,24 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Timestamp.h"
+#include "time/Duration.h"
 
-Timestamp Timestamp::now() {
-    return Timestamp(std::chrono::high_resolution_clock::now());
+uint64_t Duration::toSeconds() const {
+    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::seconds);
 }
 
-uint64_t Timestamp::toSeconds() {
-    return this->toDuration<std::chrono::seconds>();
+uint64_t Duration::toMillis() const {
+    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::milliseconds);
 }
 
-uint64_t Timestamp::toMillis() {
-    return this->toDuration<std::chrono::milliseconds>();
+uint64_t Duration::toMicros() const {
+    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::microseconds);
 }
 
-uint64_t Timestamp::toMicros() {
-    return this->toDuration<std::chrono::microseconds>();
-}
-
-uint64_t Timestamp::toNanos() {
-    return this->toDuration<std::chrono::nanoseconds>();
+uint64_t Duration::toNanos() const {
+    return (nanos_end - nanos_start);
 }
