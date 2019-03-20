@@ -38,9 +38,19 @@ public:
     /**
      * Copy constructor
      */
-    Data(Data& other) {
-        this->time = other.time;
-        this->origin = other.origin;
+    Data(Data& other) : time(other.time), origin(other.origin) {
+
+    }
+
+    /**
+     * Assignment operator
+     */
+    Data& operator=(const Data& other) {
+        if (this != &other) {
+            this->time = other.time;
+            this->origin = other.origin;
+        }
+        return *this;
     }
 
     /**

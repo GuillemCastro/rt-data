@@ -71,19 +71,19 @@ private:
         return value / other.nNanos;
     }
 
-    uint64_t operator/(const TimeUnit& other) {
+    uint64_t operator/(const TimeUnit& other) const {
         return this->nNanos / other.nNanos;
     }
 
-    uint64_t operator*(const TimeUnit& other) {
+    uint64_t operator*(const TimeUnit& other) const {
         return this->nNanos * other.nNanos;
     }
 
-    uint64_t operator*(uint64_t other) {
+    uint64_t operator*(uint64_t other) const {
         return this->nNanos * other;
     }
 
-    uint64_t operator/(uint64_t other) {
+    uint64_t operator/(uint64_t other) const {
         return this->nNanos / other;
     }
 

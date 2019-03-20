@@ -120,7 +120,7 @@ public:
      * @param duration A time duration to add to the timestamp
      * @returns a new Timestamp with the sum of the old timestamp and the passed duration
      */
-    Timestamp operator+(const Duration& duration) {
+    Timestamp operator+(const Duration& duration) const {
         return Timestamp(this->nanos + duration.toNanos());
     }
 
@@ -129,7 +129,7 @@ public:
      * @param duration A time duration to substract from the timestamp
      * @returns a new Timestamp with the substraction of the passed duration to the old timestamp
      */
-    Timestamp operator-(const Duration& duration) {
+    Timestamp operator-(const Duration& duration) const {
         return Timestamp(this->nanos - duration.toNanos());
     }
 
@@ -137,7 +137,7 @@ public:
      * Compare if the timestamp is older than another timestamp
      * A timestamp is older if it represents an older point in time
      */
-    bool operator<(const Timestamp& other) {
+    bool operator<(const Timestamp& other) const {
         return (nanos < other.nanos);
     }
 
@@ -145,7 +145,7 @@ public:
      * Compare if the timestamp is newer than another timestamp
      * A timestamp is older if it represents an older point in time
      */
-    bool operator>(const Timestamp& other) {
+    bool operator>(const Timestamp& other) const {
         return (nanos > other.nanos);
     }
 
@@ -153,7 +153,7 @@ public:
      * Compare if two timestamps are equal
      * Two timestamps are equal if they represent the same point in time
      */
-    bool operator==(const Timestamp& other) {
+    bool operator==(const Timestamp& other) const {
         return (nanos == other.nanos);
     }
 
