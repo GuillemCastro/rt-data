@@ -18,14 +18,14 @@
 
 #include "time/TimeUnit.h"
 
-const TimeUnit TimeUnit::seconds      = TimeUnit(1000000000);
+const TimeUnit TimeUnit::seconds(1000000000);
 
-const TimeUnit TimeUnit::milliseconds = TimeUnit(1000000);
+const TimeUnit TimeUnit::milliseconds(1000000);
 
-const TimeUnit TimeUnit::microseconds = TimeUnit(1000);
+const TimeUnit TimeUnit::microseconds(1000);
 
-const TimeUnit TimeUnit::nanoseconds  = TimeUnit(1);
+const TimeUnit TimeUnit::nanoseconds(1);
 
-uint64_t TimeUnit::convert(uint64_t value, TimeUnit original, TimeUnit destination) {
+uint64_t TimeUnit::convert(uint64_t value, const TimeUnit& original, const TimeUnit& destination) {
     return (original * value) / destination;
 }

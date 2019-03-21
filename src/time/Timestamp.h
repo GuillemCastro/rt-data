@@ -30,14 +30,31 @@ class Timestamp {
 
 public:
 
+    //Default constructor
     Timestamp() = default;
 
+    /**
+     * Constructor with an integral time as nanos
+     */
     explicit Timestamp(uint64_t nanos) : nanos(nanos) {
 
     }
 
+    /**
+     * Copy constructors
+     */
     Timestamp(const Timestamp& other) : nanos(other.nanos) {
 
+    }
+
+    /**
+     * Assignment operator
+     */
+    Timestamp& operator=(const Timestamp& other) {
+        if (this != &other) {
+            this->nanos = other.nanos;
+        }
+        return *this;
     }
 
     /**
@@ -89,7 +106,8 @@ public:
      * @returns the duration between the two timestamps
      */
     Duration operator-(const Timestamp& other) {
-        return Duration(other.nanos, nanos);
+        Duration d(other.nanos, nanos);
+        return d;
     }
 
 

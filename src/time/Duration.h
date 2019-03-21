@@ -52,6 +52,24 @@ public:
     }
 
     /**
+     * Copy constructor
+     */
+    Duration(Duration& other) : nanos_start(other.nanos_start), nanos_end(other.nanos_end) {
+
+    }
+
+    /**
+     * Assignment operator
+     */
+    Duration& operator=(const Duration& other) {
+        if (this != &other) {
+            this->nanos_start = other.nanos_start;
+            this->nanos_end = other.nanos_end;
+        }
+        return *this;
+    }
+
+    /**
      * Get the duration value as an integral representing seconds
      */
     uint64_t toSeconds() const;

@@ -37,6 +37,23 @@ public:
     }
 
     /**
+     * Copy constructor
+     */
+    TimeUnit(TimeUnit& other) : nNanos(other.nNanos) {
+
+    }
+
+    /**
+     * Assignment operator
+     */
+    TimeUnit& operator=(const TimeUnit& other) {
+        if (this != &other) {
+            this->nNanos = other.nNanos;
+        }
+        return *this;
+    }
+
+    /**
      * A TimeUnit representing seconds
      */
     static const TimeUnit seconds;
@@ -63,11 +80,11 @@ public:
      * @param destination The destination TimeUnit
      * @returns The value converted from the original TimeUnit to the destination TimeUnit
      */
-    static uint64_t convert(uint64_t value, TimeUnit original, TimeUnit destination);
+    static uint64_t convert(uint64_t value, const TimeUnit& original, const TimeUnit& destination);
 
 private:
 
-    friend uint64_t operator/(uint64_t value, TimeUnit& other) {
+    friend uint64_t operator/(uint64_t value, const TimeUnit& other) {
         return value / other.nNanos;
     }
 
