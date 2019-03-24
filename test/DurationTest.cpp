@@ -20,7 +20,7 @@
 #include <iostream>
 
 void DurationTest::conversionTest() {
-    Duration test(1000000000);
+    Duration test(1000000000, TimeUnit::nanoseconds);
     CPPUNIT_ASSERT(1 == test.toSeconds());
     CPPUNIT_ASSERT(1000 == test.toMillis());
     CPPUNIT_ASSERT(1000000 == test.toMicros());
