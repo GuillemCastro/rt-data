@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 project(rtdata)
 
+SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(CppUnit REQUIRED)
 
