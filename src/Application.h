@@ -16,30 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <signal.h>
-#include <unistd.h>
-#include <iostream>
+#pragma once
 
-#include "Application.h"
+#include "Broker.h"
+#include "SensorsManager.h"
 
-Application app;
-bool stopped = false;
+class Application {
 
-void signal_handler(int signo);
+public:
 
-int main() {
-    //Capture Ctrl+C
-    if (signal(SIGINT, signal_handler) == SIG_ERR) {
-        std::cerr << "ERROR: Cant set SIGINT signal handler. Exiting." << std::endl;
-        exit(2);
-    }
+    virtual void setup();
 
-    app.setup();
-    while(!stopped) {
-        app.loop();
-    }
-}
+    virtual void loop();
 
-void signal_handler(int signo) {
-    stopped = true;
-}
+protected:
+
+    Broker broker;
+
+    SensorsManager manager;
+
+};
