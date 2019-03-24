@@ -17,6 +17,25 @@
 */
 
 #include "Sensor.h"
+#include "Broker.h"
+
+class DoubleData : public Data {
+
+public:
+
+    DoubleData(double value) : Data() {
+
+    }
+
+    double getValue() {
+        return value;
+    }
+
+private:
+
+    double value;
+
+};
 
 class SensorStub : public Sensor {
 
@@ -24,14 +43,14 @@ public:
 
     const static double TEST_VALUE;
 
-    void fetch(std::vector<double>& res);
+    void fetch(Broker* broker);
 
 
 private:
 
     virtual void read() override {
-        double value = TEST_VALUE;
-        this->queue.push(value);
+        std::shared_ptr<Data> data = std::make_shared<DoubleData>(TEST_VALUE);
+        this->queue.push(data);
     }
 
 };

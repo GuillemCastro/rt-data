@@ -52,15 +52,3 @@ void SensorTest::stopTest() {
         CPPUNIT_FAIL("No exception expected");
     }
 }
-
-void SensorTest::fetchTest() {
-    sensor->start();
-    std::vector<double> res;
-    sensor->fetch(res);
-    if (!res.empty()) {
-        CPPUNIT_ASSERT_EQUAL(res[0], SensorStub::TEST_VALUE);
-    }
-    else {
-        CPPUNIT_FAIL("Could not test. Result vector is empty.");
-    }
-}

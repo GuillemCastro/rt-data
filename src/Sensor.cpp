@@ -42,12 +42,6 @@ bool Sensor::isStopped() {
     return stopped;
 }
 
-void Sensor::fetch(std::vector<double>& res) {
-    while (!queue.empty()) {
-        res.push_back(queue.pop());
-    }
-}
-
 void Sensor::run() {
     while (!stopped) {
         this->read();

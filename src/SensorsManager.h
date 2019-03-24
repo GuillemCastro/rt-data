@@ -44,6 +44,18 @@ public:
     }
 
     /**
+     * Destructor
+     */
+    ~SensorsManager() {
+        try {
+            stop();
+        }
+        catch (std::runtime_error&) {
+            //Already stopped
+        }
+    }
+
+    /**
      * Start the manager. It starts the internal thread, and the sensors
      * @throws std::runtime_error If the manager is stopped or already started
      */
@@ -81,6 +93,12 @@ public:
      */
     void removeSensor(std::shared_ptr<Sensor> sensor);
 
+    /**
+     * Set the broker that will dispatch the data fetched by this manager
+     * @param broker A pointer to a Broker
+     */
+    void setBroker(Broker* broker);
+
 private:
 
     /**
@@ -96,5 +114,7 @@ private:
     std::mutex sensor_mtx;
 
     std::thread fetch_thread;
+
+    Broker* broker;
 
 };

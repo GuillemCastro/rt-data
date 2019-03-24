@@ -70,9 +70,10 @@ void SensorsManager::run() {
     std::unique_lock<std::mutex> lck(sensor_mtx, std::defer_lock);
     while (!stopped) {
         lck.lock();
-        for (auto& sensor : sensors) {
-            std::vector<double> res;
-            sensor->fetch(res);
+        if (broker != NULL) {
+            for (auto& sensor : sensors) {
+                sensor->fetch(broker);
+            }
         }
         lck.unlock();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -85,4 +86,8 @@ bool SensorsManager::isStarted() const {
 
 bool SensorsManager::isStopped() const {
     return stopped;
+}
+
+void SensorsManager::setBroker(Broker* broker) {
+    this->broker = broker;
 }

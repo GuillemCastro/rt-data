@@ -20,9 +20,12 @@
 
 const double SensorStub::TEST_VALUE = 23.0;
 
-void SensorStub::fetch(std::vector<double>& res) {
+void SensorStub::fetch(Broker* broker) {
     while (queue.empty()) {
         ; //wait
     }
-    Sensor::fetch(res);
+    while (!queue.empty()) {
+        auto& data = queue.pop(); 
+        broker->dispatch("test_double", data);
+    }
 }

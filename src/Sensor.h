@@ -21,7 +21,11 @@
 #include <vector>
 #include <atomic>
 #include <thread>
+#include <memory>
+
 #include "concurrent/ConcurrentQueue.h"
+#include "Data.h"
+#include "Broker.h"
 
 /**
  * A class to interface with a sensor. Provides methods
@@ -36,6 +40,18 @@ public:
      */
     Sensor() : started(false), stopped(false) {
 
+    }
+
+    /**
+     * Destructor
+     */
+    ~Sensor() {
+        try {
+            stop();
+        }
+        catch (std::runtime_error&) {
+            //Already stopped
+        }
     }
 
     /**
@@ -70,20 +86,20 @@ public:
      * sensors that generate more than one data value.
      * @params res The vector where the fetched data will be stored.
      */
-    virtual void fetch(std::vector<double>& res);
+    virtual void fetch(Broker* broker) = 0;
 
 protected:
 
     /**
      * Internal read method. Must be overriden by a subclass.
-     * THe results of the read must be saved to the `queue`.
+     * The results of the read must be saved to the `queue`.
      */
     virtual void read() = 0;
 
     /**
      * Internal thread-safe queue where the read data is stored. 
      */
-    ConcurrentQueue<double> queue;
+    ConcurrentQueue<std::shared_ptr<Data>> queue;
 
 private:
 

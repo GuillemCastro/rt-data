@@ -26,7 +26,6 @@ class SensorTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(SensorTest);
     CPPUNIT_TEST(startTest);
     CPPUNIT_TEST(stopTest);
-    CPPUNIT_TEST(fetchTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -38,8 +37,6 @@ public:
     void startTest();
 
     void stopTest();
-
-    void fetchTest();
 
 private:
 
