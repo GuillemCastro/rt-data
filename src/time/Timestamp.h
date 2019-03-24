@@ -117,7 +117,7 @@ public:
      * @param unit The time units
      * @returns a new Timestamp with the sum of the old timestamp and the passed time
      */
-    Timestamp plus(uint64_t time, TimeUnit unit) {
+    Timestamp plus(uint64_t time, const TimeUnit& unit) {
         uint64_t nanos = TimeUnit::convert(time, unit, TimeUnit::nanoseconds);
         return Timestamp(this->nanos + nanos);
     }
@@ -128,7 +128,7 @@ public:
      * @param unit The time units
      * @returns a new Timestamp with the substraction of the passed time to the old timestamp
      */
-    Timestamp minus(uint64_t time, TimeUnit unit) {
+    Timestamp minus(uint64_t time, const TimeUnit& unit) {
         uint64_t nanos = TimeUnit::convert(time, unit, TimeUnit::nanoseconds);
         return Timestamp(this->nanos - nanos);
     }

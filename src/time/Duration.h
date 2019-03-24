@@ -45,16 +45,14 @@ public:
      * @param value An integral representing a time duration
      * @param units The time unit of the time value
      */
-    Duration (uint64_t value, TimeUnit units) {
-        uint64_t end = TimeUnit::convert(value, units, TimeUnit::nanoseconds);
-        uint64_t start = 0;
-        Duration(start, end);
+    Duration (uint64_t value, const TimeUnit& units) : nanos_start(0), nanos_end(TimeUnit::convert(value, units, TimeUnit::nanoseconds)) {
+
     }
 
     /**
      * Copy constructor
      */
-    Duration(Duration& other) : nanos_start(other.nanos_start), nanos_end(other.nanos_end) {
+    Duration(const Duration& other) : nanos_start(other.nanos_start), nanos_end(other.nanos_end) {
 
     }
 
