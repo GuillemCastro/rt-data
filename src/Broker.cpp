@@ -55,7 +55,7 @@ void Broker::dispatch(std::string topic, std::shared_ptr<Data> data) {
     }
     std::unique_lock<std::mutex> lck(mtx);
     for (auto& listener : listeners[topic]) {
-        pool.addJob([listener, topic, data] {
+        pool.addJob([this, &listener, topic, data] {
             listener(topic, data);
         });
     }

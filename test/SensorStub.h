@@ -23,7 +23,7 @@ class DoubleData : public Data {
 
 public:
 
-    DoubleData(double value) : Data() {
+    DoubleData(double value) : value(value), Data() {
 
     }
 
@@ -34,6 +34,24 @@ public:
 private:
 
     double value;
+
+};
+
+class IntData : public Data {
+
+public:
+
+    IntData(int value) : value(value), Data() {
+
+    }
+
+    int getValue() {
+        return value;
+    }
+
+private:
+
+    int value;
 
 };
 

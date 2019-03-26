@@ -19,7 +19,7 @@
 #include "concurrent/ThreadPool.h"
 
 void ThreadPool::init_threads() {
-    for (int i = 0; i < thread_count; ++i) {
+    for (int i = 0; i < threads.size(); ++i) {
        threads[i] = std::thread(&ThreadPool::thread_run, this);
     }
 }
@@ -32,9 +32,9 @@ void ThreadPool::addJob(std::function<void(void)> job) {
 void ThreadPool::thread_run() {
     while (!stopped) {
         std::unique_lock<std::mutex> lck(wait_mutex);
-        new_job.wait(lck, [this]() -> bool {return queue.empty() || stopped;});
+        new_job.wait(lck, [this]() -> bool {return !queue.empty() || stopped;});
         if (!stopped) {
-            auto& job = queue.pop();
+            std::function<void(void)> job = queue.pop();
             ++jobs_in_execution;
             job();
             --jobs_in_execution;

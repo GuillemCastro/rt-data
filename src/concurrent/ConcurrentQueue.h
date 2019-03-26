@@ -38,7 +38,7 @@ public:
      * Delete and return the first element from the queue.
      * @returns the first element of the queue.
      */
-    T& pop() {
+    const T& pop() {
         std::unique_lock<std::mutex> lck(mtx);
         T& item = q.front();
         q.pop();
