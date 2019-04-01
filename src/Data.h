@@ -21,11 +21,12 @@
 #include <string>
 
 #include "time/Timestamp.h"
+#include "serialization/Serializable.h"
 
 /**
  * Class that represents data
  */
-class Data {
+class Data : public Serializable {
 
 public:
 
@@ -74,6 +75,24 @@ public:
      * Sets who generated this data.
      */
     void setOrigin(std::string& origin);
+
+    /**
+     * Serialize the Data. Do not call directly.
+     * @param object The resulting SerializedObject where the data must be saved.
+     */
+    virtual void serialize(SerializedObject* object) override {
+        object->put("timestamp", (unsigned int) time.toNanos());
+        object->put("origin", origin);
+    }
+
+    /**
+     * Deserialize the Data. Do not call directly.
+     * @param object The SerializedObject to load the data from.
+     */
+    virtual void deserialize(SerializedObject* object) override {
+        time = Timestamp(object->getUInt("timestamp"));
+        origin = object->getString("origin");
+    }
 
 protected:
 
