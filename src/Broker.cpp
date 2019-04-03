@@ -41,7 +41,7 @@ bool Broker::isStopped() {
     return stopped;
 }
 
-void Broker::subscribe(std::string topic, std::function<void(std::string, std::shared_ptr<Data>)> listener) {
+void Broker::subscribe(std::string topic, std::shared_ptr<Listener> listener) {
     if (stopped) {
         throw std::runtime_error("Cannot subscribe to a stopped Broker");
     }
@@ -56,7 +56,7 @@ void Broker::dispatch(std::string topic, std::shared_ptr<Data> data) {
     std::unique_lock<std::mutex> lck(mtx);
     for (auto& listener : listeners[topic]) {
         pool.addJob([this, &listener, topic, data] {
-            listener(topic, data);
+            listener->handle(topic, data);
         });
     }
 }

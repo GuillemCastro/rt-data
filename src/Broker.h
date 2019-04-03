@@ -26,7 +26,7 @@
 #include <stdexcept>
 #include <mutex>
 
-#include "Data.h"
+#include "Listener.h"
 #include "concurrent/ThreadPool.h"
 
 class Broker {
@@ -77,10 +77,10 @@ public:
     /**
      * Subscribe a listener to a topic
      * @param topic The topic to subscribe to
-     * @param listener A function that will be executed when an event from the passed
+     * @param listener A pointer to a Listener that will be executed when an event from the passed
      *      topic is dispatched.
      */
-    void subscribe(std::string topic, std::function<void(std::string, std::shared_ptr<Data>)> listener);
+    void subscribe(std::string topic, std::shared_ptr<Listener> listener);
 
     /**
      * Dipatch an event to a topic with an associated data
@@ -93,7 +93,7 @@ private:
 
     std::atomic<bool> started, stopped;
 
-    std::unordered_map<std::string, std::vector<std::function<void(std::string, std::shared_ptr<Data>)>>> listeners;
+    std::unordered_map<std::string, std::vector<std::shared_ptr<Listener>>> listeners;
 
     std::mutex mtx;
 

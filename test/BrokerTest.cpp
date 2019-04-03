@@ -18,6 +18,7 @@
 
 #include "BrokerTest.h"
 #include "SensorStub.h"
+#include "utils/LambdaListener.h"
 
 #include <chrono>
 #include <iostream>
@@ -27,12 +28,12 @@ void BrokerTest::dispatchTest() {
     std::condition_variable cond_var;
     std::atomic<bool> dispatched(false);
     broker->start();
-    broker->subscribe("test", [this, &dispatched, &cond_var](std::string topic, std::shared_ptr<Data> data) {
+    broker->subscribe("test", std::make_shared<LambdaListener>([this, &dispatched, &cond_var](std::string topic, std::shared_ptr<Data> data) {
         std::shared_ptr<IntData> int_data = std::static_pointer_cast<IntData>(data);
         CPPUNIT_ASSERT(5 == int_data->getValue());
         dispatched = true;
         cond_var.notify_one();
-    });
+    }));
     std::unique_lock<std::mutex> lck(mutex);
     std::shared_ptr<Data> data = std::make_shared<IntData>(5);
     broker->dispatch("test", data);
