@@ -1,3 +1,6 @@
 [submodule "libs/nlohmann_json"]
 	path = libs/nlohmann_json
 	url = https://github.com/nlohmann/json
+[submodule "libs/SQLiteCpp"]
+	path = libs/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp.git
