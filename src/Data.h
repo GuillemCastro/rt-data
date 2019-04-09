@@ -46,6 +46,23 @@ public:
     }
 
     /**
+     * Constructor with origin. Sets the data time to the current time
+     * @param origin The origin of the data
+     */
+    Data(const std::string origin) : time(Timestamp::now()), origin(origin)  {
+
+    }
+
+    /**
+     * Constructor with time and origin
+     * @param time When this data was created
+     * @param origin The origin of the data
+     */
+    Data(const Timestamp& time, const std::string origin) : time(time), origin(origin)  {
+
+    }
+
+    /**
      * Assignment operator
      */
     Data& operator=(const Data& other) {
