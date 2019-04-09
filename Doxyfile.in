@@ -1,0 +1,3 @@
+OUTPUT_DIRECTORY       = build/doc_doxygen/
+RECURSIVE              = YES
+INPUT                  = src/ docs/
