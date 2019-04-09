@@ -23,31 +23,62 @@ include_directories(src)
 
 include_directories(libs/SQLiteCpp/include)
 
-file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp)
+file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp)
 
 add_library( rtdata STATIC ${SRC_FILES} )
 
-target_link_libraries(rtdata Threads::Threads )
+target_link_libraries(rtdata
+    cppunit
+    Threads::Threads
+    nlohmann_json::nlohmann_json
+    SQLiteCpp
+    sqlite3
+    dl
+)
 
-target_link_libraries(rtdata dl)
+option(BUILD_TESTS "Build the tests" ON)
+IF(BUILD_TESTS)
+    IF(NOT(MSVC OR MINGW))
+        include_directories(${CPPUNIT_INCLUDE_DIR})
+        include_directories(test)
+        include_directories(libs/SQLiteCpp/include)
+        file(GLOB TEST_FILES test/*.cpp src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp)
+        list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
+        add_executable(rtdata_test ${TEST_FILES})
+        target_link_libraries(rtdata_test
+            cppunit
+            Threads::Threads
+            nlohmann_json::nlohmann_json
+            SQLiteCpp
+            sqlite3
+            dl
+        )
+    ENDIF()
+ENDIF()
 
-target_link_libraries(rtdata nlohmann_json::nlohmann_json)
+option(BUILD_DOCS "Build documentation" OFF)
+find_package(Doxygen)
+if (DOXYGEN_FOUND AND BUILD_DOCS)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-target_link_libraries(rtdata sqlite3)
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    message("Doxygen build started")
 
-target_link_libraries(rtdata SQLiteCpp)
+    add_custom_target( doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM )
+endif (DOXYGEN_FOUND AND BUILD_DOCS)
 
-IF(NOT(MSVC OR MINGW))
-    include_directories(${CPPUNIT_INCLUDE_DIR})
-    include_directories(test)
-    include_directories(libs/SQLiteCpp/include)
-    file(GLOB TEST_FILES test/*.cpp src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp)
-    list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
-    add_executable(rtdata_test ${TEST_FILES})
-    target_link_libraries(rtdata_test cppunit)
-    target_link_libraries(rtdata_test Threads::Threads )
-    target_link_libraries(rtdata_test dl)
-    target_link_libraries(rtdata_test nlohmann_json::nlohmann_json)
-    target_link_libraries(rtdata_test sqlite3)
-    target_link_libraries(rtdata_test SQLiteCpp)
+option(EXECUTE_TESTS "Execute the tests" OFF)
+if (EXECUTE_TESTS)
+    add_custom_target(
+        tests
+        ALL
+        COMMAND rtdata_test
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Executing tests" VERBATIM
+    )
 ENDIF()

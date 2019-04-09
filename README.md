@@ -12,6 +12,14 @@ cmake ..
 make
 ```
 
+## Build instructions with documentation
+
+```
+mkdir build && cd build
+cmake .. -DBUILD_DOCS=ON
+make
+```
+
 ## Build instructions for cross compilation for ARMv7+ (armhf)
 
 ```
