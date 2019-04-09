@@ -42,8 +42,7 @@ IF(BUILD_TESTS)
         include_directories(${CPPUNIT_INCLUDE_DIR})
         include_directories(test)
         include_directories(libs/SQLiteCpp/include)
-        file(GLOB TEST_FILES test/*.cpp src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp)
-        list(REMOVE_ITEM TEST_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
+        file(GLOB TEST_FILES test/*.cpp)
         add_executable(rtdata_test ${TEST_FILES})
         target_link_libraries(rtdata_test
             cppunit
@@ -52,8 +51,30 @@ IF(BUILD_TESTS)
             SQLiteCpp
             sqlite3
             dl
+            rtdata
         )
     ENDIF()
+ENDIF()
+
+option(BUILD_INTEGRATION_TESTS "Build the integration tests" OFF)
+IF(BUILD_INTEGRATION_TESTS)
+    include_directories(test/integration)
+    include_directories(libs/SQLiteCpp/include)
+    file(GLOB INTEGRATION_TEST_FILES test/integration/*.cpp)
+    foreach( testsourcefile ${INTEGRATION_TEST_FILES} )
+        string( REPLACE ".cpp" "" testname ${testsourcefile} )
+        get_filename_component(test_executable ${testname} NAME)
+        add_executable( ${test_executable} ${testsourcefile} )
+        target_link_libraries(${test_executable}
+            cppunit
+            Threads::Threads
+            nlohmann_json::nlohmann_json
+            SQLiteCpp
+            sqlite3
+            dl
+            rtdata
+        )
+    endforeach( testsourcefile ${APP_SOURCES} )
 ENDIF()
 
 option(BUILD_DOCS "Build documentation" OFF)
