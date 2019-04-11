@@ -22,6 +22,7 @@
 #include <linux/kernel.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h>
+#include <linux/random.h>
 
 #define DEVICE_NAME "stubdevice"
 #define CLASS_NAME "stub"
@@ -35,7 +36,7 @@ static int majorNumber;
 static struct class* stubClass = NULL;
 static struct device* stubDevice = NULL;
 
-static int dev_open(struct inode *, strucct file *);
+static int dev_open(struct inode *, struct file *);
 static int dev_release(struct inode *, struct file *);
 static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
 static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
@@ -84,26 +85,43 @@ static void __exit stub_exit(void) {
     printk(KERN_INFO "StubDevice: device destroyed!");
 }
 
-static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset) {
-    int error_count = 0;
-    
-    int num;
-    get_random_bytes(&num, sizeof(num));
-    num = num % 1024; // Simulate a random 10-bit number
+static int dev_open(struct inode *inodep, struct file *filep){
+   printk(KERN_INFO "StubDevice: Device has been opened\n");
+   return 0;
+}
 
-    error_count = copy_to_user(buffer, &num, sizeof(num));
-    if (error_count == 0) {
-        printk(KERN_INFO "StubDevice: sent number %d to the user", num);
-        return (sizeof(num));
+static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset) {
+    int error_count = 0, count = 0;
+    char buff[50];
+    int num;
+    if(*offset == 0) {
+        get_random_bytes(&num, sizeof(num));
+        num = num % 1024; // Simulate a random 10-bit number
+        if (num < 0) {
+            num *= -1;
+        }
+        count = snprintf(buff, 50, "%d", num);
+        if (len < count) {
+            return 0;
+        }
+        error_count = copy_to_user(buffer, buff, count);
+        if (error_count == 0) {
+            (*offset) += count;
+            printk(KERN_INFO "StubDevice: sent number %d to the user", num);
+            return (count);
+        }
+        else {
+            printk(KERN_INFO "StubDevice: Failed to send number %d to the user", num);
+            return -EFAULT;
+        }
     }
     else {
-        printk(KERN_INFO "StubDevice: Failed to send number %d to the user", num);
-        return -EFAULT;
+        return 0;
     }
 }
 
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) {
-
+    return 0;
 }
 
 static int dev_release(struct inode *inodep, struct file *filep){
