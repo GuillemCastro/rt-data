@@ -25,8 +25,14 @@
 #include <cppunit/TextOutputter.h>
 #include <cppunit/CompilerOutputter.h>
 
+#include <Log.h>
+
 
 int main() {
+
+    Log::init();
+    Log::log(INFO, "Test executions started");
+
     CppUnit::TestResultCollector result;
 
     std::ofstream xmlout ( "testresults.xml" );
@@ -40,6 +46,8 @@ int main() {
     bool wasSuccessful = runner.run();
 
     xmlOutputter.write();
+
+    Log::log(INFO, "Test executions ended");
 
     return !wasSuccessful;
 }

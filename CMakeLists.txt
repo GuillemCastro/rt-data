@@ -15,6 +15,8 @@ find_package(CppUnit REQUIRED)
 
 find_package(Threads REQUIRED)
 
+find_package(g3logger)
+
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES main.cpp)
@@ -23,7 +25,7 @@ include_directories(src)
 
 include_directories(libs/SQLiteCpp/include)
 
-file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp)
+file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp src/sensors/*.cpp)
 
 add_library( rtdata STATIC ${SRC_FILES} )
 
@@ -35,6 +37,15 @@ target_link_libraries(rtdata
     sqlite3
     dl
 )
+
+IF(g3logger_FOUND)
+    message(STATUS "G3Log found!")
+    target_link_libraries(rtdata g3logger)
+    add_definitions(-DWITH_G3LOG)
+ELSE()
+    message(STATUS "G3Log not found!")
+    message(WARNING "Logging disabled!" )
+ENDIF()
 
 option(BUILD_TESTS "Build the tests" ON)
 IF(BUILD_TESTS)
