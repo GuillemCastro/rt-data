@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "concurrent/ThreadPool.h"
+#include "ThreadPool.h"
 
 void ThreadPool::init_threads() {
     for (int i = 0; i < threads.size(); ++i) {
@@ -34,6 +34,9 @@ void ThreadPool::thread_run() {
         std::unique_lock<std::mutex> lck(wait_mutex);
         new_job.wait(lck, [this]() -> bool {return !queue.empty() || stopped;});
         if (!stopped) {
+            while (queue.empty()) {
+                ;
+            }
             std::function<void(void)> job = queue.pop();
             ++jobs_in_execution;
             job();
