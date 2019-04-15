@@ -38,9 +38,9 @@ public:
      * Delete and return the first element from the queue.
      * @returns the first element of the queue.
      */
-    const T& pop() {
+    T pop() {
         std::unique_lock<std::mutex> lck(mtx);
-        T& item = q.front();
+        T item = q.front();
         q.pop();
         return item;
     }
@@ -49,7 +49,7 @@ public:
      * Add a new item to the back of the queue.
      * @params item An item to be stored in the queue.
      */
-    void push(T& item) {
+    void push(T item) {
         std::unique_lock<std::mutex> lck(mtx);
         q.push(item);
     }
