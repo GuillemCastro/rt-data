@@ -41,5 +41,7 @@ int main() {
 }
 
 void signal_handler(int signo) {
-    stopped = true;
+    if (signo == SIGINT) {
+        stopped = true;
+    }
 }
