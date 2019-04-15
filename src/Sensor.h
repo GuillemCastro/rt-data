@@ -84,7 +84,7 @@ public:
      * Fetch the read data by the sensor.
      * This interface allows sensors to perform "burst" reads, or
      * sensors that generate more than one data value.
-     * @params res The vector where the fetched data will be stored.
+     * @params broker The Broker where the data will be sent.
      */
     virtual void fetch(Broker* broker) = 0;
 
