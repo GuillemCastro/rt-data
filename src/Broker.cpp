@@ -54,8 +54,8 @@ void Broker::dispatch(std::string topic, std::shared_ptr<Data> data) {
         throw std::runtime_error("Cannot dispatch before starting or after stopping the Broker");
     }
     std::unique_lock<std::mutex> lck(mtx);
-    for (auto& listener : listeners[topic]) {
-        pool.addJob([this, &listener, topic, data] {
+    for (auto listener : listeners[topic]) {
+        pool.addJob([this, listener, topic, data]() {
             listener->handle(topic, data);
         });
     }
