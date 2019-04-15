@@ -25,7 +25,7 @@ void SensorStub::fetch(Broker* broker) {
         ; //wait
     }
     while (!queue.empty()) {
-        auto& data = queue.pop(); 
+        auto data = queue.pop(); 
         broker->dispatch("test_double", data);
     }
 }
