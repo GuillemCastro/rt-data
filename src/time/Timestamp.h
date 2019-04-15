@@ -21,7 +21,7 @@
 #include <chrono>
 #include <cstdint>
 
-#include "time/Duration.h"
+#include "Duration.h"
 
 /**
  * A class representing a point in time. 

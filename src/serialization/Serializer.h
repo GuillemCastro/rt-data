@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "serialization/Serializable.h"
+#include "Serializable.h"
 
 /**
  * A helper class to serialize and deserialize objects

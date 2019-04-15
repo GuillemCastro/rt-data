@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "time/Duration.h"
+#include "Duration.h"
 
 uint64_t Duration::toSeconds() const {
     return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::seconds);

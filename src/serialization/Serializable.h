@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "serialization/SerializedObject.h"
+#include "SerializedObject.h"
 
 /**
  * Interface to be implemented by objects that can be serialized

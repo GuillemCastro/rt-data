@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "serialization/SerializedObject.h"
-#include "utils/Any.h"
+#include "SerializedObject.h"
+#include "../utils/Any.h"
 
 #include <SQLiteCpp/Statement.h>
 

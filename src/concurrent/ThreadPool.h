@@ -25,7 +25,7 @@
 #include <mutex>
 #include <condition_variable>
 
-#include "concurrent/ConcurrentQueue.h"
+#include "ConcurrentQueue.h"
 
 /**
  * A class to manage a thread pool

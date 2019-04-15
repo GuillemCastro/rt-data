@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "time/TimeUnit.h"
+#include "TimeUnit.h"
 
 const TimeUnit TimeUnit::seconds(1000000000);
 

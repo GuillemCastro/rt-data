@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "utils/LambdaListener.h"
+#include "LambdaListener.h"
 
 void LambdaListener::handle(std::string topic, std::shared_ptr<Data> data) {
     listener(topic, data);

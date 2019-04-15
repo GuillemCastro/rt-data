@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "serialization/SerializedObject.h"
+#include "SerializedObject.h"
 
 #include <vector>
 #include <stdint.h>
