@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "io/SQLiteWriter.h"
+#include "SQLiteWriter.h"
 
 void SQLiteWriter::open() {
     if (rt_optimization) {
@@ -36,20 +36,22 @@ void SQLiteWriter::close() {
     is_open = false;
 }
 
-void SQLiteWriter::write(Data& data) {
+void SQLiteWriter::write(std::shared_ptr<Data> data) {
     write("default", data);
 }
 
-void SQLiteWriter::write(std::string topic, Data& data) {
+void SQLiteWriter::write(std::string topic, std::shared_ptr<Data> data) {
     if (!is_open) {
         throw std::runtime_error("Writer is not open");
     }
     std::unique_lock<std::mutex> lck(mtx);
     //The table name is a combination of the topic and the origin of the data
     //An origin is not expected to send different types of data to the same topic
-    std::string table = topic + "_" + data.getOrigin();
+    std::ostringstream table_stream;
+    table_stream << topic << "_" << data->getOrigin();
+    std::string table = table_stream.str();
     SQLiteObject object(table);
-    data.serialize(&object);
+    data->serialize(&object);
     buffer.push_back(object);
     if (!db.tableExists(table)) {
         db.exec(object.getCreateTable());

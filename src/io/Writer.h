@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "Data.h"
+#include "../Data.h"
 
 /**
  * Interface to implement writters of Data objects.
@@ -42,13 +42,13 @@ public:
      * Write an object. Might be buffered. Returning from this function does
      * not guarantee that the object was written (depends on the implementation).
      */
-    virtual void write(Data& data) = 0;
+    virtual void write(std::shared_ptr<Data> data) = 0;
 
     /**
      * Write an object. Might be buffered. Returning from this function does
      * not guarantee that the object was written (depends on the implementation).
      */
-    virtual void write(std::string topic, Data& data) = 0;
+    virtual void write(std::string topic, std::shared_ptr<Data> data) = 0;
 
     /**
      * Force any buffered object to be written. Returning from this function

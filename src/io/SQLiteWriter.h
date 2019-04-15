@@ -18,8 +18,8 @@
 
 #pragma once
 
-#include "io/Writer.h"
-#include "serialization/SQLiteObject.h"
+#include "Writer.h"
+#include "../serialization/SQLiteObject.h"
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
@@ -27,6 +27,8 @@
 #include <mutex>
 #include <unordered_map>
 #include <stdexcept>
+#include <sstream>
+#include <memory>
 
 /**
  * A concrete implementation of Writer for SQLite databases
@@ -96,14 +98,14 @@ public:
      * not guarantee that the object was written (depends on the implementation).
      * flush() will be called if the size of the buffer exceeds buffer_size.
      */
-    virtual void write(Data& data);
+    virtual void write(std::shared_ptr<Data> data);
 
    /**
      * Write an object. Will be buffered. Returning from this function does
      * not guarantee that the object was written (depends on the implementation).
      * flush() will be called if the size of the buffer exceeds buffer_size.
      */
-    virtual void write(std::string topic, Data& data);
+    virtual void write(std::string topic, std::shared_ptr<Data> data);
 
     /**
      * Force any buffered object to be written. Returning from this function
