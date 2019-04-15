@@ -38,12 +38,15 @@ target_link_libraries(rtdata
     dl
 )
 
-IF(g3logger_FOUND)
-    message(STATUS "G3Log found!")
+install (TARGETS rtdata DESTINATION lib)
+install(DIRECTORY src/ DESTINATION include/rtdata FILES_MATCHING PATTERN "*.h")
+
+option(WITH_LOGGING "Support logging" ON)
+IF(g3logger_FOUND AND WITH_LOGGING)
+    message(STATUS "Adding logging support")
     target_link_libraries(rtdata g3logger)
     add_definitions(-DWITH_G3LOG)
 ELSE()
-    message(STATUS "G3Log not found!")
     message(WARNING "Logging disabled!" )
 ENDIF()
 

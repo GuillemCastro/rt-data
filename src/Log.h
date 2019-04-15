@@ -59,7 +59,7 @@ namespace Log {
 
         };
 
-        void levelLog(LEVELS level, const char* file, const int line, const char* function, const char* message, ...) {
+        static void levelLog(LEVELS level, const char* file, const int line, const char* function, const char* message, ...) {
             char to_log[2048];
             va_list arglist;
             va_start(arglist, message);
@@ -80,7 +80,7 @@ namespace Log {
      * @param logFilePath The path for the log files (optional, default = "./")'
      * @param enableConsole Whether the logs should be printed by stdout or not (optional, default = true)
      */
-    void init(const std::string& logPrefix = "log", const std::string& logFilePath = "./", bool enableConsole = true) {
+    static void init(const std::string& logPrefix = "log", const std::string& logFilePath = "./", bool enableConsole = true) {
         #ifdef WITH_G3LOG
         logWorker = std::unique_ptr<g3::LogWorker> {g3::LogWorker::createLogWorker()};
         auto fileSinkHandle = logWorker->addSink(std::make_unique<g3::FileSink>(logPrefix, logFilePath), &g3::FileSink::fileWrite);
@@ -100,7 +100,7 @@ namespace Log {
     #ifdef WITH_G3LOG
     #define log(level, message, ...) levelLog(level, __FILE__, __LINE__, __PRETTY_FUNCTION__, message, ##__VA_ARGS__)
     #else
-    void log(Level level, const char* message, ...) {
+    static void log(Level level, const char* message, ...) {
         //nop
     }
     #endif
