@@ -19,6 +19,7 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
 
 #include "time/Timestamp.h"
 #include "serialization/Serializable.h"
@@ -41,7 +42,7 @@ public:
     /**
      * Copy constructor
      */
-    Data(Data& other) : time(other.time), origin(other.origin) {
+    Data(const Data& other) : time(other.time), origin(other.origin) {
 
     }
 
@@ -49,7 +50,7 @@ public:
      * Constructor with origin. Sets the data time to the current time
      * @param origin The origin of the data
      */
-    Data(const std::string origin) : time(Timestamp::now()), origin(origin)  {
+    Data(const std::string& origin) : time(Timestamp::now()), origin(origin)  {
 
     }
 
@@ -58,7 +59,7 @@ public:
      * @param time When this data was created
      * @param origin The origin of the data
      */
-    Data(const Timestamp& time, const std::string origin) : time(time), origin(origin)  {
+    Data(const Timestamp& time, const std::string& origin) : time(time), origin(origin)  {
 
     }
 
@@ -67,8 +68,8 @@ public:
      */
     Data& operator=(const Data& other) {
         if (this != &other) {
-            this->time = other.time;
-            this->origin = other.origin;
+            this->time = Timestamp(other.time.toNanos());
+            this->origin = std::string(other.origin);
         }
         return *this;
     }
@@ -76,22 +77,22 @@ public:
     /**
      * Returns the timestamp when this data was created.
      */
-    Timestamp& getTimestamp();
+    Timestamp getTimestamp();
 
     /**
      * Returns who generated this data.
      */
-    std::string& getOrigin();
+    std::string getOrigin();
 
     /**
      * Set the timestamp when this data was created.
      */
-    void setTimestamp(Timestamp& time);
+    void setTimestamp(const Timestamp& time);
 
     /**
      * Sets who generated this data.
      */
-    void setOrigin(std::string& origin);
+    void setOrigin(const std::string& origin);
 
     /**
      * Serialize the Data. Do not call directly.
