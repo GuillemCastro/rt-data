@@ -36,7 +36,7 @@ public:
      * The signature of the anonymous function must be,
      * void(std::string,std::shared_ptr<Data>)> listener);
      */
-    LambdaListener(std::function<void(std::string, std::shared_ptr<Data>)> listener) : listener(listener) {
+    explicit LambdaListener(const std::function<void(std::string, std::shared_ptr<Data>)>& listener) : listener(listener) {
 
     }
 

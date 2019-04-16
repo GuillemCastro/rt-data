@@ -38,7 +38,7 @@ public:
 
     }
 
-    explicit SQLiteObject(std::string table) : SerializedObject(), table(table) {
+    explicit SQLiteObject(const std::string& table) : SerializedObject(), table(table) {
 
     }
 
@@ -165,7 +165,7 @@ public:
      * Get the table name
      * @returns The table name
      */
-    std::string getTable() {
+    std::string getTable() const {
         return table;
     }
 

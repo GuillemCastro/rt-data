@@ -39,9 +39,9 @@ public:
      * By default build the pool with 10 threads
      */
     ThreadPool() : thread_count(10), 
-        threads(std::vector<std::thread>(10)), 
+        jobs_in_execution(0),
         stopped(false),
-        jobs_in_execution(0) {
+        threads(std::vector<std::thread>(10)) {
         init_threads();
     }
 
@@ -49,10 +49,10 @@ public:
      * Build a pool with 'count' number of threads
      * @param count The number of threads of the pool
      */
-    ThreadPool(int count) : thread_count(count), 
-        threads(std::vector<std::thread>(count)), 
+    explicit ThreadPool(int count) : thread_count(count),
+        jobs_in_execution(0),
         stopped(false),
-        jobs_in_execution(0) {
+        threads(std::vector<std::thread>(count)) {
         init_threads();
     }
 
@@ -79,7 +79,7 @@ public:
      * Get the number of threads managed by the class
      * @returns the number of threads managed by the class
      */
-    int size() {
+    int size() const {
         return thread_count;
     }
 
@@ -87,7 +87,7 @@ public:
      * Get the number of jobs in execution
      * @returns the number of jobs in execution
      */
-    int inExecution() {
+    int inExecution() const {
         return jobs_in_execution;
     }
 

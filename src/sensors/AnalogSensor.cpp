@@ -44,7 +44,7 @@ void AnalogSensor::read() {
 
     value = (std::stoi(buff) - zero) * (scale / span);
 
-    Log::log(INFO, "[%s] Read value %d", sensor_name.c_str(), value);
+    Log::log(INFO, "[%s] Read value %f", sensor_name.c_str(), value);
 
     std::shared_ptr<Data> data = std::make_shared<AnalogData>(sensor_name, value);
     queue.push(data);
@@ -70,7 +70,7 @@ void AnalogData::deserialize(SerializedObject* object) {
     value = object->getDouble("analog_value");
 }
 
-double AnalogData::getValue() {
+double AnalogData::getValue() const {
     return value;
 }
 

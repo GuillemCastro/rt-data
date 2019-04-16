@@ -39,7 +39,7 @@ public:
     /**
      * Default constructor
      */
-    SensorsManager() : started(false), stopped(false) {
+    SensorsManager() : started(false), stopped(false), broker(NULL) {
 
     }
 

@@ -79,7 +79,7 @@ class AnyImpl : public Any {
 
 public:
     
-    AnyImpl(const T& content) : content(content) {
+    explicit AnyImpl(const T& content) : content(content) {
 
     }
     

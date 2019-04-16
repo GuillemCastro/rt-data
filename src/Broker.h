@@ -66,13 +66,13 @@ public:
      * Is the Broker started?
      * @returns returs wheter the Broker is started or not
      */
-    bool isStarted();
+    bool isStarted() const;
 
     /**
      * Is the Broker stopped?
      * @returns returs wheter the Broker is stopped or not
      */
-    bool isStopped();
+    bool isStopped() const;
 
     /**
      * Subscribe a listener to a topic

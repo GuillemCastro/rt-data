@@ -18,11 +18,11 @@
 
 #include "Data.h"
 
-Timestamp Data::getTimestamp() {
+Timestamp Data::getTimestamp() const {
     return time;
 }
 
-std::string Data::getOrigin() {
+std::string Data::getOrigin() const {
     return origin;
 }
 

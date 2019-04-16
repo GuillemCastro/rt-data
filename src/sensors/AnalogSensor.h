@@ -40,9 +40,9 @@ public:
      * @param zeroVoltage The lowest possible voltage at which the ADC reads a value (tipically 0)
      * @param spanVoltage The maximum possible voltage at which the ADC reads a value (tipically 5 or 3.3)
      */
-    AnalogSensor(std::string file, 
-        std::string topic, 
-        std::string sensorName,
+    AnalogSensor(const std::string& file, 
+        const std::string& topic, 
+        const std::string& sensorName,
         int samplingRate,
         double zeroValue,
         double spanValue,
@@ -131,7 +131,7 @@ public:
      */
     virtual void deserialize(SerializedObject* object) override;
 
-    double getValue();
+    double getValue() const;
 
     void setValue(double value);
 

@@ -50,7 +50,7 @@ public:
      * Constructor with origin. Sets the data time to the current time
      * @param origin The origin of the data
      */
-    Data(const std::string& origin) : time(Timestamp::now()), origin(origin)  {
+    explicit Data(const std::string& origin) : time(Timestamp::now()), origin(origin)  {
 
     }
 
@@ -77,12 +77,12 @@ public:
     /**
      * Returns the timestamp when this data was created.
      */
-    Timestamp getTimestamp();
+    Timestamp getTimestamp() const;
 
     /**
      * Returns who generated this data.
      */
-    std::string getOrigin();
+    std::string getOrigin() const;
 
     /**
      * Set the timestamp when this data was created.

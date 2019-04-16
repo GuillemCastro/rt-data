@@ -45,7 +45,7 @@ public:
     /**
      * Destructor
      */
-    ~Sensor() {
+    virtual ~Sensor() {
         try {
             stop();
         }

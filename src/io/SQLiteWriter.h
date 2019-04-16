@@ -41,7 +41,7 @@ public:
      * Default constructor.
      * @param file The database file
      */
-    explicit SQLiteWriter(std::string file) : is_open(false), file(file), buffer_size(500), rt_optimization(false), db(file, SQLite::OPEN_READWRITE) {
+    explicit SQLiteWriter(std::string file) : is_open(false), rt_optimization(false), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -50,7 +50,7 @@ public:
      * @param file The database file
      * @param bufferSize The maximum size for the buffer. If this size is exceeded, flush() will be called.
      */
-    SQLiteWriter(std::string file, int bufferSize) : is_open(false), file(file), buffer_size(bufferSize), rt_optimization(false), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(std::string file, int bufferSize) : is_open(false), rt_optimization(false), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -60,7 +60,7 @@ public:
      * @param optimization Applies some optimizations. MIGHT CAUSE DATA LOSS. The journal is set to memory and SQLite does not
      *          verify if the data has been written to disk by the OS
      */
-    SQLiteWriter(std::string file, bool optimization) : is_open(false), file(file), buffer_size(500), rt_optimization(optimization), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(std::string file, bool optimization) : is_open(false), rt_optimization(optimization), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -71,7 +71,7 @@ public:
      * @param optimization Applies some optimizations. MIGHT CAUSE DATA LOSS. The journal is set to memory and SQLite does not
      *          verify if the data has been written to disk by the OS
      */
-    SQLiteWriter(std::string file, int bufferSize, bool optimization) : is_open(false), file(file), buffer_size(bufferSize), rt_optimization(optimization), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(std::string file, int bufferSize, bool optimization) : is_open(false), rt_optimization(optimization), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
 
     }
 

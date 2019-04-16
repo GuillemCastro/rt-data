@@ -33,11 +33,11 @@ void Broker::stop() {
     this->stopped = true;
 }
 
-bool Broker::isStarted() {
+bool Broker::isStarted() const {
     return started;
 }
 
-bool Broker::isStopped() {
+bool Broker::isStopped() const {
     return stopped;
 }
 
