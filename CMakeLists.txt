@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 project(rtdata)
 
+# The version number.
+set (rtdata_VERSION_MAJOR 0)
+set (rtdata_VERSION_MINOR 1)
+
 SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
@@ -117,3 +121,12 @@ if (EXECUTE_TESTS)
         COMMENT "Executing tests" VERBATIM
     )
 ENDIF()
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE  
+     "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set (CPACK_PACKAGE_VERSION_MAJOR "${rtdata_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${rtdata_VERSION_MINOR}")
+set (CPACK_PACKAGE_CONTACT "guillem.castro@cosmicresearch.org")
+include (CPack)
