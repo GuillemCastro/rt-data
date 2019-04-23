@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <memory>
+
 //Fordward declaration
 template <typename T>
 class AnyImpl;
