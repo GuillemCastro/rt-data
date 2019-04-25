@@ -70,6 +70,7 @@ IF(BUILD_TESTS)
             sqlite3
             dl
             rtdata
+            pthread
         )
     ENDIF()
 ENDIF()
