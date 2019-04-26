@@ -26,9 +26,9 @@ class ThreadTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(ThreadTest);
     CPPUNIT_TEST(minPriorityTest);
     CPPUNIT_TEST(maxPriorityTest);
-    CPPUNIT_TEST(setPriorityTest);
-    CPPUNIT_TEST(setPolicyTest);
-    CPPUNIT_TEST(priorityBoundsTest);
+    //CPPUNIT_TEST(setPriorityTest);
+    //CPPUNIT_TEST(setPolicyTest);
+    //CPPUNIT_TEST(priorityBoundsTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
