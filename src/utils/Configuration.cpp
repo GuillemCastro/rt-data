@@ -18,13 +18,13 @@
 
 #include "Configuration.h"
 
-Configuration& Configuration::at(const std::string& property) {
+std::shared_ptr<Configuration> Configuration::at(const std::string& property) {
     if (childs.find(property) == childs.end()) {
         load_from_implementation(property);
     }
-    return *childs[property];
+    return childs[property];
 }
 
-Configuration& Configuration::operator[](const std::string &property) {
+std::shared_ptr<Configuration> Configuration::operator[](const std::string &property) {
     return this->at(property);
 }

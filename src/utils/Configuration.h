@@ -53,7 +53,7 @@ public:
      * @param property The name of the node that will be returned
      * @returns A node named `property`
      */
-    virtual Configuration& at(const std::string& property);
+    virtual std::shared_ptr<Configuration> at(const std::string& property);
 
     /**
      * Get a child of the current node
@@ -61,7 +61,7 @@ public:
      * @param property The name of the node that will be returned
      * @returns A node named `property`
      */
-    virtual Configuration& operator[](const std::string &property);
+    virtual std::shared_ptr<Configuration> operator[](const std::string &property);
 
     /**
      * Set the content of the current node

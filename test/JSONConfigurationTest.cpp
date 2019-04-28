@@ -23,45 +23,45 @@
 #include "JSONConfigurationTest.h"
 
 void JSONConfigurationTest::getBoolTest() {
-    bool test = config["bool_true"].get<bool>();
+    bool test = config["bool_true"]->get<bool>();
     CPPUNIT_ASSERT(test);
 }
 
 void JSONConfigurationTest::getStringTest() {
-    std::string test = config["string_test"].get<std::string>();
+    std::string test = config["string_test"]->get<std::string>();
     CPPUNIT_ASSERT(test == std::string("test"));
 }
 
 void JSONConfigurationTest::getFloatTest() {
-    double test = config["float_three"].get<double>();
+    double test = config["float_three"]->get<double>();
     // https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
     bool almost_equal = std::abs(test - 3.0) <= std::numeric_limits<double>::epsilon() * std::abs(test + 3.0) * 2 || std::abs(test - 3.0) < std::numeric_limits<double>::min();
     CPPUNIT_ASSERT(almost_equal);
 }
 
 void JSONConfigurationTest::getIntTest() {
-    int64_t test = config["int_minus_three"].get<int64_t>();
+    int64_t test = config["int_minus_three"]->get<int64_t>();
     CPPUNIT_ASSERT(test == -3);
 }
 
 void JSONConfigurationTest::getUIntTest() {
-    uint64_t test = config["uint_three"].get<uint64_t>();
+    uint64_t test = config["uint_three"]->get<uint64_t>();
     CPPUNIT_ASSERT(test == 3);
 }
 
 void JSONConfigurationTest::getArrayTest() {
-    std::vector<int64_t> test = config["array"].get<std::vector<int64_t>>();
+    std::vector<int64_t> test = config["array"]->get<std::vector<int64_t>>();
     CPPUNIT_ASSERT(test[0] == 3);
     CPPUNIT_ASSERT(test[1] == 4);
 }
 
 void JSONConfigurationTest::getNestedConfig() {
-    int64_t test = config["object"]["int_three"].get<int64_t>();
+    int64_t test = config["object"]->at("int_three")->get<int64_t>();
     CPPUNIT_ASSERT(test == 3);
 }
 
 void JSONConfigurationTest::setInt() {
-    config["object"]["int_three"].set((int64_t)5);
-    int64_t test = config["object"]["int_three"].get<int64_t>();
+    config["object"]->at("int_three")->set((int64_t)5);
+    int64_t test = config["object"]->at("int_three")->get<int64_t>();
     CPPUNIT_ASSERT(test == 5);
 }
