@@ -24,6 +24,7 @@
 #include <memory>
 
 #include "concurrent/ConcurrentQueue.h"
+#include "utils/Configuration.h"
 #include "Data.h"
 #include "Broker.h"
 
@@ -38,7 +39,31 @@ public:
     /**
      * Default constructor
      */
-    Sensor() : started(false), stopped(false) {
+    Sensor() : name("unknown"), topic("default"), sampling_rate(10000), started(false), stopped(false) {
+
+    }
+
+    /**
+     * Constructor with all configurable parameters.
+     * @param name The name of the sensor. Used to identify it.
+     * @param topic The topic this sensor will publish its data to.
+     * @param rate The rate in nanoseconds at which this sensor will be read.
+     */
+    Sensor(const std::string& name, const std::string& topic, uint64_t rate) : name(name), topic(topic), sampling_rate(rate), started(false), stopped(false)  {
+
+    }
+
+    /**
+     * Constructor with configuration object
+     * @param config The node containing the configuration for this sensor
+     */
+    explicit Sensor(std::shared_ptr<Configuration> config) : 
+        config(config),
+        name(config->at("name")->get<std::string>()),
+        topic(config->at("topic")->get<std::string>()),
+        sampling_rate(config->at("sampling_rate")->get<uint64_t>()),
+        started(false),
+        stopped(false) {
 
     }
 
@@ -72,13 +97,13 @@ public:
      * Is the sensor started?
      * @returns Whether or not the sensor has been started
      */
-    virtual bool isStarted();
+    virtual bool isStarted() const;
 
     /**
      * Is the sensor stopped?
      * @returns Whether or not the sensor has been stopped
      */
-    virtual bool isStopped();
+    virtual bool isStopped() const;
 
     /**
      * Fetch the read data by the sensor.
@@ -88,6 +113,42 @@ public:
      */
     virtual void fetch(Broker* broker) = 0;
 
+    /**
+     * Get the name of this sensor
+     * @returns The name of the sensor
+     */
+    std::string getName() const;
+
+    /**
+     * Get the topic of this sensor
+     * @returns The topic this sensor is publishing to
+     */
+    std::string getTopic() const;
+
+    /**
+     * Get the sampling rate (in nanoseconds) for this second
+     * @returns The sampling rate in nanoseconds
+     */
+    uint64_t getSamplingRate() const;
+
+    /**
+     * Set the name of this sensor. It does not need to be unique, but the combination of sensor name and topic shall be unique.
+     * @param name An string identifier for this sensor
+     */
+    void setName(const std::string& name);
+
+    /**
+     * Set the topic this sensor will publish to. The combination of sensor name and topic shall be unique. 
+     * @param name An string identifying a topic. 
+     */
+    void setTopic(const std::string& topic);
+
+    /**
+     * Set the sampling rate for the reading of this sensor. In nanoseconds.
+     * @param rate The sampling rate in nanoseconds at which the sensor will be read.
+     */
+    void setSamplingRate(uint64_t rate);
+
 protected:
 
     /**
@@ -95,6 +156,26 @@ protected:
      * The results of the read must be saved to the `queue`.
      */
     virtual void read() = 0;
+
+    /**
+     * The name of the sensor. Used to populate the origin field from Data.
+     * If not set, defaults to "unknown".
+     */
+    std::string name;
+
+    /**
+     * The topic where this sensor will publish its data.
+     * If not set, defaults to "default".
+     */
+    std::string topic;
+
+    /**
+     * The sampling rate in nanoseconds.
+     * Each interval of `sampling_rate` nanoseconds the sensor will be read.
+     */
+    uint64_t sampling_rate;
+
+    std::shared_ptr<Configuration> config;
 
     /**
      * Internal thread-safe queue where the read data is stored. 

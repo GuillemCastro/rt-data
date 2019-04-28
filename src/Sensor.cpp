@@ -34,17 +34,41 @@ void Sensor::stop() {
     this->sensor_thread.join();
 }
 
-bool Sensor::isStarted() {
+bool Sensor::isStarted() const {
     return started;
 }
 
-bool Sensor::isStopped() {
+bool Sensor::isStopped() const {
     return stopped;
 }
 
 void Sensor::run() {
     while (!stopped) {
         this->read();
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(sampling_rate));
     }
+}
+
+std::string Sensor::getName() const {
+    return name;
+}
+
+std::string Sensor::getTopic() const {
+    return topic;
+}
+
+uint64_t Sensor::getSamplingRate() const {
+    return sampling_rate;
+}
+
+void Sensor::setName(const std::string& name) {
+    this->name = name;
+}
+
+void Sensor::setTopic(const std::string& topic) {
+    this->topic = topic;
+}
+
+void Sensor::setSamplingRate(uint64_t rate) {
+    this->sampling_rate = rate;
 }

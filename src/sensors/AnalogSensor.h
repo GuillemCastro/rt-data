@@ -43,17 +43,32 @@ public:
     AnalogSensor(const std::string& file, 
         const std::string& topic, 
         const std::string& sensorName,
-        int samplingRate,
+        uint64_t samplingRate,
         double zeroValue,
         double spanValue,
         double scale,
         int quantizationBits,
         double zeroVoltage,
-        double spanVoltage ) : Sensor(), file(file), topic(topic), sensor_name(sensorName), sampling_rate(samplingRate),
-        zero_value(zeroValue), span_value(spanValue), scale(scale), quantization_bits(quantizationBits), zero_voltage(zeroVoltage),
+        double spanVoltage ) : Sensor(sensorName, topic, samplingRate), file(file), zero_value(zeroValue),
+        span_value(spanValue), scale(scale), quantization_bits(quantizationBits), zero_voltage(zeroVoltage),
         span_voltage(spanVoltage) {
             zero = (double)(1 << quantization_bits) * (zero_value - zero_voltage) / span_voltage;
             span = (double)(1 << quantization_bits) * (span_value) / span_voltage;
+    }
+
+    /**
+     * Constructor with Configuration object
+     * @param config The configuration node for this sensor
+     */
+    AnalogSensor(std::shared_ptr<Configuration> config) : 
+        Sensor(config),
+        zero_value(config->at("zero")->get<double>()),
+        span_value(config->at("span")->get<double>()),
+        scale(config->at("span")->get<double>()),
+        quantization_bits(config->at("quantization_bits")->get<uint64_t>()),
+        zero_voltage(config->at("zero_voltage")->get<int64_t>()),
+        span_voltage(config->at("span_voltage")->get<int64_t>()) {
+
     }
 
     /**
@@ -84,9 +99,6 @@ protected:
 private:
 
     std::string file;
-    std::string topic;
-    std::string sensor_name;
-    int sampling_rate;
     double zero_value;
     double span_value;
     double scale;

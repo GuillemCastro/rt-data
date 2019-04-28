@@ -17,6 +17,7 @@
 */
 
 #include "SensorStub.h"
+#include "utils/JSONConfiguration.h"
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -26,6 +27,7 @@ class SensorTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(SensorTest);
     CPPUNIT_TEST(startTest);
     CPPUNIT_TEST(stopTest);
+    CPPUNIT_TEST(configTest);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -38,9 +40,16 @@ public:
 
     void stopTest();
 
+    void configTest();
+
 private:
 
     std::shared_ptr<Sensor> sensor;
+    std::shared_ptr<JSONConfiguration> config;
+
+    static const std::string NAME;
+    static const std::string TOPIC;
+    static const uint64_t RATE;
 
 };
 

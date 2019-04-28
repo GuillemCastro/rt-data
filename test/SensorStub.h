@@ -59,6 +59,8 @@ class SensorStub : public Sensor {
 
 public:
 
+    using Sensor::Sensor;
+
     const static double TEST_VALUE;
 
     void fetch(Broker* broker);
