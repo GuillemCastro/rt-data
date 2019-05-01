@@ -20,12 +20,12 @@
 
 void Serial::start() {
     tty_fd = open(file.c_str(), O_RDWR | O_NONBLOCK | O_NOCTTY | O_NDELAY );
-
     if (tty_fd < 0) {
         throw std::runtime_error("Could not open serial port");
     }
+    fcntl(tty_fd, F_SETFL, O_RDWR); // Set the file status flags to O_RDWR
 
-    tcgetattr (tty_fd, &tty) ;
+    tcgetattr(tty_fd, &tty); // Get the options struct
 
     cfmakeraw(&tty); // Set to raw-like mode (input is done char by char, no echoing, processing disabled). This initializes some of the flags.
     
@@ -44,6 +44,14 @@ void Serial::start() {
 
     tty.c_cc[VMIN] = 0; // Minimum number of characters for reads -> 0
     tty.c_cc[VTIME] = 100;	// Timeout for reads -> 10 seconds (100 deciseconds)
+
+    tcsetattr(tty_fd, TCSANOW, &tty); // Set the options
+
+    int status;
+    ioctl(tty_fd, TIOCMGET, &status);
+    status |= TIOCM_DTR; // Data terminal ready
+    status |= TIOCM_RTS; // Request to send
+    ioctl(tty_fd, TIOCMSET, &status);
 
     is_open = true;
 }
