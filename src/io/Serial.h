@@ -25,6 +25,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdexcept>
+#include <sys/ioctl.h>
 
 enum Parity {
     NONE,
