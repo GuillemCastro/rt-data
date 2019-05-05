@@ -28,6 +28,12 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE:PATH="..\toolchain.cmake"
 make
 ```
 
+## Dependencies
+
+```
+sudo apt install libcurl4-gnutls-dev gpsd libqgpsmm23 libqgpsmm-dev libgps libgps-dev
+```
+
 ## License
 
 rt-data is licensed under the **[GNU Lesser General Public License]**. The terms of the license are as follows: 
