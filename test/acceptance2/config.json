@@ -1,0 +1,11 @@
+{
+    "sensors": {
+        "gps": {
+            "name": "gps",
+            "topic": "test",
+            "sampling_rate": 10000000,
+            "host": "localhost",
+            "port": "2947"
+        }
+    }
+}

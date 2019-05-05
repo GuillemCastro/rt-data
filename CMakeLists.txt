@@ -19,6 +19,8 @@ find_package(CppUnit REQUIRED)
 
 find_package(Threads REQUIRED)
 
+find_package(GPSD REQUIRED)
+
 find_package(g3logger)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -39,6 +41,7 @@ target_link_libraries(rtdata
     nlohmann_json::nlohmann_json
     SQLiteCpp
     sqlite3
+    gps
     dl
 )
 
