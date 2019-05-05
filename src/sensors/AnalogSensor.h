@@ -60,7 +60,7 @@ public:
      * Constructor with Configuration object
      * @param config The configuration node for this sensor
      */
-    AnalogSensor(std::shared_ptr<Configuration> config) : 
+    explicit AnalogSensor(std::shared_ptr<Configuration> config) : 
         Sensor(config),
         zero_value(config->at("zero")->get<double>()),
         span_value(config->at("span")->get<double>()),
@@ -82,12 +82,6 @@ public:
      * @throws std::runtime_error if the sensor has been already stopped or if it was never started.
      */
     virtual void stop() override;
-
-    /**
-     * Fetch the read data by the sensor and send it to a Broker.
-     * @params broker The Broker where the data will be sent.
-     */
-    virtual void fetch(Broker* broker) override;
 
 protected:
 

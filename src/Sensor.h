@@ -111,7 +111,7 @@ public:
      * sensors that generate more than one data value.
      * @params broker The Broker where the data will be sent.
      */
-    virtual void fetch(Broker* broker) = 0;
+    virtual void fetch(Broker* broker);
 
     /**
      * Get the name of this sensor

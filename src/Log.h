@@ -98,9 +98,9 @@ namespace Log {
      * @param ... (additional arguments) If message contains format specifiers, the function expects additional arguments each containing a value to be used to replace a format specifier 
      */
     #ifdef WITH_G3LOG
-    #define log(level, message, ...) levelLog(level, __FILE__, __LINE__, __PRETTY_FUNCTION__, message, ##__VA_ARGS__)
+    #define logMessage(level, message, ...) levelLog(level, __FILE__, __LINE__, __PRETTY_FUNCTION__, message, ##__VA_ARGS__)
     #else
-    static void log(Level level, const char* message, ...) {
+    static void logMessage(Level level, const char* message, ...) {
         //nop
     }
     #endif

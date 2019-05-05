@@ -31,7 +31,7 @@
 int main() {
 
     Log::init();
-    Log::log(INFO, "Test executions started");
+    Log::logMessage(INFO, "Test executions started");
 
     CppUnit::TestResultCollector result;
 
@@ -47,7 +47,7 @@ int main() {
 
     xmlOutputter.write();
 
-    Log::log(INFO, "Test executions ended");
+    Log::logMessage(INFO, "Test executions ended");
 
     return !wasSuccessful;
 }

@@ -49,6 +49,13 @@ void Sensor::run() {
     }
 }
 
+void Sensor::fetch(Broker* broker) {
+    while (!queue.empty()) {
+        std::shared_ptr<Data> data = queue.pop();
+        broker->dispatch(topic, data);
+    }
+}
+
 std::string Sensor::getName() const {
     return name;
 }

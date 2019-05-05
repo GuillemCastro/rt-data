@@ -32,32 +32,22 @@ void AnalogSensor::read() {
 
     std::ifstream fp(file);
     if (fp.fail()) {
-        Log::log(WARNING, "[%s] Failed to open the file %s", name.c_str(), file.c_str());
+        Log::logMessage(WARNING, "[%s] Failed to open the file %s", name.c_str(), file.c_str());
         return;
     }
 
     fp >> buff;
     if (fp.fail()) {
-        Log::log(WARNING, "[%s] Failed to read from the file %s", name.c_str(), file.c_str());
+        Log::logMessage(WARNING, "[%s] Failed to read from the file %s", name.c_str(), file.c_str());
         return;
     }
 
     value = (std::stoi(buff) - zero) * (scale / span);
 
-    Log::log(INFO, "[%s] Read value %f", name.c_str(), value);
+    Log::logMessage(INFO, "[%s] Read value %f", name.c_str(), value);
 
     std::shared_ptr<Data> data = std::make_shared<AnalogData>(name, value);
     queue.push(data);
-}
-
-void AnalogSensor::fetch(Broker* broker) {
-    while (queue.empty()) {
-        ;
-    }
-    while (!queue.empty()) {
-        std::shared_ptr<Data> data = queue.pop();
-        broker->dispatch(topic, data);
-    }
 }
 
 void AnalogData::serialize(SerializedObject* object) {
