@@ -16,6 +16,9 @@ find_package(g3logger)
 
 find_package(nlohmann_json)
 
+set(CURL_LIBRARY "-lcurl") 
+find_package(CURL REQUIRED) 
+
 target_link_libraries(
     rtdata_acceptance_test
     rtdata
@@ -26,6 +29,7 @@ target_link_libraries(
     dl
     g3logger
     gps
+    curl
 )
 
 add_definitions(-DWITH_G3LOG)

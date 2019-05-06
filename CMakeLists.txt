@@ -19,6 +19,9 @@ find_package(CppUnit REQUIRED)
 
 find_package(Threads REQUIRED)
 
+set(CURL_LIBRARY "-lcurl") 
+find_package(CURL REQUIRED) 
+
 find_package(GPSD REQUIRED)
 
 find_package(g3logger)
@@ -42,6 +45,7 @@ target_link_libraries(rtdata
     SQLiteCpp
     sqlite3
     gps
+    curl
     dl
 )
 

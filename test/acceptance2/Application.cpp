@@ -19,16 +19,19 @@
 #include <rtdata/Application.h>
 #include <rtdata/sensors/GPSSensor.h>
 #include <rtdata/io/SQLiteWriter.h>
+#include <rtdata/io/HTTPWriter.h>
 #include <rtdata/utils/JSONConfiguration.h>
 #include <rtdata/utils/LambdaListener.h>
 #include <rtdata/Log.h>
 
-SQLiteWriter writer("database.db");
+//SQLiteWriter writer("database.db");
+HTTPWriter httpWriter("http://localhost:5000");
 
 void Application::setup() {
     Log::init();
     Log::logMessage(INFO, "Acceptance test config started");
-    writer.open();
+    //writer.open();
+    httpWriter.open();
     JSONConfiguration config(std::string("config.json"));
     std::shared_ptr<Sensor> sensor = std::make_shared<GPSSensor>(config.at("sensors")->at("gps"));
     manager.addSensor(sensor);
@@ -38,12 +41,15 @@ void Application::setup() {
         Log::logMessage(DEBUG, "Received data with longitude %f", analog_data->getLongitude());
         Log::logMessage(DEBUG, "Received data with altitude %f", analog_data->getAltitude());
         Log::logMessage(DEBUG, "Received data with origin %s", data->getOrigin().c_str());
-        writer.write(topic, data);
-        writer.flush();
+        //writer.write(topic, data);
+        httpWriter.write(topic, data);
+        //writer.flush();
     }));
     broker.start();
     manager.start();
     Log::logMessage(INFO, "Acceptance test config ended");
+    //writer.close();
+    httpWriter.close();
 }
 
 void Application::loop() {
