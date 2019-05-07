@@ -17,9 +17,8 @@
 */
 
 #include "HTTPWriter.h"
-#include "../Log.h"
 
-bool HTTPWriter::curl_init = false;
+std::atomic<bool> HTTPWriter::curl_init(false);
 
 void HTTPWriter::open() {
     if (!curl_init) {
@@ -45,7 +44,6 @@ void HTTPWriter::write(std::string topic, std::shared_ptr<Data> data) {
     post_body["data"] = json.getJSON();
     post_body["topic"] = topic;
     std::string post_body_str = post_body.dump();
-    Log::logMessage(INFO, post_body_str.c_str());
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, hs);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_body_str.c_str());
