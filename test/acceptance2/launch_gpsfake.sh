@@ -1,3 +1,4 @@
+#!/bin/bash
 # rt-data
 # Copyright (C) 2019 Guillem Castro
 #
@@ -14,12 +15,5 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask
-from flask import request
-
-app = Flask(__name__)
-
-@app.route('/', methods=['POST'])
-def main():
-    print(request.get_json())
-    return "ok"
+# call with sudo!
+gpsfake -lS testdata.log

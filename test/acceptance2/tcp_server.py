@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # rt-data
 # Copyright (C) 2019 Guillem Castro
 #
@@ -14,12 +15,24 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask
-from flask import request
+import socket
 
-app = Flask(__name__)
+HOST = 'localhost'
+PORT = 5005
+BUFFER_SIZE = 1024
 
-@app.route('/', methods=['POST'])
-def main():
-    print(request.get_json())
-    return "ok"
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen(0)
+
+conn, addr = s.accept()
+print 'Connection address:', addr
+while True:
+    data = conn.recv(BUFFER_SIZE)
+    if not data: 
+        break
+    print("received data:", data)
+    raw = list(map(lambda x: ord(x), data))
+    print("raw received data: ", raw)
+    conn.send(data)  # echo
+conn.close()
