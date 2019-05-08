@@ -100,7 +100,7 @@ namespace Log {
     #ifdef WITH_G3LOG
     #define logMessage(level, message, ...) levelLog(level, __FILE__, __LINE__, __PRETTY_FUNCTION__, message, ##__VA_ARGS__)
     #else
-    static void logMessage(Level level, const char* message, ...) {
+    inline static void logMessage(Level level, const char* message, ...) {
         //nop
     }
     #endif
