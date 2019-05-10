@@ -34,7 +34,11 @@ public:
 
     }
 
-    JSONObject(const nlohmann::json& json) : serialized(json) {
+    explicit JSONObject(const std::string& topic) : JSONObject() {
+        put("topic", topic);
+    }
+
+    explicit JSONObject(const nlohmann::json& json) : serialized(json) {
 
     }
 
@@ -114,11 +118,21 @@ public:
         return serialized.dump();
     }
 
+    /**
+     * Obtain the bytes of the serialized object as JSON characters
+     * @returns A vector of bytes representing the serialized object
+     */
+    std::vector<uint8_t> getBytes() {
+        std::string json = getJSONString();
+        std::vector<uint8_t> result(json.begin(), json.end());
+        return result;
+    }
+
 private:
 
     template <typename T>
     void _put(std::string key, const T& value) {
-        serialized[key] = value;
+        serialized[key.c_str()] = value;
     }
 
     template <typename T>

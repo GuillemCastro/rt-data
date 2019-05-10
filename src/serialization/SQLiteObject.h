@@ -179,6 +179,15 @@ public:
         }
     }
 
+    /**
+     * Obtain the bytes of the serialized object. Returns an empty vector
+     * @returns An empty vector
+     */
+    std::vector<uint8_t> getBytes() {
+        std::vector<uint8_t> result;
+        return result;
+    }
+
 private:
 
     enum Type {

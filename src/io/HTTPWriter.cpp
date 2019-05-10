@@ -39,10 +39,9 @@ void HTTPWriter::write(std::string topic, std::shared_ptr<Data> data) {
     if (curl == NULL) {
         throw std::runtime_error("Error initializing cURL");
     }
-    JSONObject json = serializer.serialize<JSONObject>(*data);
-    nlohmann::json post_body;
-    post_body["data"] = json.getJSON();
-    post_body["topic"] = topic;
+    JSONObject json(topic);
+    data->serialize(&json);
+    nlohmann::json post_body = json.getJSON();
     std::string post_body_str = post_body.dump();
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, hs);

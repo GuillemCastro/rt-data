@@ -21,6 +21,7 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include <vector>
 
 /**
  * Interface for serialized containers.
@@ -66,5 +67,11 @@ public:
     virtual bool getBool(const std::string& key) = 0;
 
     virtual std::string getString(const std::string& key) = 0;
+
+    /**
+     * Obtain the bytes of the serialized object
+     * @returns A vector of bytes representing the serialized object
+     */
+    virtual std::vector<uint8_t> getBytes() = 0;
 
 };

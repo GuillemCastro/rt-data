@@ -23,6 +23,7 @@
 #include <vector>
 #include <stdint.h>
 #include <stdexcept>
+#include <algorithm>
 
 class ByteObject : public SerializedObject {
 
@@ -32,8 +33,16 @@ public:
 
     }
 
-    ByteObject(const std::vector<uint8_t> bytes) : bytes(bytes) {
+    explicit ByteObject(const std::string& topic) : ByteObject() {
+        put("topic", topic);
+    }
 
+    explicit ByteObject(const std::vector<uint8_t> bytes) {
+        uint32_t size = bytes[0] | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
+        if ((size + sizeof(uint32_t)) != bytes.size()) {
+            throw std::invalid_argument("The vector has a different number of bytes than declared");
+        }
+        std::copy(bytes.begin() + sizeof(uint32_t), bytes.end(), this->bytes.begin());
     }
 
     /**
@@ -100,11 +109,18 @@ public:
      * Get the resulting bytes.
      * @returns A vector of bytes that representing the serialization
      *      of all passed values.
-     * Every value has prepended its size (or lenght)
+     * Every value has prepended its size (or length)
      * |size of object1|object1 bytes|size of object2|object2 bytes|
      */
     std::vector<uint8_t> getBytes() {
-        return bytes;
+        std::vector<uint8_t> result(sizeof(uint32_t) + bytes.size());
+        std::copy(bytes.begin(), bytes.end(), result.begin() + sizeof(uint32_t));
+        uint32_t total_size = bytes.size();
+        result[0] = total_size & 255;
+        result[1] = (total_size >> 8) & 255;
+        result[2] = (total_size >> 16) & 255;
+        result[3] = (total_size >> 24) & 255;
+        return result;
     }
 
 private:

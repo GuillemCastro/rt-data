@@ -63,24 +63,9 @@ void TCPWriter::write(std::string topic, std::shared_ptr<Data> data) {
         throw std::runtime_error("TCPWriter must be open before writing");
     }
     std::unique_lock<std::mutex> lck(mtx);
-    ByteObject serialized = serializer.serialize<ByteObject>(*data);
-    std::vector<uint8_t> data_bytes = serialized.getBytes();
-    // 4 bytes for the size of the packet + 1 for the size of the topic + the topic + the data bytes
-    std::vector<uint8_t> bytes(data_bytes.size() + topic.size() + 5);
-    // Put topic and data into the bytes vector
-    for (int i = 0; i < topic.size(); ++i) {
-        bytes[i+5] = (uint8_t)topic[i];
-    }
-    for (int i = 0; i < data_bytes.size(); ++i) {
-        bytes[i + topic.size() + 5] = data_bytes[i];
-    }
-    bytes[4] = (uint8_t)topic.size();
-    // Calculate the size of the message and split it in 4 bytes
-    uint32_t total_size = data_bytes.size() + topic.size() + 1;
-    bytes[0] = total_size & 255;
-    bytes[1] = (total_size >> 8) & 255;
-    bytes[2] = (total_size >> 16) & 255;
-    bytes[3] = (total_size >> 24) & 255;
+    ByteObject serialized(topic);
+    data->serialize(&serialized);
+    std::vector<uint8_t> bytes = serialized.getBytes();
     ssize_t data_written = 0;
     ssize_t message_size = bytes.size();
     while (data_written < message_size) {
