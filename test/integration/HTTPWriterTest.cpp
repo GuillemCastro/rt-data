@@ -16,16 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "io/SQLiteWriter.h"
-#include "Data.h"
+#include <io/HTTPWriter.h>
+#include <Data.h>
 
 #include <iostream>
 
 int main() {
     std::string origin = "test";
     Timestamp time = Timestamp::now();
-    SQLiteWriter writer("database.db");
+    HTTPWriter writer("127.0.0.1:5000");
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
     writer.open();
+    writer.write(d);
     writer.write(d);
 }

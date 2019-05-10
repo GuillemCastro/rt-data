@@ -16,16 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "io/SQLiteWriter.h"
-#include "Data.h"
+#include <io/FileWriter.h>
+#include <Data.h>
+#include <serialization/JSONObject.h>
+#include <serialization/ByteObject.h>
+
 
 #include <iostream>
 
 int main() {
     std::string origin = "test";
     Timestamp time = Timestamp::now();
-    SQLiteWriter writer("database.db");
+    FileWriter<JSONObject> writerJSON("test_json.txt");
+    FileWriter<ByteObject> writerByte("test_byte.txt");
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
-    writer.open();
-    writer.write(d);
+    writerJSON.open();
+    writerByte.open();
+    writerJSON.write(d);
+    writerJSON.write(d);
+    writerByte.write(d);
+    writerByte.write(d);
 }
