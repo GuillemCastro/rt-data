@@ -106,7 +106,7 @@ public:
      * Get the resulting JSON
      * @returns The serialized JSON
      */
-    nlohmann::json getJSON() {
+    nlohmann::json getJSON() const {
         return serialized;
     }
 

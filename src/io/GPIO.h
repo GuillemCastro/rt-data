@@ -55,7 +55,7 @@ public:
      * Constructor. Build a GPIO object with a pin number.
      * @param pin The number of the pin to manage. 
      */
-    GPIO(int pin) : pin(pin) {
+    explicit GPIO(int pin) : pin(pin) {
 
     }
 

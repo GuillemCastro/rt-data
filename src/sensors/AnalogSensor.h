@@ -68,7 +68,8 @@ public:
         quantization_bits(config->at("quantization_bits")->get<uint64_t>()),
         zero_voltage(config->at("zero_voltage")->get<int64_t>()),
         span_voltage(config->at("span_voltage")->get<int64_t>()) {
-
+            zero = (double)(1 << quantization_bits) * (zero_value - zero_voltage) / span_voltage;
+            span = (double)(1 << quantization_bits) * (span_value) / span_voltage;
     }
 
     /**

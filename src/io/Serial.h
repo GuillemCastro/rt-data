@@ -63,7 +63,7 @@ public:
      * Constructor with filename
      * @param file The file that represents the serial stream to open
      */
-    Serial(const std::string& file) : Serial(file, 9600, 8, NONE) {
+    explicit Serial(const std::string& file) : Serial(file, 9600, 8, NONE) {
 
     }
 

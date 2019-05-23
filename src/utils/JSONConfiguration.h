@@ -37,7 +37,7 @@ public:
      * Loads and parses the passed filename as a JSON file.
      * @param file The filename of a JSON file.
      */
-    JSONConfiguration(std::string file) : Configuration() {
+    explicit JSONConfiguration(std::string file) : Configuration() {
         std::ifstream i(file);
         this->file = nlohmann::json::parse(i);
     }
@@ -46,7 +46,7 @@ public:
      * Constructor with a JSON object
      * @param file A JSON object
      */
-    JSONConfiguration(const nlohmann::json& file) : file(file) {
+    explicit JSONConfiguration(const nlohmann::json& file) : file(file) {
 
     }
 

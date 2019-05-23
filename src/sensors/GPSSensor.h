@@ -50,8 +50,8 @@ public:
      * @param host The hostname of the host where the gpsd daemon is running. By default "localhost"
      * @param port The port that gpsd is listening to. By default DEFAULT_GPSD_PORT
      */
-    GPSSensor(std::string name, std::string topic, 
-        uint64_t rate, std::string host="localhost", std::string port=DEFAULT_GPSD_PORT) : Sensor(name, topic, rate), host(host), port(port), gps(host.c_str(), port.c_str()) {
+    GPSSensor(const std::string& name, const std::string& topic, 
+        uint64_t rate, const std::string& host="localhost", const std::string& port=DEFAULT_GPSD_PORT) : Sensor(name, topic, rate), host(host), port(port), gps(host.c_str(), port.c_str()) {
 
     }
     
@@ -142,11 +142,12 @@ public:
 
     }
 
-    GPSData(gps_data_t* gps_data) :
+    explicit GPSData(gps_data_t* gps_data) :
         gps_time(Timestamp((uint64_t)(gps_data->fix.time * 1000000000.0))),
         status((GPSStatus)gps_data->status),
         number_of_satellites_used(gps_data->satellites_used),
         number_of_satellites_visible(gps_data->satellites_visible),
+        fix_mode((FixMode)gps_data->fix.mode),
         longitude(gps_data->fix.longitude),
         latitude(gps_data->fix.latitude),
         altitude(gps_data->fix.altitude),

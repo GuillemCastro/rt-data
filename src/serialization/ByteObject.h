@@ -37,7 +37,7 @@ public:
         put("topic", topic);
     }
 
-    explicit ByteObject(const std::vector<uint8_t> bytes) {
+    explicit ByteObject(const std::vector<uint8_t>& bytes) {
         uint32_t size = bytes[0] | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24);
         if ((size + sizeof(uint32_t)) != bytes.size()) {
             throw std::invalid_argument("The vector has a different number of bytes than declared");
@@ -126,7 +126,7 @@ public:
 private:
 
     template <typename T>
-    void _put(std::string key, const T& value) {
+    void _put(const std::string& key, const T& value) {
         const uint8_t* serialized = reinterpret_cast<const uint8_t*>(&value);
         bytes.push_back((uint8_t) sizeof(T));
         for (int i = 0; i < sizeof(value); ++i) {
@@ -134,7 +134,7 @@ private:
         }
     }
 
-    void _put_string(std::string key, const std::string& value) {
+    void _put_string(const std::string& key, const std::string& value) {
         bytes.push_back((uint8_t) value.size());
         for (char character : value) {
             bytes.push_back((uint8_t) character);
@@ -142,7 +142,7 @@ private:
     }
 
     template <typename T>
-    T _get(std::string key) {
+    T _get(const std::string& key) {
         if (sizeof(T) > bytes.size()) {
             throw std::out_of_range("Not enough remaining bytes to be deserialized");
         }
@@ -158,7 +158,7 @@ private:
         return result;
     }
 
-    std::string _get_string(std::string key) {
+    std::string _get_string(const std::string& key) {
         if (bytes.size() <= 1) {
             throw std::out_of_range("Not enough remaining bytes to be deserialized");
         }

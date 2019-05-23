@@ -39,7 +39,7 @@ public:
      * Default constructor
      * @param url The URL of the HTTP endpoint
      */
-    HTTPWriter(std::string url) : url(url) {
+    explicit HTTPWriter(const std::string& url) : url(url) {
 
     }
 

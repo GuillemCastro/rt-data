@@ -1,4 +1,4 @@
-/**
+/*
  * rt-data
  * Copyright (C) 2019 Guillem Castro
  *
@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
 
@@ -22,7 +22,8 @@
 #include <mutex>
 
 /**
- * A thread-safe (blocking) queue.
+ * \class ConcurrentQueue
+ * \brief A thread-safe (blocking) queue.
  */
 template <typename T>
 class ConcurrentQueue {
