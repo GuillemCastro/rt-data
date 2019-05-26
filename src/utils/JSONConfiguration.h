@@ -50,8 +50,20 @@ public:
 
     }
 
-    // Use the constructors defined for Configuration
-    using Configuration::Configuration;
+    /**
+     * Default constructor
+     */
+    JSONConfiguration() : Configuration() {
+
+    }
+
+    /**
+     * Constructor to build a leaf
+     * @param content The content of the leaf
+     */
+    explicit JSONConfiguration(std::shared_ptr<Any> content) : Configuration(content) {
+
+    }
 
 protected:
 
