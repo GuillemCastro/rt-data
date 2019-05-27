@@ -40,6 +40,7 @@ void I2C::close() {
     if (ret < 0) {
         throw std::runtime_error(strerror(errno));
     }
+    started = false;
 }
 
 uint8_t I2C::read(uint8_t address) {
@@ -60,7 +61,9 @@ void I2C::read(uint8_t address, std::vector<uint8_t>& out, size_t size) {
         throw std::runtime_error("I2C port is not open");   
     }
     this->set_address(address);
-    out.resize(size);
+    if (out.size() < size) {
+        out.resize(size);
+    }
     int ret = ::read(fd, out.data(), size);
     if (ret < 0) {
         throw std::runtime_error(strerror(errno));
