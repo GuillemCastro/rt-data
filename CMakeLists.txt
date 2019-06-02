@@ -34,7 +34,7 @@ include_directories(src)
 
 include_directories(libs/SQLiteCpp/include)
 
-file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp src/sensors/*.cpp)
+file(GLOB SRC_FILES  src/*.cpp src/concurrent/*.cpp src/time/*.cpp src/serialization/*.cpp src/utils/*.cpp src/io/*.cpp src/sensors/*.cpp src/control/*.cpp)
 
 add_library( rtdata STATIC ${SRC_FILES} )
 
