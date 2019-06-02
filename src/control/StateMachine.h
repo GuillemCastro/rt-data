@@ -21,7 +21,7 @@
 #include "../Listener.h"
 #include "State.h"
 
-#include <unordered_map>
+#include <unordered_set>
 
 /**
  * \class StateMachine
@@ -51,16 +51,16 @@ public:
      * @param start_state The initial state of the state machine
      */
     StateMachine(std::shared_ptr<State> start_state) {
-        states[start_state->get_name()] = start_state;
-        current_state = states[start_state->get_name()].get();
-        transitions[current_state->get_name()] = std::vector<std::string>();
+        states.insert(start_state);
+        current_state = start_state.get();
+        transitions[current_state] = std::vector<State*>();
         current_state->arrive();
     }
 
     /**
      * Add a new state to the state machine
      * @param state the state to be added
-     * @throws std::invalid_argument If a state with the same name is already in the state machine
+     * @throws std::invalid_argument If the state is already in the state machine
      */
     void add_state(std::shared_ptr<State> state);
 
@@ -103,14 +103,14 @@ private:
 
     /**
      * Change the current state
-     * @param state_name The name of the new current state
+     * @param state The new current state
      */
-    void change_current_state(const std::string& state_name);
+    void change_current_state(State* state);
 
     State* current_state;
 
-    std::unordered_map<std::string, std::shared_ptr<State>> states;
+    std::unordered_set<std::shared_ptr<State>> states;
 
-    std::unordered_map<std::string, std::vector<std::string>> transitions;
+    std::unordered_map<State*, std::vector<State*>> transitions;
 
 };
