@@ -11,9 +11,7 @@ matrix:
             - make
             - libcurl4-gnutls-dev
             - gpsd
-            - libqgpsmm23
             - libqgpsmm-dev
-            - libgps
             - libgps-dev
             - cppcheck
             - libcppunit-dev
@@ -31,9 +29,7 @@ matrix:
             - make
             - libcurl4-gnutls-dev
             - gpsd
-            - libqgpsmm23
             - libqgpsmm-dev
-            - libgps
             - libgps-dev
             - cppcheck
             - libcppunit-dev
@@ -50,9 +46,7 @@ matrix:
             - make
             - libcurl4-gnutls-dev
             - gpsd
-            - libqgpsmm23
             - libqgpsmm-dev
-            - libgps
             - libgps-dev
             - cppcheck
             - libcppunit-dev
@@ -70,9 +64,7 @@ matrix:
             - make
             - libcurl4-gnutls-dev
             - gpsd
-            - libqgpsmm23
             - libqgpsmm-dev
-            - libgps
             - libgps-dev
             - cppcheck
             - libcppunit-dev
