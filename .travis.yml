@@ -1,12 +1,9 @@
 language: cpp
 
-env:
-  global:
-    - LINUX_DIST=trusty
-
 matrix:
   include:
     - os: linux
+      dist: xenial
       compiler: gcc
       sudo: true
       addons:
@@ -29,6 +26,8 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
     - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
+    - wget https://github.com/CosmicResearch/g3log/releases/download/1.3.2/g3log-1.3.2-Linux.2.deb
+    - sudo apt-get install g3log-1.3.2-Linux.2.deb
 
 script:
      - mkdir -p build
