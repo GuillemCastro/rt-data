@@ -1,6 +1,7 @@
 # rt-data
 
 [![Build Status](http://jenkins.rt-data.org:8080/job/rt-data/badge/icon)](http://jenkins.rt-data.org:8080/job/rt-data/)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8Y9TP)
 
 rt-data is a data acquisition framework for embedded systems.
 
