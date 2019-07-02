@@ -1,6 +1,7 @@
 # rt-data
 
 [![Build Status](https://travis-ci.org/GuillemCastro/rt-data.svg?branch=master)](https://travis-ci.org/GuillemCastro/rt-data)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2944/badge)](https://bestpractices.coreinfrastructure.org/projects/2944)
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8Y9TP)
 
 rt-data is a data acquisition framework for embedded systems.
