@@ -15,7 +15,7 @@ matrix:
             - cmake
             - make
             - libcurl4-gnutls-dev
-            # - gpsd
+            - libcppunit
             - libqgpsmm-dev
             - libgps-dev
             - cppcheck

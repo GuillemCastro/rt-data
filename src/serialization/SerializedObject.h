@@ -50,6 +50,8 @@ public:
 
     virtual void put(const std::string& key, std::string value) = 0;
 
+    virtual void put(const std::string& key, uint64_t value) = 0;
+
     /**
      * 'Get' methods to deserialize objects
      * @param key The key of the value to be deserialized. Could be ignored by the implementation.
@@ -67,6 +69,8 @@ public:
     virtual bool getBool(const std::string& key) = 0;
 
     virtual std::string getString(const std::string& key) = 0;
+
+    virtual uint64_t getLongInt(const std::string& key) = 0;
 
     /**
      * Obtain the bytes of the serialized object

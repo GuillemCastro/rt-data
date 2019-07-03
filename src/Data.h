@@ -99,7 +99,7 @@ public:
      * @param object The resulting SerializedObject where the data must be saved.
      */
     virtual void serialize(SerializedObject* object) override {
-        object->put("timestamp", (unsigned int) time.toNanos());
+        object->put("timestamp", time.toNanos());
         object->put("origin", origin);
     }
 
@@ -108,7 +108,7 @@ public:
      * @param object The SerializedObject to load the data from.
      */
     virtual void deserialize(SerializedObject* object) override {
-        time = Timestamp(object->getUInt("timestamp"));
+        time = Timestamp(object->getLongInt("timestamp"));
         origin = object->getString("origin");
     }
 

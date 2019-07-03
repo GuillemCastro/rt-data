@@ -26,7 +26,7 @@ SQLiteWriter writer("database.db");
 
 void Application::setup() {
     Log::init();
-    Log::log(INFO, "Acceptance test config started");
+    Log::logMessage(INFO, "Acceptance test config started");
     writer.open();
     std::shared_ptr<Sensor> sensor = std::make_shared<AnalogSensor>(
         "./a.txt", // file
@@ -43,14 +43,15 @@ void Application::setup() {
     manager.addSensor(sensor);
     broker.subscribe("test", std::make_shared<LambdaListener>([](std::string topic, std::shared_ptr<Data> data) {
         std::shared_ptr<AnalogData> analog_data = std::static_pointer_cast<AnalogData>(data);
-        Log::log(DEBUG, "Received data with value %f", analog_data->getValue());
-        Log::log(DEBUG, "Received data with origin %s", data->getOrigin().c_str());
+        Log::logMessage(DEBUG, "Received data with time %llu", (long long unsigned int)analog_data->getTimestamp().toNanos());
+        Log::logMessage(DEBUG, "Received data with value %f", analog_data->getValue());
+        Log::logMessage(DEBUG, "Received data with origin %s", data->getOrigin().c_str());
         writer.write(topic, data);
         writer.flush();
     }));
     broker.start();
     manager.start();
-    Log::log(INFO, "Acceptance test config ended");
+    Log::logMessage(INFO, "Acceptance test config ended");
 }
 
 void Application::loop() {

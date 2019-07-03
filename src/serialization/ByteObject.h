@@ -75,6 +75,10 @@ public:
         _put_string(key, value);
     }
 
+    virtual void put(const std::string& key, uint64_t value) {
+        _put<uint64_t>(key, value);
+    }
+
     /**
      * 'Get' methods to deserialize objects
      * @param key The key of the value to be deserialized. This parameter is ignored.
@@ -103,6 +107,10 @@ public:
 
     virtual std::string getString(const std::string& key) {
         return _get_string(key);
+    }
+
+    virtual uint64_t getLongInt(const std::string& key) {
+        return _get<uint64_t>(key);
     }
 
     /**

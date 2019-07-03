@@ -73,6 +73,10 @@ public:
         _put(key, escaped_value, Type::STRING);
     }
 
+    virtual void put(const std::string& key, uint64_t value) {
+        _put(key, value, Type::LONGINT);
+    }
+
     /**
      * 'Get' methods to deserialize objects
      * @param key The key of the value to be deserialized. This parameter is ignored.
@@ -106,6 +110,10 @@ public:
             content.erase( content.end() - 1 );
         }
         return content;
+    }
+
+    virtual uint64_t getLongInt(const std::string& key) {
+        return contents[key]->get<uint64_t>();
     }
 
     /**
@@ -191,7 +199,7 @@ public:
 private:
 
     enum Type {
-        INT, UINT, FLOAT, DOUBLE, BOOL, STRING
+        INT, UINT, FLOAT, DOUBLE, BOOL, STRING, LONGINT
     };
 
     template <typename T>
@@ -220,6 +228,9 @@ private:
                 break;
             case STRING:
                 insert.bind(bind_column_name, contents[column]->get<std::string>());
+                break;
+            case LONGINT:
+                insert.bind(bind_column_name, (long long int)contents[column]->get<uint64_t>());
                 break;
         }
     }
