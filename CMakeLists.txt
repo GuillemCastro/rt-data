@@ -5,8 +5,8 @@ project(rtdata)
 set (rtdata_VERSION_MAJOR 0)
 set (rtdata_VERSION_MINOR 1)
 
-SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -lcppunit")
-SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -lcppunit")
+SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")

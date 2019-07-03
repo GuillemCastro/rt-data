@@ -3,7 +3,7 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: xenial
+      dist: bionic
       compiler: gcc
       sudo: true
       addons:
@@ -11,17 +11,16 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
+            - g++-5
             - cmake
             - make
             - libcurl4-gnutls-dev
-            - libcppunit-1.13
             - libqgpsmm-dev
             - libgps-dev
             - cppcheck
             - libcppunit-dev
       env:
-         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
 before_install:
     - eval "${MATRIX_EVAL}"
