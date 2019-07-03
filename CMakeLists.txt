@@ -79,6 +79,9 @@ IF(BUILD_TESTS)
             rtdata
             pthread
         )
+        IF(g3logger_FOUND AND WITH_LOGGING)
+            target_link_libraries(rtdata_test g3logger)
+        ENDIF()
     ENDIF()
 ENDIF()
 
