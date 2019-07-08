@@ -60,14 +60,14 @@ public:
      * Constructor with Configuration object
      * @param config The configuration node for this sensor
      */
-    explicit AnalogSensor(std::shared_ptr<Configuration> config) : 
+    explicit AnalogSensor(Configuration& config) : 
         Sensor(config),
-        zero_value(config->at("zero")->get<double>()),
-        span_value(config->at("span")->get<double>()),
-        scale(config->at("span")->get<double>()),
-        quantization_bits(config->at("quantization_bits")->get<uint64_t>()),
-        zero_voltage(config->at("zero_voltage")->get<int64_t>()),
-        span_voltage(config->at("span_voltage")->get<int64_t>()) {
+        zero_value(config["zero"].get<double>()),
+        span_value(config["span"].get<double>()),
+        scale(config["span"].get<double>()),
+        quantization_bits(config["quantization_bits"].get<uint64_t>()),
+        zero_voltage(config["zero_voltage"].get<int64_t>()),
+        span_voltage(config["span_voltage"].get<int64_t>()) {
             zero = (double)(1 << quantization_bits) * (zero_value - zero_voltage) / span_voltage;
             span = (double)(1 << quantization_bits) * (span_value) / span_voltage;
     }

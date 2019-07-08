@@ -20,29 +20,24 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "Any.h"
 
 /**
- * An interface that represents a configuration file with a tree-like structure
- * Each node of the tree represents either a property (leaf) or another tree.
- * The configuration properties are not loaded until they are acessed for the first time (lazy initialization).
+ * A class with the interface that allows to build a configuration data structure with a tree-like structure.
+ * The idea is to load the configuration tree from a configuration file.
+ * Each node of the tree represents either a property (leaf), an array or another tree.
+ * This class contains the implementation for the leaf nodes. The actual tree is implemented at the subclass level (see ConfigurationTreeNode).
  */
 class Configuration {
 
 public:
 
-    /**
-     * Default constructor
-     */
-    Configuration() : content(nullptr) {
+    Configuration() : content(Any::create_any(nullptr)) {
 
     }
 
-    /**
-     * Constructor to build a leaf
-     * @param content The content of the leaf
-     */
     Configuration(std::shared_ptr<Any> content) : content(content) {
 
     }
@@ -53,7 +48,15 @@ public:
      * @param property The name of the node that will be returned
      * @returns A node named `property`
      */
-    virtual std::shared_ptr<Configuration> at(const std::string& property);
+    virtual Configuration& at(const std::string& property);
+
+    /**
+     * Get a child of the current node
+     * Note: if the child does not exist, it will be created
+     * @param index The position of the node in an array
+     * @returns The node in the `index` position
+     */
+    virtual Configuration& at(const int index);
 
     /**
      * Get a child of the current node
@@ -61,7 +64,15 @@ public:
      * @param property The name of the node that will be returned
      * @returns A node named `property`
      */
-    virtual std::shared_ptr<Configuration> operator[](const std::string &property);
+    virtual Configuration& operator[](const std::string &property);
+
+    /**
+     * Get a child of the current node
+     * Note: if the child does not exist, it will be created
+     * @param index The position of the node in an array
+     * @returns The node in the `index` position
+     */
+    virtual Configuration& operator[](const int index);
 
     /**
      * Set the content of the current node
@@ -69,13 +80,8 @@ public:
      * @param content The new content for the node
      */
     template <typename T>
-    void set(const T& content) {
-        if (this->content == nullptr) {
-            this->content = Any::create_any<T>(content);
-        }
-        else {
-            this->content->set<T>(content);
-        }
+    void set(T content) {
+        this->content->set<T>(content);
     }
 
     /**
@@ -84,8 +90,8 @@ public:
      * @param content The new content for the node
      */
     template <typename T>
-    void operator=(const T& s)  {
-        this->set<T>(content);
+    void operator=(T content) {
+        this->set(content);
     }
 
     /**
@@ -96,6 +102,41 @@ public:
     T get() {
         return content->get<T>();
     }
+
+protected:
+
+    /**
+     * The content of the current node.
+     * Can contain any type.
+     */
+    std::shared_ptr<Any> content;
+
+};
+
+/**
+ * A class that represents a node with a subtree. Each child is an instance of Configuration.
+ * The configuration childs are not loaded until they are acessed for the first time (lazy initialization).
+ */
+class ConfigurationTreeNode : public Configuration {
+
+public:
+
+    // Use the constructors defined by Configuration
+    using Configuration::Configuration;
+
+    /**
+     * Get a child of the current node
+     * Note: if the child does not exist, it will be created
+     * @param property The name of the node that will be returned
+     * @returns A node named `property`
+     */
+    virtual Configuration& at(const std::string& property);
+
+    /**
+     * Get a child of the current node. This operation is not supported on this type of node.
+     * @throws std::runtime_error When called
+     */
+    virtual Configuration& at(const int index);
 
 protected:
 
@@ -111,10 +152,44 @@ protected:
      */
     std::unordered_map<std::string, std::shared_ptr<Configuration>> childs;
 
+};
+
+class ConfigurationArrayNode : public Configuration {
+
+public:
+
+    // Use the constructors defined by Configuration
+    using Configuration::Configuration;
+
     /**
-     * The content of the current node.
-     * Can contain any type.
+     * Get a child of the current node. This operation is not supported on this type of node.
+     * @throws std::runtime_error When called
      */
-    std::shared_ptr<Any> content;
+    virtual Configuration& at(const std::string& property);
+
+    /**
+     * Get a child of the current node
+     * Note: if the child does not exist, it will be created
+     * @param index The position of the node in an array
+     * @returns The node in the `index` position
+     */
+    virtual Configuration& at(const int index);
+
+protected:
+
+    /**
+     * Loads an array from the underlying configuration file into the childs array.
+     * Must be implemented by subclasses.
+     */
+    virtual void load_from_implementation() = 0;
+
+    /**
+     * The array of child nodes
+     */
+    std::vector<std::shared_ptr<Configuration>> childs;
+
+private:
+
+    bool loaded = false;
 
 };

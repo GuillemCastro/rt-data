@@ -23,12 +23,6 @@ const std::string SensorTest::TOPIC = "sensor_topic";
 const uint64_t SensorTest::RATE = 10;
 
 void SensorTest::setUp() {
-    nlohmann::json file = {
-        {"name", NAME},
-        {"topic", TOPIC},
-        {"sampling_rate", RATE}
-    };
-    config = std::make_shared<JSONConfiguration>(file);
     sensor = std::make_shared<SensorStub>();
 }
 
@@ -64,6 +58,12 @@ void SensorTest::stopTest() {
 }
 
 void SensorTest::configTest() {
+    nlohmann::json file = {
+        {"name", NAME},
+        {"topic", TOPIC},
+        {"sampling_rate", RATE}
+    };
+    JSONConfiguration config(file);
     SensorStub sensor(config);
     CPPUNIT_ASSERT(sensor.getName() == NAME);
     CPPUNIT_ASSERT(sensor.getTopic() == TOPIC);

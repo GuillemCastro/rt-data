@@ -25,10 +25,11 @@
 
 /**
  * A class that represents a configuration file with a tree-like structure, loaded from a JSON file.
- * Each node of the tree represents either a property (leaf) or another tree.
+ * This class can also represent a JSON object in a JSON document.
+ * Each node of the tree represents either a property (leaf), an array or another tree.
  * The configuration properties are not loaded until they are acessed for the first time (lazy initialization).
  */
-class JSONConfiguration : public Configuration {
+class JSONObjectConfiguration : public ConfigurationTreeNode {
 
 public:
 
@@ -37,7 +38,7 @@ public:
      * Loads and parses the passed filename as a JSON file.
      * @param file The filename of a JSON file.
      */
-    explicit JSONConfiguration(std::string file) : Configuration() {
+    explicit JSONObjectConfiguration(std::string file) : ConfigurationTreeNode() {
         std::ifstream i(file);
         this->file = nlohmann::json::parse(i);
     }
@@ -46,14 +47,14 @@ public:
      * Constructor with a JSON object
      * @param file A JSON object
      */
-    explicit JSONConfiguration(const nlohmann::json& file) : file(file) {
+    explicit JSONObjectConfiguration(const nlohmann::json& file) : file(file), ConfigurationTreeNode() {
 
     }
 
     /**
      * Default constructor
      */
-    JSONConfiguration() : Configuration() {
+    JSONObjectConfiguration() : ConfigurationTreeNode() {
 
     }
 
@@ -61,7 +62,7 @@ public:
      * Constructor to build a leaf
      * @param content The content of the leaf
      */
-    explicit JSONConfiguration(std::shared_ptr<Any> content) : Configuration(content) {
+    explicit JSONObjectConfiguration(std::shared_ptr<Any> content) : ConfigurationTreeNode(content) {
 
     }
 
@@ -78,3 +79,61 @@ private:
     nlohmann::json file;
 
 };
+
+/**
+ * A class that represents a configuration array, loaded from a JSON file.
+ * All the array is loaded at once.
+ */
+class JSONArrayConfiguration : public ConfigurationArrayNode {
+
+public:
+
+    /**
+     * Constructor with filename
+     * Loads and parses the passed filename as a JSON file.
+     * @param file The filename of a JSON file.
+     */
+    explicit JSONArrayConfiguration(std::string file) : ConfigurationArrayNode() {
+        std::ifstream i(file);
+        this->file = nlohmann::json::parse(i);
+    }
+
+    /**
+     * Constructor with a JSON object
+     * @param file A JSON object
+     */
+    explicit JSONArrayConfiguration(const nlohmann::json& file) : file(file), ConfigurationArrayNode() {
+
+    }
+
+    /**
+     * Default constructor
+     */
+    JSONArrayConfiguration() : ConfigurationArrayNode() {
+
+    }
+
+    /**
+     * Constructor to build a leaf
+     * @param content The content of the leaf
+     */
+    explicit JSONArrayConfiguration(std::shared_ptr<Any> content) : ConfigurationArrayNode(content) {
+
+    }
+
+protected:
+
+    /**
+     * Load the array from the JSON file
+     */
+    virtual void load_from_implementation();
+
+private:
+
+    inline void load_child(const int index);
+
+    nlohmann::json file;
+
+};
+
+using JSONConfiguration = JSONObjectConfiguration;

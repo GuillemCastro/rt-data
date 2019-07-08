@@ -59,8 +59,8 @@ public:
      * Constructor with a Configuration object
      * @param config The node containing the configuration for this sensor
      */
-    explicit GPSSensor(std::shared_ptr<Configuration> config) : Sensor(config), 
-        host(config->at("host")->get<std::string>()), port(config->at("port")->get<std::string>()), gps(host.c_str(), port.c_str()) {
+    explicit GPSSensor(Configuration& config) : Sensor(config), 
+        host(config["host"].get<std::string>()), port(config["port"].get<std::string>()), gps(host.c_str(), port.c_str()) {
 
     }
 
