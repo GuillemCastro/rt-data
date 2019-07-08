@@ -57,11 +57,10 @@ public:
      * Constructor with configuration object
      * @param config The node containing the configuration for this sensor
      */
-    explicit Sensor(std::shared_ptr<Configuration> config) : 
-        config(config),
-        name(config->at("name")->get<std::string>()),
-        topic(config->at("topic")->get<std::string>()),
-        sampling_rate(config->at("sampling_rate")->get<uint64_t>()),
+    explicit Sensor(Configuration& config) : 
+        name(config["name"].get<std::string>()),
+        topic(config["topic"].get<std::string>()),
+        sampling_rate(config["sampling_rate"].get<uint64_t>()),
         started(false),
         stopped(false) {
 
@@ -174,8 +173,6 @@ protected:
      * Each interval of `sampling_rate` nanoseconds the sensor will be read.
      */
     uint64_t sampling_rate;
-
-    std::shared_ptr<Configuration> config;
 
     /**
      * Internal thread-safe queue where the read data is stored. 

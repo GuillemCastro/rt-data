@@ -45,7 +45,6 @@ public:
 private:
 
     std::shared_ptr<Sensor> sensor;
-    std::shared_ptr<JSONConfiguration> config;
 
     static const std::string NAME;
     static const std::string TOPIC;

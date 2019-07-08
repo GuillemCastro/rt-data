@@ -29,7 +29,7 @@ class JSONConfigurationTest : public CppUnit::TestFixture {
     CPPUNIT_TEST(getFloatTest);
     CPPUNIT_TEST(getIntTest);
     CPPUNIT_TEST(getUIntTest);
-    //CPPUNIT_TEST(getArrayTest);
+    CPPUNIT_TEST(getArrayTest);
     CPPUNIT_TEST(getNestedConfig);
     CPPUNIT_TEST(setInt);
     CPPUNIT_TEST_SUITE_END();

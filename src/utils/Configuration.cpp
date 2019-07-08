@@ -18,13 +18,41 @@
 
 #include "Configuration.h"
 
-std::shared_ptr<Configuration> Configuration::at(const std::string& property) {
+Configuration& Configuration::at(const std::string& property) {
+    throw std::runtime_error("Operation not supported on a leaf node");
+}
+
+Configuration& Configuration::at(const int index) {
+    throw std::runtime_error("Operation not supported on a leaf node");
+}
+
+Configuration& ConfigurationTreeNode::at(const std::string& property) {
     if (childs.find(property) == childs.end()) {
         load_from_implementation(property);
     }
-    return childs[property];
+    return *childs[property];
 }
 
-std::shared_ptr<Configuration> Configuration::operator[](const std::string &property) {
+Configuration& ConfigurationArrayNode::at(const int index) {
+    if (!loaded) {
+        load_from_implementation();
+        loaded = true;
+    }
+    return *childs[index];
+}
+
+Configuration& Configuration::operator[](const std::string &property) {
     return this->at(property);
+}
+
+Configuration& Configuration::operator[](const int index) {
+    return this->at(index);
+}
+
+Configuration& ConfigurationTreeNode::at(const int index) {
+    throw std::runtime_error("Operation not supported on a tree node");
+}
+
+Configuration& ConfigurationArrayNode::at(const std::string& property) {
+    throw std::runtime_error("Operation not supported on an array node");
 }

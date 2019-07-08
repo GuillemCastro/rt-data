@@ -34,7 +34,7 @@ void Application::setup() {
     httpWriter.open();
     tcpWriter.open();
     JSONConfiguration config(std::string("config.json"));
-    std::shared_ptr<Sensor> sensor = std::make_shared<GPSSensor>(config.at("sensors")->at("gps"));
+    std::shared_ptr<Sensor> sensor = std::make_shared<GPSSensor>(config["sensors"]["gps"]);
     manager.addSensor(sensor);
     broker.subscribe("test", std::make_shared<LambdaListener>([](std::string topic, std::shared_ptr<Data> data) {
         std::shared_ptr<GPSData> analog_data = std::static_pointer_cast<GPSData>(data);
