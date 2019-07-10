@@ -4,7 +4,7 @@ project(rtdata_acceptance)
 SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB SRC_FILES Application.cpp)
 

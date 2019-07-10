@@ -32,19 +32,19 @@ void AnalogSensor::read() {
 
     std::ifstream fp(file);
     if (fp.fail()) {
-        Log::logMessage(WARNING, "[%s] Failed to open the file %s", name.c_str(), file.c_str());
+        Log::log(WARNING) << "[" << name << "] Failed to open the file " << file;
         return;
     }
 
     fp >> buff;
     if (fp.fail()) {
-        Log::logMessage(WARNING, "[%s] Failed to read from the file %s", name.c_str(), file.c_str());
+        Log::log(WARNING) << "[" << name << "] Failed to read from file " << file;
         return;
     }
 
     value = (std::stoi(buff) - zero) * (scale / span);
 
-    Log::logMessage(INFO, "[%s] Read value %f", name.c_str(), value);
+    Log::log(INFO) << "[" << name << "] Read value " << value;
 
     std::shared_ptr<Data> data = std::make_shared<AnalogData>(name, value);
     queue.push(data);

@@ -23,7 +23,7 @@ void GPSSensor::start() {
         throw std::runtime_error("No GPSD running");
     }
     Sensor::start();
-    Log::logMessage(INFO, "[%s] GPS sensor started", name.c_str());
+    Log::log(INFO) << "[" << name << "] GPS sensor started";
 }
 
 void GPSSensor::stop() {
@@ -34,7 +34,7 @@ void GPSSensor::read() {
     if (gps.waiting(10)) { // wait for input, timeout = 10 seconds
         gps_data_t* gpsd_data = gps.read();
         if (gpsd_data == NULL) {
-            Log::logMessage(WARNING, "[%s] Received invalid (null) GPS data", name.c_str());
+            Log::log(WARNING) << "[" << name << "] Received invalid (null) GPS data";
             return; // invalid gps data
         }
         std::shared_ptr<GPSData> gps_data = std::make_shared<GPSData>(gpsd_data);

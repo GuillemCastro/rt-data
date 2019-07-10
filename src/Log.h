@@ -22,8 +22,10 @@
 #include <g3log/g3log.hpp>
 #include <g3log/logworker.hpp>
 #include <memory>
-#include <iostream>
+#include <experimental/source_location>
+#include <sstream>
 #endif
+#include <iostream>
 
 #ifndef WITH_G3LOG
 enum Level {
@@ -34,45 +36,52 @@ enum Level {
 };
 #endif
 
-namespace Log {
+#ifdef WITH_G3LOG
+class LogLine {
 
-    namespace { //Private namespace
+public:
 
-        #ifdef WITH_G3LOG
+    LogLine(std::string file, int line, std::string function, LEVELS& level) :
+        stream(), file(file), line(line), function(function), level(level) {
 
-        struct ConsoleSink {
+    }
 
-            enum FG_Color {YELLOW = 33, RED = 31, GREEN=32, WHITE = 97};
+    ~LogLine() {
+        g3::internal::saveMessage(stream.str().c_str(), file.c_str(), line, function.c_str(), level, "", SIGABRT, nullptr);
+    }
 
-            FG_Color GetColor(const LEVELS level) const {
-                if (level.value == WARNING.value) { return YELLOW; }
-                if (level.value == DEBUG.value) { return GREEN; }
-                if (g3::internal::wasFatal(level)) { return RED; }
-                return WHITE;
-            }
-        
-            void ReceiveLogMessage(g3::LogMessageMover logEntry) {
-                auto level = logEntry.get()._level;
-                auto color = GetColor(level);
-                std::cout << "\033[" << color << "m" << logEntry.get().toString() << "\033[m" << std::endl;
-            }
+    std::ostringstream stream;
 
-        };
+private:
 
-        static void levelLog(LEVELS level, const char* file, const int line, const char* function, const char* message, ...) {
-            char to_log[2048];
-            va_list arglist;
-            va_start(arglist, message);
-            vsnprintf(to_log, sizeof(to_log), message, arglist);
-            va_end(arglist);
-            LogCapture(file, line, function, level).stream() << to_log; 
-        }
+    std::string file;
+    int line;
+    std::string function;
+    LEVELS level;
 
-        static std::unique_ptr<g3::LogWorker> logWorker;
-    
-        #endif
+};
 
-    } //End private namespace
+template<typename T>
+LogLine& operator<<(LogLine& line, T&& value) {
+    line.stream << std::forward<T>(value);
+    return line;
+}
+
+template<typename T>
+LogLine& operator<<(LogLine&& line, T&& value) {
+    return line << std::forward<T>(value);
+}
+#endif //WITH_G3LOG
+
+class Log {
+
+public:
+
+    Log() = delete;
+
+    Log(const Log& another) = delete;
+
+    Log& operator=(const Log& another) = delete;
 
     /**
      * Initialize the logging service
@@ -82,12 +91,11 @@ namespace Log {
      */
     static void init(const std::string& logPrefix = "log", const std::string& logFilePath = "./", bool enableConsole = true) {
         #ifdef WITH_G3LOG
-        logWorker = std::unique_ptr<g3::LogWorker> {g3::LogWorker::createLogWorker()};
-        auto fileSinkHandle = logWorker->addSink(std::make_unique<g3::FileSink>(logPrefix, logFilePath), &g3::FileSink::fileWrite);
+        auto fileSinkHandle = Log::logWorker->addSink(std::make_unique<g3::FileSink>(logPrefix, logFilePath), &g3::FileSink::fileWrite);
         if (enableConsole) {
-            auto consoleSinkHandle = logWorker->addSink(std::make_unique<ConsoleSink>(), &ConsoleSink::ReceiveLogMessage);
+            auto consoleSinkHandle = Log::logWorker->addSink(std::make_unique<ConsoleSink>(), &ConsoleSink::ReceiveLogMessage);
         }
-        g3::initializeLogging(logWorker.get());
+        g3::initializeLogging(Log::logWorker.get());
         #endif
     }
 
@@ -98,11 +106,40 @@ namespace Log {
      * @param ... (additional arguments) If message contains format specifiers, the function expects additional arguments each containing a value to be used to replace a format specifier 
      */
     #ifdef WITH_G3LOG
-    #define logMessage(level, message, ...) levelLog(level, __FILE__, __LINE__, __PRETTY_FUNCTION__, message, ##__VA_ARGS__)
-    #else
-    inline static void logMessage(Level level, const char* message, ...) {
-        //nop
+    static inline LogLine log(LEVELS level = INFO, std::experimental::source_location loc = std::experimental::source_location::current()) {
+        return LogLine(loc.file_name(), loc.line(), loc.function_name(), level);
     }
-    #endif
+    #else
+    static inline std::ostream& log(Level level) {
+        return std::cout;
+    }
+    #endif // WITH_G3LOG
 
-}
+private:
+
+    #ifdef WITH_G3LOG
+
+    struct ConsoleSink {
+
+        enum FG_Color {YELLOW = 33, RED = 31, GREEN=32, WHITE = 97};
+
+        FG_Color GetColor(const LEVELS level) const {
+            if (level.value == WARNING.value) { return YELLOW; }
+            if (level.value == DEBUG.value) { return GREEN; }
+            if (g3::internal::wasFatal(level)) { return RED; }
+            return WHITE;
+        }
+    
+        void ReceiveLogMessage(g3::LogMessageMover logEntry) {
+            auto level = logEntry.get()._level;
+            auto color = GetColor(level);
+            std::cout << "\033[" << color << "m" << logEntry.get().toString() << "\033[m" << std::endl;
+        }
+
+    };
+
+    static std::unique_ptr<g3::LogWorker> logWorker;
+
+    #endif // WITH_G3LOG
+
+};

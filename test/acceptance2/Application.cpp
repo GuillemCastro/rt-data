@@ -30,7 +30,7 @@ TCPWriter tcpWriter("127.0.0.1", 5005);
 
 void Application::setup() {
     Log::init();
-    Log::logMessage(INFO, "Acceptance test config started");
+    Log::log(INFO) << "Acceptance test config started";
     httpWriter.open();
     tcpWriter.open();
     JSONConfiguration config(std::string("config.json"));
@@ -38,16 +38,16 @@ void Application::setup() {
     manager.addSensor(sensor);
     broker.subscribe("test", std::make_shared<LambdaListener>([](std::string topic, std::shared_ptr<Data> data) {
         std::shared_ptr<GPSData> analog_data = std::static_pointer_cast<GPSData>(data);
-        Log::logMessage(DEBUG, "Received data with latitude %f", analog_data->getLatitude());
-        Log::logMessage(DEBUG, "Received data with longitude %f", analog_data->getLongitude());
-        Log::logMessage(DEBUG, "Received data with altitude %f", analog_data->getAltitude());
-        Log::logMessage(DEBUG, "Received data with origin %s", data->getOrigin().c_str());
+        Log::log(DEBUG) << "Received data with latitude " << analog_data->getLatitude();
+        Log::log(DEBUG) << "Received data with longitude " << analog_data->getLongitude();
+        Log::log(DEBUG) << "Received data with altitude " << analog_data->getAltitude();
+        Log::log(DEBUG) << "Received data with origin " << data->getOrigin().c_str();
         httpWriter.write(topic, data);
         tcpWriter.write(topic, data);
     }));
     broker.start();
     manager.start();
-    Log::logMessage(INFO, "Acceptance test config ended");
+    Log::log(INFO) << "Acceptance test config ended";
 }
 
 void Application::loop() {
