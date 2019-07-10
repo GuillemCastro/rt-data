@@ -26,7 +26,7 @@ find_package(GPSD REQUIRED)
 
 find_package(g3logger)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES main.cpp)
 
