@@ -22,6 +22,8 @@ void Broker::start() {
     if (started || stopped) {
         throw std::runtime_error("Cannot start already started or stopped Broker");
     }
+    int priority = Thread::getMaxSchedulingPriority(SchedulingPolicy::RT_ROUND_ROBIN) - 2;
+    pool.setSchedulingPolicy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
     this->started = true;
 }
 

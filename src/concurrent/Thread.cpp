@@ -41,16 +41,20 @@ void Thread::setSchedulingPolicy(SchedulingPolicy policy, int priority) {
     int sched_policy = convertPolicy(policy);
     sched_param params;
     params.sched_priority = priority; // Ignored if policy is not RT Round Robin or FIFO
-    if (pthread_setschedparam(this->native_handle(), sched_policy, &params)) {
-        throw std::runtime_error(std::strerror(errno));
+    int ret = pthread_setschedparam(this->native_handle(), sched_policy, &params);
+    if (ret) {
+        std::string error = (ret == EPERM)? "Insufficient privileges" : "Could not set the scheduling policy";
+        throw std::runtime_error(error);
     }
 }
 
 SchedulingPolicy Thread::getCurrentSchedulingPolicy() {
     int policy;
     sched_param params;
-    if (pthread_getschedparam(this->native_handle(), &policy, &params)) {
-        throw std::runtime_error(std::strerror(errno));
+    int ret = pthread_getschedparam(this->native_handle(), &policy, &params);
+    if (ret) {
+        std::string error = (ret == EPERM)? "Insufficient privileges" : "Could not get the scheduling policy";
+        throw std::runtime_error(error);
     }
     return (SchedulingPolicy)policy;
 }
@@ -58,8 +62,10 @@ SchedulingPolicy Thread::getCurrentSchedulingPolicy() {
 int Thread::getCurrentPriority() {
     int policy;
     sched_param params;
-    if (pthread_getschedparam(this->native_handle(), &policy, &params)) {
-        throw std::runtime_error(std::strerror(errno));
+    int ret = pthread_getschedparam(this->native_handle(), &policy, &params);
+    if (ret) {
+        std::string error = (ret == EPERM)? "Insufficient privileges" : "Could not set the scheduling priority";
+        throw std::runtime_error(error);
     }
     return params.sched_priority;
 }
@@ -72,4 +78,28 @@ int Thread::getMinSchedulingPriority(SchedulingPolicy policy) {
 int Thread::getMaxSchedulingPriority(SchedulingPolicy policy) {
     int sched_policy = convertPolicy(policy);
     return sched_get_priority_max(sched_policy);
+}
+
+SchedulingPolicy this_thread::getCurrentSchedulingPolicy() {
+    pthread_t me = pthread_self();
+    int policy;
+    sched_param params;
+    int ret = pthread_getschedparam(me, &policy, &params);
+    if (ret) {
+        std::string error = (ret == EPERM)? "Insufficient privileges" : "Could not get the scheduling policy";
+        throw std::runtime_error(error);
+    }
+    return (SchedulingPolicy)policy;
+}
+
+int this_thread::getCurrentPriority() {
+    pthread_t me = pthread_self();
+    int policy;
+    sched_param params;
+    int ret = pthread_getschedparam(me, &policy, &params);
+    if (ret) {
+        std::string error = (ret == EPERM)? "Insufficient privileges" : "Could not set the scheduling priority";
+        throw std::runtime_error(error);
+    }
+    return params.sched_priority;
 }
