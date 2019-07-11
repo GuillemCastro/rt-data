@@ -27,6 +27,7 @@
 #include "utils/Configuration.h"
 #include "Data.h"
 #include "Broker.h"
+#include "concurrent/Thread.h"
 
 /**
  * A class to interface with a sensor. Provides methods
@@ -189,6 +190,6 @@ private:
     std::atomic<bool> started;
     std::atomic<bool> stopped;
 
-    std::thread sensor_thread;
+    Thread sensor_thread;
 
 };

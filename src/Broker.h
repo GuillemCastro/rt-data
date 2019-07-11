@@ -36,7 +36,8 @@ public:
     /**
      * Default constructor
      */
-    Broker() : started(false), stopped(false) {
+    Broker() : started(false), stopped(false), 
+        pool(std::thread::hardware_concurrency() > 0? std::thread::hardware_concurrency() : 4) {
 
     }
 

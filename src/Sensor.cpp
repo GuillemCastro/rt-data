@@ -22,7 +22,15 @@ void Sensor::start() {
     if (started || stopped) {
         throw std::runtime_error("Sensor already started or stopped!");
     }
-    this->sensor_thread = std::thread(&Sensor::run, this);
+    this->sensor_thread = Thread(&Sensor::run, this);
+    try {
+        int priority = Thread::getMaxSchedulingPriority(SchedulingPolicy::RT_ROUND_ROBIN) - 1;
+        this->sensor_thread.setSchedulingPolicy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
+    }
+    catch (std::runtime_error& ex) {
+        Log::log(WARNING) << "[" << name << "] While setting the sensor's thread scheduling policy an exception was thrown: " << ex.what();
+        Log::log(WARNING) << "[" << name << "] Are you running as sudo?";
+    }
     this->started = true;
 }
 

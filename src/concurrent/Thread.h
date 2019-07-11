@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <stdexcept>
 #include <thread>
 #include <sched.h>
 #include <pthread.h>
@@ -85,5 +86,25 @@ public:
 private:
 
     static int convertPolicy(SchedulingPolicy policy);
+
+};
+
+/**
+ * This namespace contains methods to manage the executing (current) thread
+ * It "extends" the std::this_thread namespace 
+ */
+namespace this_thread {
+
+    /**
+     * Get the current scheduling policy for the current thread
+     * @returns The policy used by the scheduler for this thread
+     */
+    SchedulingPolicy getCurrentSchedulingPolicy();
+
+    /**
+     * Get the current priority for the current thread
+     * @returns The priority used by the scheduler for this thread
+     */
+    int getCurrentPriority();
 
 };

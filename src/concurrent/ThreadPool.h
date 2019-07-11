@@ -26,9 +26,14 @@
 #include <condition_variable>
 
 #include "ConcurrentQueue.h"
+#include "Thread.h"
+#include "../Log.h"
 
 /**
- * A class to manage a thread pool
+ * A class to create and manage a thread pool
+ * The pool manages a queue of jobs (tasks/functions without inputs nor outputs)
+ * that are executed asynchronously by the thread pool.
+ * This class guarantees that all threads are joined before this class is destructed.
  */
 class ThreadPool {
 
@@ -41,7 +46,7 @@ public:
     ThreadPool() : thread_count(10), 
         jobs_in_execution(0),
         stopped(false),
-        threads(std::vector<std::thread>(10)) {
+        threads(std::vector<Thread>(10)) {
         init_threads();
     }
 
@@ -52,7 +57,7 @@ public:
     explicit ThreadPool(int count) : thread_count(count),
         jobs_in_execution(0),
         stopped(false),
-        threads(std::vector<std::thread>(count)) {
+        threads(std::vector<Thread>(count)) {
         init_threads();
     }
 
@@ -74,6 +79,13 @@ public:
      * Note: all the queued jobs are discarded
      */
     void join();
+
+    /**
+     * Sets the scheduling policy for all the pool's threads
+     * @param policy The SchedulingPolicy that will follow the threads
+     * @param priority The priority for the threads
+     */
+    void setSchedulingPolicy(SchedulingPolicy policy, int priority);
 
     /**
      * Get the number of threads managed by the class
@@ -101,7 +113,7 @@ private:
 
     ConcurrentQueue<std::function<void(void)>> queue;
 
-    std::vector<std::thread> threads;
+    std::vector<Thread> threads;
 
     std::condition_variable new_job;
 

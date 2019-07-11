@@ -62,6 +62,12 @@ private:
 };
 
 template<typename T>
+LogLine& operator<<(LogLine& line, T& value) {
+    line.stream << std::forward<T>(value);
+    return line;
+}
+
+template<typename T>
 LogLine& operator<<(LogLine& line, T&& value) {
     line.stream << std::forward<T>(value);
     return line;

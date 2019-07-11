@@ -20,7 +20,7 @@
 
 void ThreadPool::init_threads() {
     for (int i = 0; i < threads.size(); ++i) {
-       threads[i] = std::thread(&ThreadPool::thread_run, this);
+        threads[i] = Thread(&ThreadPool::thread_run, this);
     }
 }
 
@@ -54,6 +54,18 @@ void ThreadPool::join() {
     for (auto& thread : threads) {
         if (thread.joinable()) {
             thread.join();
+        }
+    }
+}
+
+void ThreadPool::setSchedulingPolicy(SchedulingPolicy policy, int priority) {
+    for (int i = 0; i < threads.size(); ++i) {
+        try {
+           threads[i].setSchedulingPolicy(policy, priority);
+        }
+        catch (const std::runtime_error& ex) {
+            Log::log(WARNING) << "While setting a ThreadPool's thread scheduling policy an exception was thrown: " << ex.what();
+            Log::log(WARNING) << "Are you running as sudo?";
         }
     }
 }
