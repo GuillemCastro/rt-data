@@ -23,7 +23,7 @@ class DoubleData : public Data {
 
 public:
 
-    DoubleData(double value) : value(value), Data() {
+    DoubleData(double value) : Data(), value(value) {
 
     }
 
@@ -41,7 +41,7 @@ class IntData : public Data {
 
 public:
 
-    IntData(int value) : value(value), Data() {
+    IntData(int value) : Data(), value(value) {
 
     }
 

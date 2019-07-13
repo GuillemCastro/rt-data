@@ -57,7 +57,7 @@ void JSONObjectConfiguration::load_from_implementation(const std::string& proper
 
 void JSONArrayConfiguration::load_from_implementation() {
     childs.resize(file.size());
-    for (int i = 0; i < file.size(); ++i) {
+    for (std::size_t i = 0; i < file.size(); ++i) {
         load_child(i);
     }
 }
