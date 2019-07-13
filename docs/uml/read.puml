@@ -1,0 +1,15 @@
+@startuml
+
+participant "sensor : Sensor"
+
+... every 'sampling_rate' nanoseconds ...
+
+-> "sensor : Sensor" : run()
+
+"sensor : Sensor"->"sensor : Sensor" : read()
+
+<- "sensor : Sensor"
+
+... ...
+
+@enduml

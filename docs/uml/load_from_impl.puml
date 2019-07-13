@@ -1,0 +1,22 @@
+@startuml
+
+participant "config : Configuration"
+participant "config : JSONConfiguration"
+
+... ...
+
+--> "config : Configuration" : at(property)
+
+alt property not in childs
+
+    "config : Configuration" --> "config : JSONConfiguration" : load_from_implementation(property)
+    "config : JSONConfiguration" --> "config : JSONConfiguration" : childs[property] = JSONConfiguration(file[property])
+     "config : Configuration" <-- "config : JSONConfiguration"
+
+end
+
+<-- "config : Configuration" : childs[property]
+
+... ...
+
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+
+enum SchedulingPolicy {
+    DEFAULT
+    RT_FIFO
+    RT_ROUND_ROBIN
+}
+
+@enduml

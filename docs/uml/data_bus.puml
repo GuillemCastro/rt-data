@@ -1,0 +1,38 @@
+@startuml
+
+class I2C {
+    void open()
+    void close()
+    byte read(address : byte)
+    void read(address : byte, out : byte[], size : int)
+    void write(address : byte, value : byte)
+    void write(address : byte, buffer : byte[])
+}
+
+class SPI {
+    void open()
+    void close()
+    byte read()
+    void read(out : byte[], size : int)
+    void write(value : byte)
+    void write(buffer : byte[])
+    void transfer(out : byte[], in : byte[], size : int)
+}
+
+class Serial {
+    void open()
+    void close()
+    byte read()
+    void read(out : byte[], size : int)
+    void write(buffer : byte[])
+}
+
+class GPIO {
+    void open()
+    void close()
+    boolean read()
+    void write(value : boolean)
+    void set_mode(mode : Mode)
+}
+
+@enduml

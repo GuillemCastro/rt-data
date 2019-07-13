@@ -1,0 +1,27 @@
+@startuml
+
+participant SensorsManager
+participant "sensor : Sensor"
+participant "broker : Broker" 
+
+
+... every 10 milliseconds ...
+
+loop sensor in sensors
+
+    SensorsManager->"sensor : Sensor" : fetch(broker)
+
+    loop data in data_queue
+
+        "sensor : Sensor"->"broker : Broker" : dispatch(topic, data)
+        "broker : Broker"->"sensor : Sensor"
+
+    end
+
+    "sensor : Sensor"->SensorsManager
+
+end
+
+... ...
+
+@enduml

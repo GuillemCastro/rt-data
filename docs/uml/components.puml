@@ -1,0 +1,110 @@
+@startuml
+
+package UserApplicationLayer <<Node>> {
+    package UserApplication {
+        class Application
+    }
+}
+
+package EventsManagementLayer <<Node>> {
+
+    package "events" {
+        class Broker
+        interface Listener
+        interface Data
+    }
+
+    package "sensors" {
+        class Sensor
+        class AnalogSensor
+        class GPSSensor
+        class GPSData
+        class AnalogData
+
+        Sensor <|-- AnalogSensor
+        Sensor <|-- GPSSensor
+    }
+
+    package "control" {
+        class State
+        class StateMachine
+        class LambdaState
+
+        State <|-- LambdaState
+    }
+
+    package "serialization" {
+        interface SerializedObject
+        class JSONObject
+        class SQLiteObject
+        class ByteObject
+
+        interface Serializable
+
+        SerializedObject <|-- JSONObject
+        SerializedObject <|-- SQLiteObject
+        SerializedObject <|-- ByteObject 
+    }
+
+    package "concurrent" {
+        class ConcurrentQueue
+        class Thread
+        class ThreadPool
+    }
+
+    package "utils" {
+        class Any
+        class Configuration
+        class JSONConfiguration
+        class LambdaListener
+
+        Configuration <|-- JSONConfiguration
+    }
+
+    package "time" {
+        class Duration
+        class Timestamp
+        class TimeUnit
+    }
+
+    Data <|-- AnalogData
+    Data <|-- GPSData
+
+    Serializable <|-- Data
+
+}
+
+package IOLayer <<Node>> {
+
+    package "io" {
+        interface Writer
+        class SQLWriter
+        class FileWriter
+        class HTTPWriter
+        class TCPWriter
+
+        class GPIO
+        class I2C
+        class Serial 
+        class SPI
+
+        Writer <|-- SQLWriter
+        Writer <|-- FileWriter
+        Writer <|-- HTTPWriter
+        Writer <|-- TCPWriter
+    }
+
+}
+
+Duration -[hidden]- ConcurrentQueue
+Any -[hidden]- LambdaListener
+LambdaListener -[hidden]- StateMachine
+Application -[hidden]- TimeUnit
+SQLWriter -[hidden]- GPIO
+FileWriter -[hidden]- SPI
+HTTPWriter -[hidden]- I2C
+TCPWriter -[hidden]- Serial
+JSONConfiguration -[hidden]- StateMachine
+GPIO -[hidden]- Configuration
+
+@enduml

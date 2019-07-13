@@ -1,0 +1,21 @@
+@startuml
+
+Serializable <|-- Data
+
+SerializedObject <|-- ByteObject
+SerializedObject <|-- JSONObject
+SerializedObject <|-- SQLiteObject
+
+Serializable --> SerializedObject : get/put
+
+class Serializable {
+    void serialize(object : SerializedObject)
+    void deserialize(object : SerializedObject)
+}
+
+class SerializedObject {
+    void put(key : string, value : any)
+    any get(key : string)
+}
+
+@enduml

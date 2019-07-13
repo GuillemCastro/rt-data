@@ -1,0 +1,48 @@
+@startuml
+
+SensorsManager o-- Sensor
+Sensor o-- Data
+Sensor <|-- GPSSensor
+Data <|-- GPSData
+
+SensorsManager --> Sensor : fetch
+SensorsManager-->Broker : dispatch
+
+GPSSensor --> GPSData : acquires
+
+class Broker {
+    void dispatch(topic : string, data : Data)
+}
+
+class SensorsManager {
+    void start()
+    void stop()
+    void add_sensor()
+    void remove_sensor()
+}
+
+abstract class Sensor {
+    name : string
+    topic : string
+    sampling_rate : int
+    void start()
+    void stop()
+    void fetch()
+    -void read()
+}
+
+class GPSSensor {
+
+}
+
+class Data {
+    timestamp : Timestamp
+    origin : string
+}
+
+class GPSData {
+    latitude : float
+    longitude : float
+}
+
+@enduml
