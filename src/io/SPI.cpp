@@ -132,7 +132,7 @@ void SPI::write(uint8_t byte) {
     }
 }
 
-void SPI::write(std::vector<uint8_t> buffer) {
+void SPI::write(const std::vector<uint8_t>& buffer) {
     if (!started) {
         throw std::runtime_error("SPI port is not open");
     }
@@ -149,7 +149,7 @@ void SPI::write(std::vector<uint8_t> buffer) {
     }
 }
 
-void SPI::transfer(const std::vector<uint8_t> to_send, std::vector<uint8_t>& to_receive, size_t size) {
+void SPI::transfer(const std::vector<uint8_t>& to_send, std::vector<uint8_t>& to_receive, size_t size) {
     if (!started) {
         throw std::runtime_error("SPI port is not open");
     }

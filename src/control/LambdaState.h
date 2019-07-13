@@ -43,8 +43,8 @@ public:
      * @param leave A lambda that will be called when leave() is invoked
      * @param check A lambda that will be called when check_condition() is invoked
      */
-    LambdaState(const std::string& name, std::function<void()> arrive, std::function<void()> leave, 
-        std::function<bool(State* current_state, std::string event, std::shared_ptr<Data> data)> check) : 
+    LambdaState(const std::string& name, const std::function<void()>& arrive, const std::function<void()>& leave, 
+        const std::function<bool(State* current_state, std::string event, std::shared_ptr<Data> data)>& check) : 
         arrive_lambda(arrive), leave_lambda(leave), check_lambda(check) {
             set_name(name);    
     }    

@@ -38,7 +38,7 @@ public:
 
     }
 
-    Configuration(std::shared_ptr<Any> content) : content(content) {
+    explicit Configuration(std::shared_ptr<Any> content) : content(content) {
 
     }
 
