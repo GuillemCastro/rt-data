@@ -1,0 +1,34 @@
+@startuml
+
+Writer <|-- FileWriter
+Writer <|-- HTTPWriter
+Writer <|-- TCPWriter
+Writer <|-- SQLiteWriter
+
+Writer --> SerializedObject : serialize
+
+interface Writer {
+    void open()
+    void close()
+    void write(data : Data)
+    void write(topic : string, data : Data)
+    void flush()
+}
+
+class FileWriter<? extends SerializedObject> {
+
+}
+
+class HTTPWriter {
+
+}
+
+class TCPWriter {
+
+}
+
+class SQLiteWriter {
+
+}
+
+@enduml

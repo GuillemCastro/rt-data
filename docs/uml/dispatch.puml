@@ -1,0 +1,24 @@
+@startuml
+
+participant EventSource
+participant Broker
+participant ThreadPool
+participant "listener : Listener"
+
+EventSource->Broker : dispatch(topic, data)
+
+loop listener in listeners
+
+    Broker->ThreadPool : add_task(listener.handle, topic, data)
+    ThreadPool->Broker
+
+end
+
+Broker->EventSource
+
+... When a thread is available ...
+
+ThreadPool->"listener : Listener" : handle(topic, data)
+"listener : Listener"->ThreadPool
+
+@enduml

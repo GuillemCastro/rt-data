@@ -1,0 +1,14 @@
+@startuml
+
+participant Application
+participant Broker
+participant "listeners : std::unordered_map"
+
+Application->Broker : subscribe(topic, listener)
+
+    Broker->"listeners : std::unordered_map" : push_back(topic, listener)
+    "listeners : std::unordered_map" -> Broker
+
+Broker->Application
+
+@enduml

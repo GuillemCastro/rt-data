@@ -1,0 +1,36 @@
+@startuml
+
+participant Broker
+participant StateMachine
+participant "state : State"
+participant "current_state : State"
+
+... ...
+
+Broker->StateMachine : handle(topic, data)
+
+    loop state in transitions[current_state]
+
+        StateMachine->"state : State" : check_condition(current_state, topic, data)
+
+        StateMachine<-"state : State" : check
+
+        alt check
+
+            StateMachine->"current_state : State" : leave()
+            StateMachine<-"current_state : State"
+
+            StateMachine->StateMachine : current_state = state
+
+            StateMachine->"current_state : State" : arrive()
+            StateMachine<-"current_state : State"
+
+        end
+
+    end
+
+Broker<-StateMachine
+
+... ...
+
+@enduml

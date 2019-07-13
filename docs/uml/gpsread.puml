@@ -1,0 +1,19 @@
+@startuml
+
+participant "sensor : GPSSensor"
+participant GPSDriver
+
+... ...
+
+-> "sensor : GPSSensor" : read()
+
+"sensor : GPSSensor"->GPSDriver : read()
+"sensor : GPSSensor"<-GPSDriver : data
+
+"sensor : GPSSensor"->"sensor : GPSSensor" : enqueue(data)
+
+<- "sensor : GPSSensor"
+
+... ...
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+
+Broker o-- Listener
+
+Listener-->Broker : subscribes
+Broker-->Listener : notifies event
+EventSource-->Broker : sends event
+
+class Broker {
+    void subscribe(topic : string)
+    void dispatch(topic : string, data : Data)
+}
+
+interface Listener {
+    void handle(topic : string, data : Data)
+}
+
+class EventSource {
+
+}
+
+@enduml

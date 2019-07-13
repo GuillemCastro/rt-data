@@ -1,0 +1,33 @@
+@startuml
+
+Listener<|--StateMachine
+
+StateMachine o-- State
+
+StateMachine --> State : current state
+
+Broker --> Listener : sends
+
+class Broker {
+    void dispatch(topic : string, data : Data)
+}
+
+interface Listener {
+    {abstract} void handle(topic : string, data : Data)
+}
+
+class StateMachine {
+    void add_state()
+    void remove_state()
+    void add_transition(from : State, to : State)
+    void handle(topic : string, data : Data)
+}
+
+abstract class State {
+    {abstract} void arrive()
+    {abstract} void leave()
+    {abstract} bool check_condition(current_state : State, topic : string, data : Data)
+}
+
+
+@enduml

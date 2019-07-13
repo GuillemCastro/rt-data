@@ -1,0 +1,34 @@
+@startuml
+
+"std::thread" <|-- Thread
+ThreadPool o-- Thread
+ThreadPool --> ConcurrentQueue : job queue
+
+enum SchedulingPolicy {
+    DEFAULT
+    RT_FIFO
+    RT_ROUND_ROBIN
+}
+
+class Thread {
+    void set_scheduling_policy(policy : SchedulingPolicy, priority : int)
+    SchedulingPolicy get_current_scheduling_policy()
+    int get_current_priority()
+    {static} int get_min_scheduling_priority(policy : SchedulingPolicy)
+    {static} int get_max_scheduling_priority(policy : SchedulingPolicy)
+}
+
+class ThreadPool {
+    void add_job(job : function)
+    void join()
+    int size()
+    int in_execution()
+}
+
+class ConcurrentQueue <T> {
+    T pop()
+    void push(item : T)
+    bool empty()
+}
+
+@enduml

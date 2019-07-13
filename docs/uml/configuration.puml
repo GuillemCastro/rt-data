@@ -1,0 +1,32 @@
+@startuml
+
+Configuration <|-- JSONConfiguration
+Any <|-- AnyImpl
+Configuration --> Configuration : childs
+
+Configuration o-- Any : value
+
+class Configuration {
+    Configuration at(property : string)
+    void set<T>(value : T)
+    T get<T>()
+    {abstract} # void load_from_implementation(property : string) 
+}
+
+class JSONConfiguration {
+    # void load_from_implementation(property : string)
+}
+
+class Any {
+    T get<T>()
+    void set<T>(value : T)
+    {static} shared_ptr<Any> create_any<T>(value : T)
+}
+
+class AnyImpl<T> {
+    - content : T
+    T get()
+    void set(value : T)
+}
+
+@enduml

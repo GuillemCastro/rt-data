@@ -1,0 +1,14 @@
+@startuml
+Data <|-- GPSData
+
+class Data {
+    timestamp : Timestamp
+    origin : string
+}
+
+class GPSData {
+    latitude : float
+    longitude : float
+}
+
+@enduml
