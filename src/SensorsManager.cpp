@@ -32,7 +32,7 @@ void SensorsManager::add_sensor(std::shared_ptr<Sensor> sensor) {
 
 void SensorsManager::remove_sensor(std::shared_ptr<Sensor> sensor) {
     std::unique_lock<std::mutex> lck(sensor_mtx);
-    for (int i = 0; i < sensors.size(); ++i) {
+    for (std::size_t i = 0; i < sensors.size(); ++i) {
         if (sensors[i] == sensor) {
             sensors.erase(sensors.begin() + i);
         }

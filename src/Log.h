@@ -41,7 +41,7 @@ class LogLine {
 
 public:
 
-    LogLine(std::string file, int line, std::string function, LEVELS& level) :
+    LogLine(const std::string& file, int line, const std::string& function, LEVELS& level) :
         stream(), file(file), line(line), function(function), level(level) {
 
     }

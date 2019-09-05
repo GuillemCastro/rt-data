@@ -19,7 +19,7 @@
 #include "ThreadPool.h"
 
 void ThreadPool::init_threads() {
-    for (int i = 0; i < threads.size(); ++i) {
+    for (std::size_t i = 0; i < threads.size(); ++i) {
         threads[i] = Thread(&ThreadPool::thread_run, this);
     }
 }
@@ -59,7 +59,7 @@ void ThreadPool::join() {
 }
 
 void ThreadPool::set_scheduling_policy(SchedulingPolicy policy, int priority) {
-    for (int i = 0; i < threads.size(); ++i) {
+    for (std::size_t i = 0; i < threads.size(); ++i) {
         try {
            threads[i].set_scheduling_policy(policy, priority);
         }

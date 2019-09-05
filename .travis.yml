@@ -27,6 +27,7 @@ before_install:
     - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
 
 script:
+     - cppcheck --enable=all --suppress="unusedFunction" src/
      - mkdir -p build
      - cd build
      - cmake ${CMAKE_OPTIONS} -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON .. 

@@ -47,7 +47,7 @@ public:
      * Constructor with a JSON object
      * @param file A JSON object
      */
-    explicit JSONObjectConfiguration(const nlohmann::json& file) : file(file), ConfigurationTreeNode() {
+    explicit JSONObjectConfiguration(const nlohmann::json& file) : ConfigurationTreeNode(), file(file) {
 
     }
 
@@ -102,7 +102,7 @@ public:
      * Constructor with a JSON object
      * @param file A JSON object
      */
-    explicit JSONArrayConfiguration(const nlohmann::json& file) : file(file), ConfigurationArrayNode() {
+    explicit JSONArrayConfiguration(const nlohmann::json& file) : ConfigurationArrayNode(), file(file) {
 
     }
 

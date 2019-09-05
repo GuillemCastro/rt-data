@@ -50,7 +50,7 @@ public:
      * Build a StateMachine with an initial state
      * @param start_state The initial state of the state machine
      */
-    StateMachine(std::shared_ptr<State> start_state) {
+    explicit StateMachine(std::shared_ptr<State> start_state) {
         states.insert(start_state);
         current_state = start_state.get();
         transitions[current_state] = std::vector<State*>();

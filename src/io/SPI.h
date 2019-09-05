@@ -152,7 +152,7 @@ public:
      * @throws std::runtime_error If the write fails
      * @throws std::runtime_error If the port is not open
      */
-    void write(const std::vector<uint8_t> buffer);
+    void write(const std::vector<uint8_t>& buffer);
 
     /**
      * Make a full-duplex communication with the slave device (i.e. read and write simultaneously)
@@ -162,7 +162,7 @@ public:
      * @throws std::runtime_error If the transfer fails
      * @throws std::runtime_error If the port is not open
      */
-    void transfer(const std::vector<uint8_t> to_send, std::vector<uint8_t>& to_receive, size_t size);
+    void transfer(const std::vector<uint8_t>& to_send, std::vector<uint8_t>& to_receive, size_t size);
 
 private:
 

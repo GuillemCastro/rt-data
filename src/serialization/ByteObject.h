@@ -137,7 +137,7 @@ private:
     void _put(const std::string& key, const T& value) {
         const uint8_t* serialized = reinterpret_cast<const uint8_t*>(&value);
         bytes.push_back((uint8_t) sizeof(T));
-        for (int i = 0; i < sizeof(value); ++i) {
+        for (std::size_t i = 0; i < sizeof(value); ++i) {
             bytes.push_back(serialized[i]);
         }
     }
@@ -159,7 +159,7 @@ private:
         }
         T result;
         uint8_t* deserialized = reinterpret_cast<uint8_t*>(&result);
-        for (int i = 1; i <= sizeof(T) && i < bytes.size(); ++i) {
+        for (std::size_t i = 1; i <= sizeof(T) && i < bytes.size(); ++i) {
             deserialized[i-1] = bytes[i];
         }
         bytes.erase(bytes.begin(), bytes.begin() + sizeof(T) + 1);

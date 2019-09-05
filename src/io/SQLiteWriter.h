@@ -135,7 +135,7 @@ private:
 
     std::string file;
 
-    int buffer_size;
+    std::size_t buffer_size;
 
     SQLite::Database db;
 
