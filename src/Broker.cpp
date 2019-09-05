@@ -22,8 +22,8 @@ void Broker::start() {
     if (started || stopped) {
         throw std::runtime_error("Cannot start already started or stopped Broker");
     }
-    int priority = Thread::getMaxSchedulingPriority(SchedulingPolicy::RT_ROUND_ROBIN) - 2;
-    pool.setSchedulingPolicy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
+    int priority = Thread::get_max_scheduling_priority(SchedulingPolicy::RT_ROUND_ROBIN) - 2;
+    pool.set_scheduling_policy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
     this->started = true;
 }
 
@@ -35,11 +35,11 @@ void Broker::stop() {
     this->stopped = true;
 }
 
-bool Broker::isStarted() const {
+bool Broker::is_started() const {
     return started;
 }
 
-bool Broker::isStopped() const {
+bool Broker::is_stopped() const {
     return stopped;
 }
 
@@ -57,7 +57,7 @@ void Broker::dispatch(std::string topic, std::shared_ptr<Data> data) {
     }
     std::unique_lock<std::mutex> lck(mtx);
     for (auto listener : listeners[topic]) {
-        pool.addJob([this, listener, topic, data]() {
+        pool.add_job([this, listener, topic, data]() {
             listener->handle(topic, data);
         });
     }

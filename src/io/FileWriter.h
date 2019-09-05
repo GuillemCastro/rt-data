@@ -97,7 +97,7 @@ public:
      * Is the file open?
      * @returns Whether or not the file is open
      */
-    virtual bool isOpen() override {
+    virtual bool is_open() override {
         return file.is_open();
     }
 
@@ -105,7 +105,7 @@ public:
      * Is the file closed?
      * @returns Whether or not the file is closed
      */
-    virtual bool isClosed() override {
+    virtual bool is_open() override {
         return !file.is_open();
     }
 

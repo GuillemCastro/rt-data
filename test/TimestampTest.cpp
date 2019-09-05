@@ -31,28 +31,28 @@ void TimestampTest::tearDown() {
 
 void TimestampTest::secondsTest() {
     Timestamp test(1000000000); //1 second in nanos
-    CPPUNIT_ASSERT(1 == test.toSeconds());
+    CPPUNIT_ASSERT(1 == test.to_seconds());
 }
 
 void TimestampTest::millisTest() {
     Timestamp test(1000000); //1 millisecond in nanos
-    CPPUNIT_ASSERT(1 == test.toMillis());
+    CPPUNIT_ASSERT(1 == test.to_millis());
 }
 
 void TimestampTest::microsTest() {
     Timestamp test(1000); //1 millisecond in nanos
-    CPPUNIT_ASSERT(1 == test.toMicros());
+    CPPUNIT_ASSERT(1 == test.to_micros());
 }
 
 void TimestampTest::nanosTest() {
     Timestamp test(1); //1 millisecond in nanos
-    CPPUNIT_ASSERT(1 == test.toNanos());
+    CPPUNIT_ASSERT(1 == test.to_nanos());
 }
 
 void TimestampTest::durationTest() {
     Timestamp t(100);
     Duration test = t - Timestamp::epoch;
-    CPPUNIT_ASSERT(100 == test.toNanos());
+    CPPUNIT_ASSERT(100 == test.to_nanos());
 }
 
 void TimestampTest::comparatorsTest() {
@@ -65,8 +65,8 @@ void TimestampTest::comparatorsTest() {
 void TimestampTest::arithmeticTest() {
     Timestamp test(100);
     Timestamp result = test.plus(100, TimeUnit::nanoseconds);
-    CPPUNIT_ASSERT(200 == result.toNanos());
+    CPPUNIT_ASSERT(200 == result.to_nanos());
     Timestamp test2(200);
     Timestamp result2 = test2.minus(100, TimeUnit::nanoseconds);
-    CPPUNIT_ASSERT(100 == result2.toNanos());
+    CPPUNIT_ASSERT(100 == result2.to_nanos());
 }

@@ -20,7 +20,7 @@
 #include "../Log.h"
 
 void TCPWriter::open() {
-    if (is_open) {
+    if (isopen) {
         throw std::runtime_error("TCPWriter already open");
     }
     std::unique_lock<std::mutex> lck(mtx);
@@ -39,11 +39,11 @@ void TCPWriter::open() {
     if (status < 0) {
         throw std::runtime_error(strerror(errno));
     }
-    is_open = true;
+    isopen = true;
 }
 
 void TCPWriter::close() {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("TCPWriter already closed");
     }
     std::unique_lock<std::mutex> lck(mtx);
@@ -51,7 +51,7 @@ void TCPWriter::close() {
     if (status < 0) {
         throw std::runtime_error(strerror(errno));
     }
-    is_open = false;
+    isopen = false;
 }
 
 void TCPWriter::write(std::shared_ptr<Data> data) {
@@ -59,13 +59,13 @@ void TCPWriter::write(std::shared_ptr<Data> data) {
 }
 
 void TCPWriter::write(std::string topic, std::shared_ptr<Data> data) {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("TCPWriter must be open before writing");
     }
     std::unique_lock<std::mutex> lck(mtx);
     ByteObject serialized(topic);
     data->serialize(&serialized);
-    std::vector<uint8_t> bytes = serialized.getBytes();
+    std::vector<uint8_t> bytes = serialized.get_bytes();
     ssize_t data_written = 0;
     ssize_t message_size = bytes.size();
     while (data_written < message_size) {
@@ -77,12 +77,12 @@ void TCPWriter::write(std::string topic, std::shared_ptr<Data> data) {
     }
 }
 
-bool TCPWriter::isOpen() {
-    return is_open;
+bool TCPWriter::is_open() {
+    return isopen;
 }
 
-bool TCPWriter::isClosed() {
-    return !is_open;
+bool TCPWriter::is_closed() {
+    return !isopen;
 }
 
 void TCPWriter::flush() {

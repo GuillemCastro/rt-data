@@ -71,33 +71,33 @@ public:
      * Is the manager started?
      * @returns Whether or not the manager has been started
      */
-    bool isStarted() const;
+    bool is_started() const;
 
     /**
      * Is the manager stopped?
      * @returns Whether or not the manager has been stopped
      */
-    bool isStopped() const;
+    bool is_stopped() const;
 
     /**
      * Add a new sensor and if the manager is already started, start the sensor
      * @params sensor A pointer to the sensor to be added
      * @throws std::runtime_error If the manager is stopped
      */
-    void addSensor(std::shared_ptr<Sensor> sensor);
+    void add_sensor(std::shared_ptr<Sensor> sensor);
 
     /**
      * Remove a sensor from the manager
      * @params sensor A pointer to the sensor to be removed
      * Note: No exception is thrown if the manager is stopped
      */
-    void removeSensor(std::shared_ptr<Sensor> sensor);
+    void remove_sensor(std::shared_ptr<Sensor> sensor);
 
     /**
      * Set the broker that will dispatch the data fetched by this manager
      * @param broker A pointer to a Broker
      */
-    void setBroker(Broker* broker);
+    void set_broker(Broker* broker);
 
 private:
 

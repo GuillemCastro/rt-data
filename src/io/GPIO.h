@@ -89,7 +89,7 @@ public:
      * @param mode The new mode of the pin (Mode::INPUT or Mode::OUTPUT)
      * @throws std::runtime_error If the operation fails
      */
-    void setMode(Mode mode);
+    void set_mode(Mode mode);
 
 private:
 

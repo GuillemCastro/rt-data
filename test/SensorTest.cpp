@@ -39,7 +39,7 @@ void SensorTest::tearDown() {
 void SensorTest::startTest() {
     try {
         sensor->start();
-        CPPUNIT_ASSERT(sensor->isStarted());
+        CPPUNIT_ASSERT(sensor->is_started());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -50,7 +50,7 @@ void SensorTest::stopTest() {
     try {
         sensor->start();
         sensor->stop();
-        CPPUNIT_ASSERT(sensor->isStopped());
+        CPPUNIT_ASSERT(sensor->is_stopped());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -65,7 +65,7 @@ void SensorTest::configTest() {
     };
     JSONConfiguration config(file);
     SensorStub sensor(config);
-    CPPUNIT_ASSERT(sensor.getName() == NAME);
-    CPPUNIT_ASSERT(sensor.getTopic() == TOPIC);
-    CPPUNIT_ASSERT(sensor.getSamplingRate() == RATE);
+    CPPUNIT_ASSERT(sensor.get_name() == NAME);
+    CPPUNIT_ASSERT(sensor.get_topic() == TOPIC);
+    CPPUNIT_ASSERT(sensor.get_sampling_rate() == RATE);
 }

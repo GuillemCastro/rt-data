@@ -81,7 +81,7 @@ void GPIO::write(PinStatus value) {
 	::close(fd);
 }
 
-void GPIO::setMode(Mode mode) {
+void GPIO::set_mode(Mode mode) {
 	char path[50];
 	snprintf(path, 50, "/sys/class/gpio/gpio%d/direction", pin);
 	int fd = ::open(path, O_WRONLY);

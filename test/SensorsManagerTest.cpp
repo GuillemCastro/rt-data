@@ -38,7 +38,7 @@ void SensorsManagerTest::tearDown() {
 void SensorsManagerTest::addSensorTest() {
     try {
         auto sensor = std::make_shared<SensorStub>();
-        manager->addSensor(sensor);
+        manager->add_sensor(sensor);
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -51,7 +51,7 @@ void SensorsManagerTest::addSensorTestStopped() {
         manager->start();
         manager->stop();
         auto sensor = std::make_shared<SensorStub>();
-        manager->addSensor(sensor);
+        manager->add_sensor(sensor);
     }
     catch (const std::runtime_error) {
         received_exception = true;
@@ -64,8 +64,8 @@ void SensorsManagerTest::addSensorTestStopped() {
 void SensorsManagerTest::removeSensorTest() {
     try {
         auto sensor = std::make_shared<SensorStub>();
-        manager->addSensor(sensor);
-        manager->removeSensor(sensor);
+        manager->add_sensor(sensor);
+        manager->remove_sensor(sensor);
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -75,7 +75,7 @@ void SensorsManagerTest::removeSensorTest() {
 void SensorsManagerTest::startTest() {
     try {
         manager->start();
-        CPPUNIT_ASSERT(manager->isStarted());
+        CPPUNIT_ASSERT(manager->is_started());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");
@@ -100,7 +100,7 @@ void SensorsManagerTest::stopTest() {
     try {
         manager->start();
         manager->stop();
-        CPPUNIT_ASSERT(manager->isStopped());
+        CPPUNIT_ASSERT(manager->is_stopped());
     }
     catch (const std::exception) {
         CPPUNIT_FAIL("No exception expected");

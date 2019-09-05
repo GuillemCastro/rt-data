@@ -27,13 +27,13 @@ void SQLiteWriter::open() {
         //We are saving disk space and some writes to disk
         db.exec("PRAGMA journal_mode = MEMORY");
     }
-    is_open = true;
+    isopen = true;
 }
 
 void SQLiteWriter::close() {
     //Nothing to do :/
     //The database is closed when the destructor of SQLite::Database is called
-    is_open = false;
+    isopen = false;
 }
 
 void SQLiteWriter::write(std::shared_ptr<Data> data) {
@@ -41,23 +41,23 @@ void SQLiteWriter::write(std::shared_ptr<Data> data) {
 }
 
 void SQLiteWriter::write(std::string topic, std::shared_ptr<Data> data) {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Writer is not open");
     }
     std::unique_lock<std::mutex> lck(mtx);
     //The table name is a combination of the topic and the origin of the data
     //An origin is not expected to send different types of data to the same topic
     std::ostringstream table_stream;
-    table_stream << topic << "_" << data->getOrigin();
+    table_stream << topic << "_" << data->get_origin();
     std::string table = table_stream.str();
     SQLiteObject object(table);
     data->serialize(&object);
     buffer.push_back(object);
     if (!db.tableExists(table)) {
-        db.exec(object.getCreateTable());
+        db.exec(object.get_create_table());
     }
     if (prepared_statements.find(table) == prepared_statements.end()) {
-        prepared_statements.emplace(table, SQLite::Statement(db, object.getInsert()));
+        prepared_statements.emplace(table, SQLite::Statement(db, object.get_insert()));
     }
     if (buffer.size() > buffer_size) {
         lck.unlock(); //Avoid deadlock
@@ -70,8 +70,8 @@ void SQLiteWriter::flush() {
     std::string table;
     SQLite::Transaction transaction(db);
     for (auto& object : buffer) {
-        table = object.getTable();
-        object.bindValues(prepared_statements.at(table));
+        table = object.get_table();
+        object.bind_values(prepared_statements.at(table));
         prepared_statements.at(table).exec();
         prepared_statements.at(table).reset();
     }
@@ -79,10 +79,10 @@ void SQLiteWriter::flush() {
     buffer.clear();
 }
 
-bool SQLiteWriter::isOpen() {
-    return is_open;
+bool SQLiteWriter::is_open() {
+    return isopen;
 }
 
-bool SQLiteWriter::isClosed() {
-    return !is_open;
+bool SQLiteWriter::is_closed() {
+    return !isopen;
 }

@@ -81,25 +81,25 @@ public:
      * Get the hostname of the GPSD daemon
      * @returns The hostname of the GPSD daemon
      */
-    std::string getHost() const;
+    std::string get_host() const;
 
     /**
      * Get the port of the GPSD daemon
      * @returns The port of the GPSD daemon
      */
-    std::string getPort() const;
+    std::string get_port() const;
 
     /**
      * Set the hostname of the GPSD daemon
      * @param host The hostname of the GPSD daemon
      */
-    void setHost(const std::string& host);
+    void set_host(const std::string& host);
 
     /**
      * Set the port of the GPSD daemon
      * @param The port of the GPSD daemon
      */
-    void setPort(const std::string& port);
+    void set_port(const std::string& port);
 
 protected:
 
@@ -163,71 +163,71 @@ public:
     
     }
 
-    Timestamp getGPSTime() const;
+    Timestamp get_GPS_time() const;
 
-    GPSStatus getGPSStatus() const;
+    GPSStatus get_GPS_status() const;
 
-    int getSatellitesUsed() const;
+    int get_satellites_used() const;
 
-    int getSatellitesVisible() const;
+    int get_satellites_visible() const;
 
-    FixMode getFixMode() const;
+    FixMode get_fix_mode() const;
 
-    double getLongitude() const;
+    double get_longitude() const;
 
-    double getLatitude() const;
+    double get_latitude() const;
 
-    double getAltitude() const;
+    double get_altitude() const;
 
-    double getTrack() const;
+    double get_track() const;
 
-    double getGroundSpeed() const;
+    double get_ground_speed() const;
 
-    double getVerticalSpeed() const;
+    double get_vertical_speed() const;
 
-    double getLatitudeUncertainty() const;
+    double get_latitude_uncertainty() const;
 
-    double getLongitudeUncertainty() const;
+    double get_longitude_uncertainty() const;
 
-    double getTrackUncertainty() const;
+    double get_track_uncertainty() const;
 
-    double getGroundSpeedUncertainty() const;
+    double get_ground_speed_uncertainty() const;
 
-    double getVerticalSpeedUncertainty() const;
+    double get_vertical_speed_uncertainty() const;
 
-    void setGPSTime(const Timestamp& time);
+    void set_GPS_time(const Timestamp& time);
 
-    void setStatus(GPSStatus status);
+    void set_GPS_status(GPSStatus status);
 
-    void setSatellitesUsed(int usedSatellites);
+    void set_satellites_used(int usedSatellites);
 
-    void setSatellitesVisible(int visibleSatellites);
+    void set_satellites_visible(int visibleSatellites);
 
-    void setFixMode(FixMode fixMode);
+    void set_fix_mode(FixMode fixMode);
 
-    void setLongitude(double longitude);
+    void set_longitude(double longitude);
 
-    void setLatitude(double latitude);
+    void set_latitude(double latitude);
 
-    void setAltitude(double altitude);
+    void set_altitude(double altitude);
 
-    void setTrack(double track);
+    void set_track(double track);
 
-    void setGroundSpeed(double groundSpeed);
+    void set_ground_speed(double groundSpeed);
 
-    void setVerticalSpeed(double verticalSpeed);
+    void set_vertical_speed(double verticalSpeed);
 
-    void setLatitudeUncertainty(double latitudeUncertainty);
+    void set_latitude_uncertainty(double latitudeUncertainty);
 
-    void setLongitudeUncertainty(double longitudeUncertainty);
+    void set_longitude_uncertainty(double longitudeUncertainty);
 
-    void setAltitudeUncertainty(double altitudeUncertainty);
+    void set_altitude_uncertainty(double altitudeUncertainty);
 
-    void setTrackUncertainty(double trackUncertainty);
+    void set_track_uncertainty(double trackUncertainty);
 
-    void setGroundSpeedUncertainty(double groundSpeedUncertainty);
+    void set_ground_speed_uncertainty(double groundSpeedUncertainty);
 
-    void setVerticalSpeedUncertainty(double verticalSpeedUncertainty);
+    void set_vertical_speed_uncertainty(double verticalSpeedUncertainty);
 
     /**
      * Serialize the AnalogData. Do not call directly.

@@ -18,7 +18,7 @@
 
 #include "Thread.h"
 
-int Thread::convertPolicy(SchedulingPolicy policy) {
+int Thread::convert_policy(SchedulingPolicy policy) {
     int sched_policy;
     switch (policy) {
         case DEFAULT:
@@ -37,8 +37,8 @@ int Thread::convertPolicy(SchedulingPolicy policy) {
     return sched_policy;
 }
 
-void Thread::setSchedulingPolicy(SchedulingPolicy policy, int priority) {
-    int sched_policy = convertPolicy(policy);
+void Thread::set_scheduling_policy(SchedulingPolicy policy, int priority) {
+    int sched_policy = convert_policy(policy);
     sched_param params;
     params.sched_priority = priority; // Ignored if policy is not RT Round Robin or FIFO
     int ret = pthread_setschedparam(this->native_handle(), sched_policy, &params);
@@ -47,7 +47,7 @@ void Thread::setSchedulingPolicy(SchedulingPolicy policy, int priority) {
     }
 }
 
-SchedulingPolicy Thread::getCurrentSchedulingPolicy() {
+SchedulingPolicy Thread::get_current_scheduling_policy() {
     int policy;
     sched_param params;
     int ret = pthread_getschedparam(this->native_handle(), &policy, &params);
@@ -57,7 +57,7 @@ SchedulingPolicy Thread::getCurrentSchedulingPolicy() {
     return (SchedulingPolicy)policy;
 }
 
-int Thread::getCurrentPriority() {
+int Thread::get_current_priority() {
     int policy;
     sched_param params;
     int ret = pthread_getschedparam(this->native_handle(), &policy, &params);
@@ -67,17 +67,17 @@ int Thread::getCurrentPriority() {
     return params.sched_priority;
 }
 
-int Thread::getMinSchedulingPriority(SchedulingPolicy policy) {
-    int sched_policy = convertPolicy(policy);
+int Thread::get_min_scheduling_priority(SchedulingPolicy policy) {
+    int sched_policy = convert_policy(policy);
     return sched_get_priority_min(sched_policy);
 }
 
-int Thread::getMaxSchedulingPriority(SchedulingPolicy policy) {
-    int sched_policy = convertPolicy(policy);
+int Thread::get_max_scheduling_priority(SchedulingPolicy policy) {
+    int sched_policy = convert_policy(policy);
     return sched_get_priority_max(sched_policy);
 }
 
-SchedulingPolicy this_thread::getCurrentSchedulingPolicy() {
+SchedulingPolicy this_thread::get_current_scheduling_policy() {
     pthread_t me = pthread_self();
     int policy;
     sched_param params;
@@ -88,7 +88,7 @@ SchedulingPolicy this_thread::getCurrentSchedulingPolicy() {
     return (SchedulingPolicy)policy;
 }
 
-int this_thread::getCurrentPriority() {
+int this_thread::get_current_priority() {
     pthread_t me = pthread_self();
     int policy;
     sched_param params;

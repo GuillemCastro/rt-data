@@ -104,7 +104,7 @@ void Serial::receive(std::vector<uint8_t>& out, size_t size) {
     }
 }
 
-speed_t Serial::convertBaudRate(const int baudRate) {
+speed_t Serial::convert_baud_rate(const int baudRate) {
     speed_t res;
     switch (baudRate) {
         case 9600:
@@ -168,7 +168,7 @@ speed_t Serial::convertBaudRate(const int baudRate) {
     return res;
 }
 
-uint32_t Serial::convertBits(const int bits) {
+uint32_t Serial::convert_bits(const int bits) {
     uint32_t res;
     switch (bits) {
         case 5:
@@ -190,7 +190,7 @@ uint32_t Serial::convertBits(const int bits) {
     return res;
 }
 
-uint32_t Serial::convertParity(Parity parity) {
+uint32_t Serial::convert_parity(Parity parity) {
     /**
     * The values for parity are,
     * NONE -> 0 (meaning no parity),

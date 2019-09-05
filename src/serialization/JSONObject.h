@@ -82,31 +82,31 @@ public:
      * @returns The deserialized value.
      */
 
-    virtual int getInt(const std::string& key) {
+    virtual int get_int(const std::string& key) {
         return _get<int>(key);
     }
 
-    virtual unsigned int getUInt(const std::string& key) {
+    virtual unsigned int get_uint(const std::string& key) {
         return _get<int>(key);
     }
 
-    virtual float getFloat(const std::string& key) {
+    virtual float get_float(const std::string& key) {
         return _get<float>(key);
     }
 
-    virtual double getDouble(const std::string& key) {
+    virtual double get_double(const std::string& key) {
         return _get<double>(key);
     }
 
-    virtual bool getBool(const std::string& key) {
+    virtual bool get_bool(const std::string& key) {
         return _get<bool>(key);
     }
 
-    virtual std::string getString(const std::string& key) {
+    virtual std::string get_string(const std::string& key) {
         return _get<std::string>(key);
     }
 
-    virtual uint64_t getLongInt(const std::string& key) {
+    virtual uint64_t get_long_int(const std::string& key) {
         return _get<uint64_t>(key);
     }
 
@@ -114,7 +114,7 @@ public:
      * Get the resulting JSON
      * @returns The serialized JSON
      */
-    nlohmann::json getJSON() const {
+    nlohmann::json get_JSON() const {
         return serialized;
     }
 
@@ -122,7 +122,7 @@ public:
      * Get the resulting JSON as a std::string
      * @returns The serialized JSON
      */
-    std::string getJSONString() {
+    std::string get_JSON_string() {
         return serialized.dump();
     }
 
@@ -130,8 +130,8 @@ public:
      * Obtain the bytes of the serialized object as JSON characters
      * @returns A vector of bytes representing the serialized object
      */
-    std::vector<uint8_t> getBytes() {
-        std::string json = getJSONString();
+    std::vector<uint8_t> get_bytes() {
+        std::string json = get_JSON_string();
         std::vector<uint8_t> result(json.begin(), json.end());
         return result;
     }

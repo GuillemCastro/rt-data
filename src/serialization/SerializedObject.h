@@ -58,24 +58,24 @@ public:
      * @returns The deserialized value.
      */
 
-    virtual int getInt(const std::string& key) = 0;
+    virtual int get_int(const std::string& key) = 0;
 
-    virtual unsigned int getUInt(const std::string& key) = 0;
+    virtual unsigned int get_uint(const std::string& key) = 0;
 
-    virtual float getFloat(const std::string& key) = 0;
+    virtual float get_float(const std::string& key) = 0;
 
-    virtual double getDouble(const std::string& key) = 0;
+    virtual double get_double(const std::string& key) = 0;
 
-    virtual bool getBool(const std::string& key) = 0;
+    virtual bool get_bool(const std::string& key) = 0;
 
-    virtual std::string getString(const std::string& key) = 0;
+    virtual std::string get_string(const std::string& key) = 0;
 
-    virtual uint64_t getLongInt(const std::string& key) = 0;
+    virtual uint64_t get_long_int(const std::string& key) = 0;
 
     /**
      * Obtain the bytes of the serialized object
      * @returns A vector of bytes representing the serialized object
      */
-    virtual std::vector<uint8_t> getBytes() = 0;
+    virtual std::vector<uint8_t> get_bytes() = 0;
 
 };

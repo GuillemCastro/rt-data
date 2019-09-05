@@ -138,9 +138,9 @@ public:
      */
     virtual void deserialize(SerializedObject* object) override;
 
-    double getValue() const;
+    double get_value() const;
 
-    void setValue(double value);
+    void set_value(double value);
 
 private:
 

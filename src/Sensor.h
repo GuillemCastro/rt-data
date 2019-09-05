@@ -97,13 +97,13 @@ public:
      * Is the sensor started?
      * @returns Whether or not the sensor has been started
      */
-    virtual bool isStarted() const;
+    virtual bool is_started() const;
 
     /**
      * Is the sensor stopped?
      * @returns Whether or not the sensor has been stopped
      */
-    virtual bool isStopped() const;
+    virtual bool is_stopped() const;
 
     /**
      * Fetch the read data by the sensor.
@@ -117,37 +117,37 @@ public:
      * Get the name of this sensor
      * @returns The name of the sensor
      */
-    std::string getName() const;
+    std::string get_name() const;
 
     /**
      * Get the topic of this sensor
      * @returns The topic this sensor is publishing to
      */
-    std::string getTopic() const;
+    std::string get_topic() const;
 
     /**
      * Get the sampling rate (in nanoseconds) for this second
      * @returns The sampling rate in nanoseconds
      */
-    uint64_t getSamplingRate() const;
+    uint64_t get_sampling_rate() const;
 
     /**
      * Set the name of this sensor. It does not need to be unique, but the combination of sensor name and topic shall be unique.
      * @param name An string identifier for this sensor
      */
-    void setName(const std::string& name);
+    void set_name(const std::string& name);
 
     /**
      * Set the topic this sensor will publish to. The combination of sensor name and topic shall be unique. 
      * @param name An string identifying a topic. 
      */
-    void setTopic(const std::string& topic);
+    void set_topic(const std::string& topic);
 
     /**
      * Set the sampling rate for the reading of this sensor. In nanoseconds.
      * @param rate The sampling rate in nanoseconds at which the sensor will be read.
      */
-    void setSamplingRate(uint64_t rate);
+    void set_sampling_rate(uint64_t rate);
 
 protected:
 

@@ -57,13 +57,13 @@ void AnalogData::serialize(SerializedObject* object) {
 
 void AnalogData::deserialize(SerializedObject* object) {
     Data::deserialize(object);
-    value = object->getDouble("analog_value");
+    value = object->get_double("analog_value");
 }
 
-double AnalogData::getValue() const {
+double AnalogData::get_value() const {
     return value;
 }
 
-void AnalogData::setValue(double value) {
+void AnalogData::set_value(double value) {
     this->value = value;
 }

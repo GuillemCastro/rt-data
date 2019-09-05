@@ -25,13 +25,13 @@ void SQLiteSerializationTest::dataSerializationTest() {
     Data d;
     Serializer s;
     std::string origin("test");
-    d.setTimestamp(epoch);
-    d.setOrigin(origin);
+    d.set_timestamp(epoch);
+    d.set_origin(origin);
     SQLiteObject sqlite_object = s.serialize<SQLiteObject>(d);
     Data d2;
     d2 = s.deserialize<Data>(sqlite_object);
-    CPPUNIT_ASSERT(epoch == d2.getTimestamp());
-    CPPUNIT_ASSERT(origin == d2.getOrigin());
-    CPPUNIT_ASSERT(sqlite_object.getInsert() == std::string("INSERT INTO default (origin, timestamp) VALUES (:origin, :timestamp);"));
-    CPPUNIT_ASSERT(sqlite_object.getCreateTable() == std::string("CREATE TABLE default (origin, timestamp);"));
+    CPPUNIT_ASSERT(epoch == d2.get_timestamp());
+    CPPUNIT_ASSERT(origin == d2.get_origin());
+    CPPUNIT_ASSERT(sqlite_object.get_insert() == std::string("INSERT INTO default (origin, timestamp) VALUES (:origin, :timestamp);"));
+    CPPUNIT_ASSERT(sqlite_object.get_create_table() == std::string("CREATE TABLE default (origin, timestamp);"));
 }

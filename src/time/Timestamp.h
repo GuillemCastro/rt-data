@@ -70,7 +70,7 @@ public:
      * @params uints The units of the point in time
      * @returns a Timestamp representing the point in time 
      */
-    static Timestamp fromDuration(uint64_t time, TimeUnit units) {
+    static Timestamp from_duration(uint64_t time, TimeUnit units) {
         uint64_t nanos = TimeUnit::convert(time, units, TimeUnit::nanoseconds);
         return Timestamp(nanos);
     }
@@ -79,26 +79,26 @@ public:
      * Return an integer representing the number of seconds
      * since epoch (implementation specific)
      */
-    uint64_t toSeconds() const;
+    uint64_t to_seconds() const;
 
     /**
      * Return an integer representing the number of milliseconds
      * since epoch (implementation specific)
      */
-    uint64_t toMillis() const;
+    uint64_t to_millis() const;
 
 
     /**
      * Return an integer representing the number of microseconds
      * since epoch (implementation specific)
      */
-    uint64_t toMicros() const;
+    uint64_t to_micros() const;
 
     /**
      * Return an integer representing the number of nanoseconds
      * since epoch (implementation specific)
      */
-    uint64_t toNanos() const;
+    uint64_t to_nanos() const;
 
     /**
      * Substract two timestamps
@@ -139,7 +139,7 @@ public:
      * @returns a new Timestamp with the sum of the old timestamp and the passed duration
      */
     Timestamp operator+(const Duration& duration) const {
-        return Timestamp(this->nanos + duration.toNanos());
+        return Timestamp(this->nanos + duration.to_nanos());
     }
 
     /**
@@ -148,7 +148,7 @@ public:
      * @returns a new Timestamp with the substraction of the passed duration to the old timestamp
      */
     Timestamp operator-(const Duration& duration) const {
-        return Timestamp(this->nanos - duration.toNanos());
+        return Timestamp(this->nanos - duration.to_nanos());
     }
 
     /**
