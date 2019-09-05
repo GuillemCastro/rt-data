@@ -40,7 +40,7 @@ public:
     /**
      * Default constructor
      */
-    TCPWriter(const std::string& host, int port) : host(host), port(port), is_open(false) {
+    TCPWriter(const std::string& host, int port) : host(host), port(port), isopen(false) {
 
     }
 
@@ -48,7 +48,7 @@ public:
      * Destructor. By default closes the socket.
      */
     ~TCPWriter() {
-        if (is_open) {
+        if (isopen) {
             try {
                 close();
             }
@@ -92,13 +92,13 @@ public:
      * Is the TCPWriter open?
      * @returns Whether or not the TCPWriter is open
      */
-    virtual bool isOpen();
+    virtual bool is_open();
 
     /**
      * Is the TCPWriter closed?
      * @returns Whether or not the TCPWriter is closed
      */
-    virtual bool isClosed();
+    virtual bool is_closed();
 
 private:
 
@@ -106,7 +106,7 @@ private:
 
     int port;
 
-    std::atomic<bool> is_open;
+    std::atomic<bool> isopen;
 
     int socket_fd;
 

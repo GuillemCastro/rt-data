@@ -60,12 +60,12 @@ public:
      * Is the writer open?
      * @returns Whether the Writer is open or not
      */
-    virtual bool isOpen() = 0;
+    virtual bool is_open() = 0;
 
     /**
      * Is the writer closed?
      * @returns Whether the Writer is closed or not
      */
-    virtual bool isClosed() = 0;
+    virtual bool is_closed() = 0;
 
 };

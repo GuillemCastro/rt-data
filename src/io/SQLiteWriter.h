@@ -41,7 +41,7 @@ public:
      * Default constructor.
      * @param file The database file
      */
-    explicit SQLiteWriter(const std::string& file) : is_open(false), rt_optimization(false), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
+    explicit SQLiteWriter(const std::string& file) : isopen(false), rt_optimization(false), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -50,7 +50,7 @@ public:
      * @param file The database file
      * @param bufferSize The maximum size for the buffer. If this size is exceeded, flush() will be called.
      */
-    SQLiteWriter(const std::string& file, int bufferSize) : is_open(false), rt_optimization(false), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(const std::string& file, int bufferSize) : isopen(false), rt_optimization(false), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -60,7 +60,7 @@ public:
      * @param optimization Applies some optimizations. MIGHT CAUSE DATA LOSS. The journal is set to memory and SQLite does not
      *          verify if the data has been written to disk by the OS
      */
-    SQLiteWriter(const std::string& file, bool optimization) : is_open(false), rt_optimization(optimization), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(const std::string& file, bool optimization) : isopen(false), rt_optimization(optimization), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -71,7 +71,7 @@ public:
      * @param optimization Applies some optimizations. MIGHT CAUSE DATA LOSS. The journal is set to memory and SQLite does not
      *          verify if the data has been written to disk by the OS
      */
-    SQLiteWriter(const std::string& file, int bufferSize, bool optimization) : is_open(false), rt_optimization(optimization), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
+    SQLiteWriter(const std::string& file, int bufferSize, bool optimization) : isopen(false), rt_optimization(optimization), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
 
     }
 
@@ -117,19 +117,19 @@ public:
      * Is the writer open?
      * @returns Whether the Writer is open or not
      */
-    virtual bool isOpen();
+    virtual bool is_open();
 
     /**
      * Is the writer closed?
      * @returns Whether the Writer is closed or not
      */
-    virtual bool isClosed();
+    virtual bool is_closed();
 
 private:
 
     std::vector<SQLiteObject> buffer;
 
-    bool is_open;
+    bool isopen;
 
     bool rt_optimization;
 

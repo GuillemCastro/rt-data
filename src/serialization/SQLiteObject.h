@@ -83,27 +83,27 @@ public:
      * @returns The deserialized value.
      */
 
-    virtual int getInt(const std::string& key) {
+    virtual int get_int(const std::string& key) {
         return contents[key]->get<int>();
     }
 
-    virtual unsigned int getUInt(const std::string& key) {
+    virtual unsigned int get_uint(const std::string& key) {
         return contents[key]->get<unsigned int>();
     }
 
-    virtual float getFloat(const std::string& key) {
+    virtual float get_float(const std::string& key) {
         return contents[key]->get<float>();
     }
 
-    virtual double getDouble(const std::string& key) {
+    virtual double get_double(const std::string& key) {
         return contents[key]->get<double>();
     }
 
-    virtual bool getBool(const std::string& key) {
+    virtual bool get_bool(const std::string& key) {
         return contents[key]->get<bool>();
     }
 
-    virtual std::string getString(const std::string& key) {
+    virtual std::string get_string(const std::string& key) {
         std::string content = contents[key]->get<std::string>();
         if (content[0] == '\"' && content[ content.size() -1 ] == '\"') {
             content.erase( content.begin() );
@@ -112,7 +112,7 @@ public:
         return content;
     }
 
-    virtual uint64_t getLongInt(const std::string& key) {
+    virtual uint64_t get_long_int(const std::string& key) {
         return contents[key]->get<uint64_t>();
     }
 
@@ -120,7 +120,7 @@ public:
      * Get the prepared statement for inserting data
      * @returns A SQL prepared statement that can be used to insert data from the serialized class 
      */
-    std::string getInsert() {
+    std::string get_insert() {
         std::ostringstream insert;
         bool first = true;
         insert << "INSERT INTO " << table << " (";
@@ -152,7 +152,7 @@ public:
      * Get the statement that can be used to create a table for the serialized class
      * @returns The create statement for the table representing the original serialized class
      */
-    std::string getCreateTable() {
+    std::string get_create_table() {
         std::ostringstream create_table;
         bool first = true;
         create_table << "CREATE TABLE " << table << " (";
@@ -173,7 +173,7 @@ public:
      * Get the table name
      * @returns The table name
      */
-    std::string getTable() const {
+    std::string get_table() const {
         return table;
     }
 
@@ -181,7 +181,7 @@ public:
      * Bind the values of this serialized object to a prepared statement
      * @params insert The statement where the values have to be bind to.
      */
-    void bindValues(SQLite::Statement& insert) {
+    void bind_values(SQLite::Statement& insert) {
         for (auto& column : contents) {
             bind_column(insert, column.first);
         }
@@ -191,7 +191,7 @@ public:
      * Obtain the bytes of the serialized object. Returns an empty vector
      * @returns An empty vector
      */
-    std::vector<uint8_t> getBytes() {
+    std::vector<uint8_t> get_bytes() {
         std::vector<uint8_t> result;
         return result;
     }

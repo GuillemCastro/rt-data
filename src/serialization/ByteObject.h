@@ -85,31 +85,31 @@ public:
      * @returns The deserialized value.
      */
 
-    virtual int getInt(const std::string& key) {
+    virtual int get_int(const std::string& key) {
         return _get<int>(key);
     }
 
-    virtual unsigned int getUInt(const std::string& key) {
+    virtual unsigned int get_uint(const std::string& key) {
         return _get<int>(key);
     }
 
-    virtual float getFloat(const std::string& key) {
+    virtual float get_float(const std::string& key) {
         return _get<float>(key);
     }
 
-    virtual double getDouble(const std::string& key) {
+    virtual double get_double(const std::string& key) {
         return _get<double>(key);
     }
 
-    virtual bool getBool(const std::string& key) {
+    virtual bool get_bool(const std::string& key) {
         return _get<bool>(key);
     }
 
-    virtual std::string getString(const std::string& key) {
+    virtual std::string get_string(const std::string& key) {
         return _get_string(key);
     }
 
-    virtual uint64_t getLongInt(const std::string& key) {
+    virtual uint64_t get_long_int(const std::string& key) {
         return _get<uint64_t>(key);
     }
 
@@ -120,7 +120,7 @@ public:
      * Every value has prepended its size (or length)
      * |size of object1|object1 bytes|size of object2|object2 bytes|
      */
-    std::vector<uint8_t> getBytes() {
+    std::vector<uint8_t> get_bytes() {
         std::vector<uint8_t> result(sizeof(uint32_t) + bytes.size());
         std::copy(bytes.begin(), bytes.end(), result.begin() + sizeof(uint32_t));
         uint32_t total_size = bytes.size();

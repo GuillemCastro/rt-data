@@ -29,18 +29,18 @@ Timestamp Timestamp::now() {
     return Timestamp(value.count());
 }
 
-uint64_t Timestamp::toSeconds() const {
+uint64_t Timestamp::to_seconds() const {
     return TimeUnit::convert(nanos, TimeUnit::nanoseconds, TimeUnit::seconds);
 }
 
-uint64_t Timestamp::toMillis() const {
+uint64_t Timestamp::to_millis() const {
     return TimeUnit::convert(nanos, TimeUnit::nanoseconds, TimeUnit::milliseconds);
 }
 
-uint64_t Timestamp::toMicros() const {
+uint64_t Timestamp::to_micros() const {
     return TimeUnit::convert(nanos, TimeUnit::nanoseconds, TimeUnit::microseconds);
 }
 
-uint64_t Timestamp::toNanos() const {
+uint64_t Timestamp::to_nanos() const {
     return this->nanos;
 }

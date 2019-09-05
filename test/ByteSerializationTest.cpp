@@ -23,11 +23,11 @@ void ByteSerializationTest::dataSerializationTest() {
     Data d;
     Serializer s;
     std::string origin("test");
-    d.setTimestamp(epoch);
-    d.setOrigin(origin);
+    d.set_timestamp(epoch);
+    d.set_origin(origin);
     ByteObject byteSerialized = s.serialize<ByteObject>(d);
     Data d2;
     d2.deserialize(&byteSerialized);
-    CPPUNIT_ASSERT(epoch == d2.getTimestamp());
-    CPPUNIT_ASSERT(origin == d2.getOrigin());
+    CPPUNIT_ASSERT(epoch == d2.get_timestamp());
+    CPPUNIT_ASSERT(origin == d2.get_origin());
 }

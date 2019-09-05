@@ -46,7 +46,7 @@ public:
      * @param bits The lenght of a Character. 5, 6, 7 or 8 bits
      * @param parity The type of parity of the characters
      */
-    Serial(const std::string& file, int baudRate, int bits, Parity parity) : file(file), baud_rate(convertBaudRate(baudRate)), bits(convertBits(bits)), parity(convertParity(parity)), is_open(false) {
+    Serial(const std::string& file, int baudRate, int bits, Parity parity) : file(file), baud_rate(convert_baud_rate(baudRate)), bits(convert_bits(bits)), parity(convert_parity(parity)), is_open(false) {
 
     }
 
@@ -105,11 +105,11 @@ private:
 
     /** Helper methods for conversions **/
 
-    static speed_t convertBaudRate(int baudRate);
+    static speed_t convert_baud_rate(int baudRate);
 
-    static uint32_t convertBits(int bits);
+    static uint32_t convert_bits(int bits);
 
-    static uint32_t convertParity(Parity parity);
+    static uint32_t convert_parity(Parity parity);
 
     /** End helper methods **/
 

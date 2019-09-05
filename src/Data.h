@@ -68,7 +68,7 @@ public:
      */
     Data& operator=(const Data& other) {
         if (this != &other) {
-            this->time = Timestamp(other.time.toNanos());
+            this->time = Timestamp(other.time.to_nanos());
             this->origin = std::string(other.origin);
         }
         return *this;
@@ -77,29 +77,29 @@ public:
     /**
      * Returns the timestamp when this data was created.
      */
-    Timestamp getTimestamp() const;
+    Timestamp get_timestamp() const;
 
     /**
      * Returns who generated this data.
      */
-    std::string getOrigin() const;
+    std::string get_origin() const;
 
     /**
      * Set the timestamp when this data was created.
      */
-    void setTimestamp(const Timestamp& time);
+    void set_timestamp(const Timestamp& time);
 
     /**
      * Sets who generated this data.
      */
-    void setOrigin(const std::string& origin);
+    void set_origin(const std::string& origin);
 
     /**
      * Serialize the Data. Do not call directly.
      * @param object The resulting SerializedObject where the data must be saved.
      */
     virtual void serialize(SerializedObject* object) override {
-        object->put("timestamp", time.toNanos());
+        object->put("timestamp", time.to_nanos());
         object->put("origin", origin);
     }
 
@@ -108,8 +108,8 @@ public:
      * @param object The SerializedObject to load the data from.
      */
     virtual void deserialize(SerializedObject* object) override {
-        time = Timestamp(object->getLongInt("timestamp"));
-        origin = object->getString("origin");
+        time = Timestamp(object->get_long_int("timestamp"));
+        origin = object->get_string("origin");
     }
 
 protected:

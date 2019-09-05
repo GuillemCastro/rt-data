@@ -26,7 +26,7 @@ class Application {
 public:
 
     Application() {
-        manager.setBroker(&broker);
+        manager.set_broker(&broker);
     }
 
     virtual void setup();

@@ -55,37 +55,37 @@ public:
      * @param policy The SchedulingPolicy for this thread
      * @param priority The priority for this thread between 0 (min priority) and 99 (max priority)
      */
-    void setSchedulingPolicy(SchedulingPolicy policy, int priority);
+    void set_scheduling_policy(SchedulingPolicy policy, int priority);
 
     /**
      * Get the current scheduling policy for the current thread
      * @returns The policy used by the scheduler for this thread
      */
-    SchedulingPolicy getCurrentSchedulingPolicy();
+    SchedulingPolicy get_current_scheduling_policy();
 
     /**
      * Get the current priority for the current thread
      * @returns The priority used by the scheduler for this thread
      */
-    int getCurrentPriority();
+    int get_current_priority();
 
     /**
      * Get the minimum priority for a given SchedulingPolicy
      * @param policy A SchedulingPolicy
      * @returns The minimum priority for the given policy (tipically 0)
      */
-    static int getMinSchedulingPriority(SchedulingPolicy policy);
+    static int get_min_scheduling_priority(SchedulingPolicy policy);
 
     /**
      * Get the maximum priority for a given SchedulingPolicy
      * @param policy A SchedulingPolicy
      * @returns The maximum priority for the given policy
      */
-    static int getMaxSchedulingPriority(SchedulingPolicy policy);
+    static int get_max_scheduling_priority(SchedulingPolicy policy);
 
 private:
 
-    static int convertPolicy(SchedulingPolicy policy);
+    static int convert_policy(SchedulingPolicy policy);
 
 };
 
@@ -99,12 +99,12 @@ namespace this_thread {
      * Get the current scheduling policy for the current thread
      * @returns The policy used by the scheduler for this thread
      */
-    SchedulingPolicy getCurrentSchedulingPolicy();
+    SchedulingPolicy get_current_scheduling_policy();
 
     /**
      * Get the current priority for the current thread
      * @returns The priority used by the scheduler for this thread
      */
-    int getCurrentPriority();
+    int get_current_priority();
 
 };

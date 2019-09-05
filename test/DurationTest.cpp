@@ -21,8 +21,8 @@
 
 void DurationTest::conversionTest() {
     Duration test(1000000000, TimeUnit::nanoseconds);
-    CPPUNIT_ASSERT(1 == test.toSeconds());
-    CPPUNIT_ASSERT(1000 == test.toMillis());
-    CPPUNIT_ASSERT(1000000 == test.toMicros());
-    CPPUNIT_ASSERT(1000000000 == test.toNanos());
+    CPPUNIT_ASSERT(1 == test.to_seconds());
+    CPPUNIT_ASSERT(1000 == test.to_millis());
+    CPPUNIT_ASSERT(1000000 == test.to_micros());
+    CPPUNIT_ASSERT(1000000000 == test.to_nanos());
 }

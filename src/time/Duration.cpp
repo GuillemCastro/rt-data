@@ -18,18 +18,18 @@
 
 #include "Duration.h"
 
-uint64_t Duration::toSeconds() const {
-    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::seconds);
+uint64_t Duration::to_seconds() const {
+    return TimeUnit::convert(to_nanos(), TimeUnit::nanoseconds, TimeUnit::seconds);
 }
 
-uint64_t Duration::toMillis() const {
-    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::milliseconds);
+uint64_t Duration::to_millis() const {
+    return TimeUnit::convert(to_nanos(), TimeUnit::nanoseconds, TimeUnit::milliseconds);
 }
 
-uint64_t Duration::toMicros() const {
-    return TimeUnit::convert(toNanos(), TimeUnit::nanoseconds, TimeUnit::microseconds);
+uint64_t Duration::to_micros() const {
+    return TimeUnit::convert(to_nanos(), TimeUnit::nanoseconds, TimeUnit::microseconds);
 }
 
-uint64_t Duration::toNanos() const {
+uint64_t Duration::to_nanos() const {
     return (nanos_end - nanos_start);
 }

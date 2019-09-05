@@ -18,18 +18,18 @@
 
 #include "Data.h"
 
-Timestamp Data::getTimestamp() const {
+Timestamp Data::get_timestamp() const {
     return time;
 }
 
-std::string Data::getOrigin() const {
+std::string Data::get_origin() const {
     return origin;
 }
 
-void Data::setTimestamp(const Timestamp& time) {
+void Data::set_timestamp(const Timestamp& time) {
     this->time = time;
 }
 
-void Data::setOrigin(const std::string& origin) {
+void Data::set_origin(const std::string& origin) {
     this->origin = origin;
 }

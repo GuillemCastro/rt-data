@@ -18,7 +18,7 @@
 
 #include "SensorsManager.h"
 
-void SensorsManager::addSensor(std::shared_ptr<Sensor> sensor) {
+void SensorsManager::add_sensor(std::shared_ptr<Sensor> sensor) {
     if (stopped) {
         throw std::runtime_error("Cannot add a new Sensor to a stopped SensorsManager");
     }
@@ -30,7 +30,7 @@ void SensorsManager::addSensor(std::shared_ptr<Sensor> sensor) {
     }
 }
 
-void SensorsManager::removeSensor(std::shared_ptr<Sensor> sensor) {
+void SensorsManager::remove_sensor(std::shared_ptr<Sensor> sensor) {
     std::unique_lock<std::mutex> lck(sensor_mtx);
     for (std::size_t i = 0; i < sensors.size(); ++i) {
         if (sensors[i] == sensor) {
@@ -44,7 +44,7 @@ void SensorsManager::start() {
         throw std::runtime_error("Cannot start already started or stopped SensorsManager");
     }
     for (auto& sensor : sensors) {
-        if (!sensor->isStarted() && !sensor->isStopped()) {
+        if (!sensor->is_started() && !sensor->is_stopped()) {
             sensor->start();
         }
     }
@@ -57,7 +57,7 @@ void SensorsManager::stop() {
         throw std::runtime_error("Cannot stop not started or already stopped SensorsManager");
     }
     for (auto& sensor : sensors) {
-        if (!sensor->isStopped() && sensor->isStarted()) {
+        if (!sensor->is_stopped() && sensor->is_started()) {
             sensor->stop();
         }
     }
@@ -80,14 +80,14 @@ void SensorsManager::run() {
     }
 }
 
-bool SensorsManager::isStarted() const {
+bool SensorsManager::is_started() const {
     return started;
 }
 
-bool SensorsManager::isStopped() const {
+bool SensorsManager::is_stopped() const {
     return stopped;
 }
 
-void SensorsManager::setBroker(Broker* broker) {
+void SensorsManager::set_broker(Broker* broker) {
     this->broker = broker;
 }

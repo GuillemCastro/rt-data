@@ -24,7 +24,7 @@ void ThreadPool::init_threads() {
     }
 }
 
-void ThreadPool::addJob(std::function<void(void)> job) {
+void ThreadPool::add_job(std::function<void(void)> job) {
     queue.push(job);
     new_job.notify_one();
 }
@@ -58,10 +58,10 @@ void ThreadPool::join() {
     }
 }
 
-void ThreadPool::setSchedulingPolicy(SchedulingPolicy policy, int priority) {
+void ThreadPool::set_scheduling_policy(SchedulingPolicy policy, int priority) {
     for (std::size_t i = 0; i < threads.size(); ++i) {
         try {
-           threads[i].setSchedulingPolicy(policy, priority);
+           threads[i].set_scheduling_policy(policy, priority);
         }
         catch (const std::runtime_error& ex) {
             Log::log(WARNING) << "While setting a ThreadPool's thread scheduling policy an exception was thrown: " << ex.what();

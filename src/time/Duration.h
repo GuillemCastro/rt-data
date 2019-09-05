@@ -70,22 +70,22 @@ public:
     /**
      * Get the duration value as an integral representing seconds
      */
-    uint64_t toSeconds() const;
+    uint64_t to_seconds() const;
 
     /**
      * Get the duration value as an integral representing milliseconds
      */
-    uint64_t toMillis() const;
+    uint64_t to_millis() const;
 
     /**
      * Get the duration value as an integral representing microseconds
      */
-    uint64_t toMicros() const;
+    uint64_t to_micros() const;
 
     /**
      * Get the duration value as an integral representing nanoseconds
      */
-    uint64_t toNanos() const;
+    uint64_t to_nanos() const;
 
 private:
 

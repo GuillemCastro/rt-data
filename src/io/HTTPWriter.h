@@ -70,13 +70,13 @@ public:
      * Is the HTTPWriter open?
      * @returns Whether or not this object has been initialized
      */
-    virtual bool isOpen();
+    virtual bool is_open();
 
     /**
      * Is the HTTPWriter closed?
      * @returns Whether or not this object has been cleaned up
      */
-    virtual bool isClosed();
+    virtual bool is_closed();
 
     /**
      * Does nothing

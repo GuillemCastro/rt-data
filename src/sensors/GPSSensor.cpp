@@ -38,162 +38,162 @@ void GPSSensor::read() {
             return; // invalid gps data
         }
         std::shared_ptr<GPSData> gps_data = std::make_shared<GPSData>(gpsd_data);
-        gps_data->setOrigin(name);
+        gps_data->set_origin(name);
         queue.push(gps_data);
     }
 }
 
-std::string GPSSensor::getHost() const {
+std::string GPSSensor::get_host() const {
     return host;
 }
 
-std::string GPSSensor::getPort() const {
+std::string GPSSensor::get_port() const {
     return port;
 }
 
-void GPSSensor::setHost(const std::string& host) {
+void GPSSensor::set_host(const std::string& host) {
     this->host = host;
 }
 
-void GPSSensor::setPort(const std::string& port) {
+void GPSSensor::set_port(const std::string& port) {
     this->port = port;
 }
 
-Timestamp GPSData::getGPSTime() const {
+Timestamp GPSData::get_GPS_time() const {
     return gps_time;
 }
 
-GPSStatus GPSData::getGPSStatus() const {
+GPSStatus GPSData::get_GPS_status() const {
     return status;
 }
 
-int GPSData::getSatellitesUsed() const {
+int GPSData::get_satellites_used() const {
     return number_of_satellites_used;
 }
 
-int GPSData::getSatellitesVisible() const {
+int GPSData::get_satellites_visible() const {
     return number_of_satellites_visible;
 }
 
-FixMode GPSData::getFixMode() const {
+FixMode GPSData::get_fix_mode() const {
     return fix_mode;
 }
 
-double GPSData::getLongitude() const {
+double GPSData::get_longitude() const {
     return longitude;
 }
 
-double GPSData::getLatitude() const {
+double GPSData::get_latitude() const {
     return latitude;
 }
 
-double GPSData::getAltitude() const {
+double GPSData::get_altitude() const {
     return altitude;
 }
 
-double GPSData::getTrack() const {
+double GPSData::get_track() const {
     return track;
 }
 
-double GPSData::getGroundSpeed() const {
+double GPSData::get_ground_speed() const {
     return ground_speed;
 }
 
-double GPSData::getVerticalSpeed() const {
+double GPSData::get_vertical_speed() const {
     return vertical_speed;
 }
 
-double GPSData::getLatitudeUncertainty() const {
+double GPSData::get_latitude_uncertainty() const {
     return latitude_uncertainty;
 }
 
-double GPSData::getLongitudeUncertainty() const {
+double GPSData::get_longitude_uncertainty() const {
     return longitude_uncertainty;
 }
 
-double GPSData::getTrackUncertainty() const {
+double GPSData::get_track_uncertainty() const {
     return track_uncertainty;
 }
 
-double GPSData::getGroundSpeedUncertainty() const {
+double GPSData::get_ground_speed_uncertainty() const {
     return ground_speed_uncertainty;
 }
 
-double GPSData::getVerticalSpeedUncertainty() const {
+double GPSData::get_vertical_speed_uncertainty() const {
     return vertical_speed_uncertainty;
 }
 
-void GPSData::setGPSTime(const Timestamp& time) {
+void GPSData::set_GPS_time(const Timestamp& time) {
     this->gps_time = time;
 }
 
-void GPSData::setStatus(GPSStatus status) {
+void GPSData::set_GPS_status(GPSStatus status) {
     this->status = status;
 }
 
-void GPSData::setSatellitesUsed(int usedSatellites) {
+void GPSData::set_satellites_used(int usedSatellites) {
     this->number_of_satellites_used = usedSatellites;
 }
 
-void GPSData::setSatellitesVisible(int visibleSatellites) {
+void GPSData::set_satellites_visible(int visibleSatellites) {
     this->number_of_satellites_visible = visibleSatellites;
 }
 
-void GPSData::setFixMode(FixMode fixMode) {
+void GPSData::set_fix_mode(FixMode fixMode) {
     this->fix_mode = fixMode;
 }
 
-void GPSData::setLongitude(double longitude) {
+void GPSData::set_longitude(double longitude) {
     this->longitude = longitude;
 }
 
-void GPSData::setLatitude(double latitude) {
+void GPSData::set_latitude(double latitude) {
     this->latitude = latitude;
 }
 
-void GPSData::setAltitude(double altitude) {
+void GPSData::set_altitude(double altitude) {
     this->altitude = altitude;
 }
 
-void GPSData::setTrack(double track) {
+void GPSData::set_track(double track) {
     this->track = track;
 }
 
-void GPSData::setGroundSpeed(double groundSpeed) {
+void GPSData::set_ground_speed(double groundSpeed) {
     this->ground_speed = groundSpeed;
 }
 
-void GPSData::setVerticalSpeed(double verticalSpeed) {
+void GPSData::set_vertical_speed(double verticalSpeed) {
     this->vertical_speed = verticalSpeed;
 }
 
-void GPSData::setLatitudeUncertainty(double latitudeUncertainty) {
+void GPSData::set_latitude_uncertainty(double latitudeUncertainty) {
     this->latitude_uncertainty = latitudeUncertainty;
 }
 
-void GPSData::setLongitudeUncertainty(double longitudeUncertainty) {
+void GPSData::set_longitude_uncertainty(double longitudeUncertainty) {
     this->longitude_uncertainty = longitudeUncertainty;
 }
 
-void GPSData::setAltitudeUncertainty(double altitudeUncertainty) {
+void GPSData::set_altitude_uncertainty(double altitudeUncertainty) {
     this->altitude_uncertainty = altitudeUncertainty;
 }
 
-void GPSData::setTrackUncertainty(double trackUncertainty) {
+void GPSData::set_track_uncertainty(double trackUncertainty) {
     this->track_uncertainty = trackUncertainty;
 }
 
-void GPSData::setGroundSpeedUncertainty(double groundSpeedUncertainty) {
+void GPSData::set_ground_speed_uncertainty(double groundSpeedUncertainty) {
     this->ground_speed_uncertainty = groundSpeedUncertainty;
 }
 
-void GPSData::setVerticalSpeedUncertainty(double verticalSpeedUncertainty) {
+void GPSData::set_vertical_speed_uncertainty(double verticalSpeedUncertainty) {
     this->vertical_speed_uncertainty = verticalSpeedUncertainty;
 }
 
 void GPSData::serialize(SerializedObject* object) {
     Data::serialize(object);
-    object->put("gps_time", (unsigned int)gps_time.toNanos());
+    object->put("gps_time", (unsigned int)gps_time.to_nanos());
     object->put("status", (int)status);
     object->put("number_of_satellites_used", number_of_satellites_used);
     object->put("number_of_satellites_visible", number_of_satellites_visible);
@@ -214,21 +214,21 @@ void GPSData::serialize(SerializedObject* object) {
 
 void GPSData::deserialize(SerializedObject* object) {
     Data::deserialize(object);
-    gps_time = Timestamp(object->getUInt("gps_time"));
-    status = (GPSStatus)object->getInt("status");
-    number_of_satellites_used = object->getInt("number_of_satellites_used");
-    number_of_satellites_visible = object->getInt("number_of_satellites_visible");
-    fix_mode = (FixMode)object->getInt("fix_mode");
-    longitude = object->getDouble("longitude");
-    latitude = object->getDouble("latitude");
-    altitude = object->getDouble("altitude");
-    track = object->getDouble("track");
-    ground_speed = object->getDouble("ground_speed");
-    vertical_speed = object->getDouble("vertical_speed");
-    latitude_uncertainty = object->getDouble("latitude_uncertainty");
-    longitude_uncertainty = object->getDouble("longitude_uncertainty");
-    altitude_uncertainty = object->getDouble("altitude_uncertainty");
-    track_uncertainty = object->getDouble("track_uncertainty");
-    ground_speed_uncertainty = object->getDouble("ground_speed_uncertainty");
-    vertical_speed_uncertainty = object->getDouble("vertical_speed_uncertainty");
+    gps_time = Timestamp(object->get_uint("gps_time"));
+    status = (GPSStatus)object->get_int("status");
+    number_of_satellites_used = object->get_int("number_of_satellites_used");
+    number_of_satellites_visible = object->get_int("number_of_satellites_visible");
+    fix_mode = (FixMode)object->get_int("fix_mode");
+    longitude = object->get_double("longitude");
+    latitude = object->get_double("latitude");
+    altitude = object->get_double("altitude");
+    track = object->get_double("track");
+    ground_speed = object->get_double("ground_speed");
+    vertical_speed = object->get_double("vertical_speed");
+    latitude_uncertainty = object->get_double("latitude_uncertainty");
+    longitude_uncertainty = object->get_double("longitude_uncertainty");
+    altitude_uncertainty = object->get_double("altitude_uncertainty");
+    track_uncertainty = object->get_double("track_uncertainty");
+    ground_speed_uncertainty = object->get_double("ground_speed_uncertainty");
+    vertical_speed_uncertainty = object->get_double("vertical_speed_uncertainty");
 }

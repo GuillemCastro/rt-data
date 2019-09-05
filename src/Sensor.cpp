@@ -24,8 +24,8 @@ void Sensor::start() {
     }
     this->sensor_thread = Thread(&Sensor::run, this);
     try {
-        int priority = Thread::getMaxSchedulingPriority(SchedulingPolicy::RT_ROUND_ROBIN) - 1;
-        this->sensor_thread.setSchedulingPolicy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
+        int priority = Thread::get_max_scheduling_priority(SchedulingPolicy::RT_ROUND_ROBIN) - 1;
+        this->sensor_thread.set_scheduling_policy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
     }
     catch (std::runtime_error& ex) {
         Log::log(WARNING) << "[" << name << "] While setting the sensor's thread scheduling policy an exception was thrown: " << ex.what();
@@ -42,11 +42,11 @@ void Sensor::stop() {
     this->sensor_thread.join();
 }
 
-bool Sensor::isStarted() const {
+bool Sensor::is_started() const {
     return started;
 }
 
-bool Sensor::isStopped() const {
+bool Sensor::is_stopped() const {
     return stopped;
 }
 
@@ -64,26 +64,26 @@ void Sensor::fetch(Broker* broker) {
     }
 }
 
-std::string Sensor::getName() const {
+std::string Sensor::get_name() const {
     return name;
 }
 
-std::string Sensor::getTopic() const {
+std::string Sensor::get_topic() const {
     return topic;
 }
 
-uint64_t Sensor::getSamplingRate() const {
+uint64_t Sensor::get_sampling_rate() const {
     return sampling_rate;
 }
 
-void Sensor::setName(const std::string& name) {
+void Sensor::set_name(const std::string& name) {
     this->name = name;
 }
 
-void Sensor::setTopic(const std::string& topic) {
+void Sensor::set_topic(const std::string& topic) {
     this->topic = topic;
 }
 
-void Sensor::setSamplingRate(uint64_t rate) {
+void Sensor::set_sampling_rate(uint64_t rate) {
     this->sampling_rate = rate;
 }

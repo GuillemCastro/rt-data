@@ -41,7 +41,7 @@ void HTTPWriter::write(std::string topic, std::shared_ptr<Data> data) {
     }
     JSONObject json(topic);
     data->serialize(&json);
-    nlohmann::json post_body = json.getJSON();
+    nlohmann::json post_body = json.get_JSON();
     std::string post_body_str = post_body.dump();
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, hs);
@@ -60,11 +60,11 @@ void HTTPWriter::close() {
     }
 }
 
-bool HTTPWriter::isOpen() {
+bool HTTPWriter::is_open() {
     return curl_init;
 }
 
-bool HTTPWriter::isClosed() {
+bool HTTPWriter::is_closed() {
     return !curl_init;
 }
 

@@ -72,7 +72,7 @@ public:
      * Queue a new job to be executed by the pool
      * @param job A function to be executed. Must have no parameters and return nothing.
      */
-    void addJob(std::function<void(void)> job);
+    void add_job(std::function<void(void)> job);
 
     /**
      * Wait for all the jobs in execution and join the threads
@@ -85,7 +85,7 @@ public:
      * @param policy The SchedulingPolicy that will follow the threads
      * @param priority The priority for the threads
      */
-    void setSchedulingPolicy(SchedulingPolicy policy, int priority);
+    void set_scheduling_policy(SchedulingPolicy policy, int priority);
 
     /**
      * Get the number of threads managed by the class
@@ -99,7 +99,7 @@ public:
      * Get the number of jobs in execution
      * @returns the number of jobs in execution
      */
-    int inExecution() const {
+    int in_execution() const {
         return jobs_in_execution;
     }
 
