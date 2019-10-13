@@ -39,8 +39,19 @@ public:
      * Default constructor
      * @param url The URL of the HTTP endpoint
      */
-    explicit HTTPWriter(const std::string& url) : url(url) {
+    explicit HTTPWriter(const std::string& url) : url(url), isopen(false) {
+        open();
+    }
 
+    ~HTTPWriter() {
+        try {
+            if (is_open()) {
+                close();
+            }
+        }
+        catch(...) {
+            // Nothing to do here...
+        }
     }
 
     /**
@@ -87,10 +98,14 @@ private:
 
     static std::atomic<bool> curl_init;
 
+    static std::atomic<unsigned int> curl_count;
+
     std::string url;
 
     Serializer serializer;
 
     std::mutex mtx;
+
+    bool isopen;
 
 };

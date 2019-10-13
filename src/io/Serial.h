@@ -46,8 +46,8 @@ public:
      * @param bits The lenght of a Character. 5, 6, 7 or 8 bits
      * @param parity The type of parity of the characters
      */
-    Serial(const std::string& file, int baudRate, int bits, Parity parity) : file(file), baud_rate(convert_baud_rate(baudRate)), bits(convert_bits(bits)), parity(convert_parity(parity)), is_open(false) {
-
+    Serial(const std::string& file, int baudRate, int bits, Parity parity) : file(file), baud_rate(convert_baud_rate(baudRate)), bits(convert_bits(bits)), parity(convert_parity(parity)), isopen(false) {
+        start();
     }
 
     /**
@@ -65,6 +65,15 @@ public:
      */
     explicit Serial(const std::string& file) : Serial(file, 9600, 8, NONE) {
 
+    }
+
+    ~Serial() {
+        try {
+            stop();
+        }
+        catch (...) {
+            // Nothing to do here
+        }
     }
 
     /**
@@ -101,6 +110,18 @@ public:
      */
     void receive(std::vector<uint8_t>& out, size_t size);
 
+    /**
+     * Is the Serial port open?
+     * @returns Whether or not the Serial port is open
+     */
+    bool is_open();
+
+    /**
+     * Is the Serial port closed?
+     * @returns Whether or not the Serial port is closed
+     */
+    bool is_closed();
+
 private:
 
     /** Helper methods for conversions **/
@@ -123,6 +144,6 @@ private:
 
     int tty_fd;
 
-    bool is_open;
+    bool isopen;
 
 };

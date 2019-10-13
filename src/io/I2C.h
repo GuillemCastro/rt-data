@@ -61,7 +61,18 @@ public:
      * @param file The filename of a I2C port (full path!)
      */
     explicit I2C(const std::string& file) : file(file), started(false), address_set(false) {
+        open();
+    }
 
+    ~I2C() {
+        if (is_open()) {
+            try {
+                close();
+            }
+            catch (...) {
+                // Nothing to do here...
+            }
+        }
     }
 
     /**
@@ -113,6 +124,18 @@ public:
      * @throws std::runtime_error If an error occurred while writing to the port
      */
     void write(uint8_t address, const std::vector<uint8_t>& buffer);
+
+    /**
+     * Is the bus open (available for reading and writing)?
+     * @returns Whether or not the bus is open
+     */
+    bool is_open();
+
+    /**
+     * Is the bus closed?
+     * @returns Whether or not the bus is open
+     */
+    bool is_closed();
 
     static const std::string I2C_1;
 

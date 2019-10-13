@@ -26,7 +26,6 @@ class SensorsManagerTest : public CppUnit::TestFixture {
 
     CPPUNIT_TEST_SUITE(SensorsManagerTest);
     CPPUNIT_TEST(addSensorTest);
-    CPPUNIT_TEST(addSensorTestStopped);
     CPPUNIT_TEST(removeSensorTest);
     CPPUNIT_TEST(startTest);
     CPPUNIT_TEST(startTestTwoTimes);
@@ -42,8 +41,6 @@ public:
     void tearDown();
 
     void addSensorTest();
-
-    void addSensorTestStopped();
 
     void removeSensorTest();
 

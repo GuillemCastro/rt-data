@@ -22,7 +22,6 @@
 
 int main() {
     SPI spi("/dev/spidev0.0", 1000000);
-    spi.open();
     spi.write('c');
     uint8_t c = spi.read();
     std::cout << (char) c << " - " << (int)c << std::endl;

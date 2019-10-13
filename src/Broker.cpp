@@ -19,20 +19,21 @@
 #include "Broker.h"
 
 void Broker::start() {
-    if (started || stopped) {
-        throw std::runtime_error("Cannot start already started or stopped Broker");
+    if (started) {
+        throw std::runtime_error("Cannot start already started Broker");
     }
+    std::unique_lock<std::mutex> lck(mtx);
     int priority = Thread::get_max_scheduling_priority(SchedulingPolicy::RT_ROUND_ROBIN) - 2;
     pool.set_scheduling_policy(SchedulingPolicy::RT_ROUND_ROBIN, priority);
     this->started = true;
 }
 
 void Broker::stop() {
-    if (!started || stopped) {
+    if (!started) {
         throw std::runtime_error("Cannot stop not started or already stopped Broker");
     }
     pool.join();
-    this->stopped = true;
+    this->started = false;
 }
 
 bool Broker::is_started() const {
@@ -40,19 +41,16 @@ bool Broker::is_started() const {
 }
 
 bool Broker::is_stopped() const {
-    return stopped;
+    return !started;
 }
 
 void Broker::subscribe(std::string topic, std::shared_ptr<Listener> listener) {
-    if (stopped) {
-        throw std::runtime_error("Cannot subscribe to a stopped Broker");
-    }
     std::unique_lock<std::mutex> lck(mtx);
     listeners[topic].push_back(listener);
 }
 
 void Broker::dispatch(std::string topic, std::shared_ptr<Data> data) {
-    if (!started || stopped) {
+    if (!started) {
         throw std::runtime_error("Cannot dispatch before starting or after stopping the Broker");
     }
     std::unique_lock<std::mutex> lck(mtx);

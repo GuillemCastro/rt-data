@@ -39,7 +39,7 @@ public:
     /**
      * Default constructor
      */
-    SensorsManager() : started(false), stopped(false), broker(NULL) {
+    SensorsManager() : started(false), broker(NULL) {
 
     }
 
@@ -48,7 +48,9 @@ public:
      */
     ~SensorsManager() {
         try {
-            stop();
+            if (is_started()) {
+                stop();
+            }
         }
         catch (std::runtime_error&) {
             //Already stopped
@@ -109,7 +111,6 @@ private:
     std::vector<std::shared_ptr<Sensor> > sensors;
 
     std::atomic<bool> started;
-    std::atomic<bool> stopped;
 
     std::mutex sensor_mtx;
 

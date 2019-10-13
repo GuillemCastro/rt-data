@@ -19,6 +19,9 @@
 #include "SQLiteWriter.h"
 
 void SQLiteWriter::open() {
+    if (is_open()) {
+        throw std::runtime_error("Database already open");
+    }
     if (rt_optimization) {
         //This way SQLite does not check if the OS has written to disk
         //The commit time is much faster
@@ -31,6 +34,9 @@ void SQLiteWriter::open() {
 }
 
 void SQLiteWriter::close() {
+    if (is_closed()) {
+        throw std::runtime_error("Database already closed");
+    }
     //Nothing to do :/
     //The database is closed when the destructor of SQLite::Database is called
     isopen = false;

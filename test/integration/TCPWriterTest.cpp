@@ -26,7 +26,6 @@ int main() {
     Timestamp time = Timestamp::now();
     TCPWriter writer("127.0.0.1", 5005);
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
-    writer.open();
     writer.write(d);
     writer.write(d);
 }

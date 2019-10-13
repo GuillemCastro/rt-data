@@ -170,3 +170,11 @@ void SPI::transfer(const std::vector<uint8_t>& to_send, std::vector<uint8_t>& to
         throw std::runtime_error(strerror(errno));
     }
 }
+
+bool SPI::is_open() {
+    return started;
+}
+
+bool SPI::is_closed() {
+    return !started;
+}

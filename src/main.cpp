@@ -21,8 +21,8 @@
 #include <iostream>
 
 #include "Application.h"
+#include "Log.h"
 
-Application app;
 bool stopped = false;
 
 void signal_handler(int signo);
@@ -34,6 +34,9 @@ int main() {
         exit(2);
     }
 
+    Log::init();
+
+    Application app;
     app.setup();
     while(!stopped) {
         app.loop();

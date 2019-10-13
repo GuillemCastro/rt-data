@@ -30,8 +30,6 @@ int main() {
     FileWriter<JSONObject> writerJSON("test_json.txt");
     FileWriter<ByteObject> writerByte("test_byte.txt");
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
-    writerJSON.open();
-    writerByte.open();
     writerJSON.write(d);
     writerJSON.write(d);
     writerByte.write(d);

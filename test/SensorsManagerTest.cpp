@@ -45,22 +45,6 @@ void SensorsManagerTest::addSensorTest() {
     }
 }
 
-void SensorsManagerTest::addSensorTestStopped() {
-    bool received_exception = false;
-    try {
-        manager->start();
-        manager->stop();
-        auto sensor = std::make_shared<SensorStub>();
-        manager->add_sensor(sensor);
-    }
-    catch (const std::runtime_error) {
-        received_exception = true;
-    }
-    if (!received_exception) {
-        CPPUNIT_FAIL("Expected exception");
-    }
-}
-
 void SensorsManagerTest::removeSensorTest() {
     try {
         auto sensor = std::make_shared<SensorStub>();

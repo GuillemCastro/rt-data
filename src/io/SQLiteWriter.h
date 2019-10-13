@@ -42,7 +42,7 @@ public:
      * @param file The database file
      */
     explicit SQLiteWriter(const std::string& file) : isopen(false), rt_optimization(false), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
-
+        open();
     }
 
     /**
@@ -51,7 +51,7 @@ public:
      * @param bufferSize The maximum size for the buffer. If this size is exceeded, flush() will be called.
      */
     SQLiteWriter(const std::string& file, int bufferSize) : isopen(false), rt_optimization(false), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
-
+        open();
     }
 
     /**
@@ -61,7 +61,7 @@ public:
      *          verify if the data has been written to disk by the OS
      */
     SQLiteWriter(const std::string& file, bool optimization) : isopen(false), rt_optimization(optimization), file(file), buffer_size(500), db(file, SQLite::OPEN_READWRITE) {
-
+        open();
     }
 
     /**
@@ -72,15 +72,22 @@ public:
      *          verify if the data has been written to disk by the OS
      */
     SQLiteWriter(const std::string& file, int bufferSize, bool optimization) : isopen(false), rt_optimization(optimization), file(file), buffer_size(bufferSize), db(file, SQLite::OPEN_READWRITE) {
-
+        open();
     }
 
     /**
      * Destructor. Flush remaining inserts and closes the database.
      */
     ~SQLiteWriter() {
-        flush();
-        close();
+        try {
+            if (is_open()) {
+                flush();
+                close();
+            }
+        }
+        catch (...) {
+            // Nothing to do here
+        }
     }
 
     /**

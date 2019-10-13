@@ -41,18 +41,20 @@ public:
      * Default constructor
      */
     TCPWriter(const std::string& host, int port) : host(host), port(port), isopen(false) {
-
+        open();
     }
 
     /**
      * Destructor. By default closes the socket.
      */
     ~TCPWriter() {
-        if (isopen) {
-            try {
+        try {
+            if (is_open()) {
                 close();
             }
-            catch(...) {}
+        }
+        catch(...) {
+            // Nothing to do here...
         }
     }
 

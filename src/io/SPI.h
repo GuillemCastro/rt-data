@@ -82,7 +82,7 @@ public:
      */
     explicit SPI(const std::string& file) :
         file(file), started(false), mode(SPIMode::MODE_0), bits_per_word(0), speed(1000000) {
-
+            open();
     }
 
     /**
@@ -92,7 +92,7 @@ public:
      */
     SPI(const std::string& file, uint32_t speed) :
         file(file), started(false), mode(SPIMode::MODE_0), bits_per_word(0), speed(speed) {
-
+            open();
     }    
 
     /**
@@ -104,7 +104,18 @@ public:
      */
     SPI(const std::string& file, SPIMode mode, uint8_t bits_per_word, uint32_t speed) : 
         file(file), started(false), mode(mode), bits_per_word(bits_per_word), speed(speed) {
+            open();
+    }
 
+    ~SPI() {
+        try {
+            if (is_open()) {
+                close();
+            }
+        }
+        catch (...) {
+            // Nothing to do here
+        }
     }
 
     /**
@@ -163,6 +174,18 @@ public:
      * @throws std::runtime_error If the port is not open
      */
     void transfer(const std::vector<uint8_t>& to_send, std::vector<uint8_t>& to_receive, size_t size);
+
+    /**
+     * Is the SPI port open?
+     * @returns Whether or not the SPI port is open
+     */
+    bool is_open();
+
+    /**
+     * Is the SPI port closed?
+     * @returns Whether or not the SPI port is closed
+     */
+    bool is_closed();
 
 private:
 

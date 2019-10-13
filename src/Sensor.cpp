@@ -19,8 +19,8 @@
 #include "Sensor.h"
 
 void Sensor::start() {
-    if (started || stopped) {
-        throw std::runtime_error("Sensor already started or stopped!");
+    if (started) {
+        throw std::runtime_error("Sensor already started!");
     }
     this->sensor_thread = Thread(&Sensor::run, this);
     try {
@@ -35,10 +35,10 @@ void Sensor::start() {
 }
 
 void Sensor::stop() {
-    if (!started || stopped) {
+    if (!started) {
         throw std::runtime_error("Sensor not started or already stopped!");
     }
-    this->stopped = true;
+    this->started = false;
     this->sensor_thread.join();
 }
 
@@ -47,11 +47,11 @@ bool Sensor::is_started() const {
 }
 
 bool Sensor::is_stopped() const {
-    return stopped;
+    return !started;
 }
 
 void Sensor::run() {
-    while (!stopped) {
+    while (!is_stopped()) {
         this->read();
         std::this_thread::sleep_for(std::chrono::nanoseconds(sampling_rate));
     }

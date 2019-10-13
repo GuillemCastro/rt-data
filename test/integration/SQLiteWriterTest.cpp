@@ -26,6 +26,5 @@ int main() {
     Timestamp time = Timestamp::now();
     SQLiteWriter writer("database.db");
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
-    writer.open();
     writer.write(d);
 }

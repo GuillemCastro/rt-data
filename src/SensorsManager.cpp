@@ -19,9 +19,6 @@
 #include "SensorsManager.h"
 
 void SensorsManager::add_sensor(std::shared_ptr<Sensor> sensor) {
-    if (stopped) {
-        throw std::runtime_error("Cannot add a new Sensor to a stopped SensorsManager");
-    }
     //Avoid adding a sensor while fetching data from sensors
     std::unique_lock<std::mutex> lck(sensor_mtx);
     sensors.push_back(sensor);
@@ -40,9 +37,10 @@ void SensorsManager::remove_sensor(std::shared_ptr<Sensor> sensor) {
 }
 
 void SensorsManager::start() {
-    if (started || stopped) {
-        throw std::runtime_error("Cannot start already started or stopped SensorsManager");
+    if (started) {
+        throw std::runtime_error("Cannot start already started SensorsManager");
     }
+    std::unique_lock<std::mutex> lck(sensor_mtx);
     for (auto& sensor : sensors) {
         if (!sensor->is_started() && !sensor->is_stopped()) {
             sensor->start();
@@ -53,22 +51,23 @@ void SensorsManager::start() {
 }
 
 void SensorsManager::stop() {
-    if (!started || stopped) {
+    if (!started) {
         throw std::runtime_error("Cannot stop not started or already stopped SensorsManager");
     }
+    std::unique_lock<std::mutex> lck(sensor_mtx);
     for (auto& sensor : sensors) {
         if (!sensor->is_stopped() && sensor->is_started()) {
             sensor->stop();
         }
     }
-    stopped = true;
+    started = false;
     fetch_thread.join();
 }
 
 void SensorsManager::run() {
     //Defer to avoid deadlock
     std::unique_lock<std::mutex> lck(sensor_mtx, std::defer_lock);
-    while (!stopped) {
+    while (started) {
         lck.lock();
         if (broker != NULL) {
             for (auto& sensor : sensors) {
@@ -85,7 +84,7 @@ bool SensorsManager::is_started() const {
 }
 
 bool SensorsManager::is_stopped() const {
-    return stopped;
+    return !started;
 }
 
 void SensorsManager::set_broker(Broker* broker) {

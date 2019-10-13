@@ -55,8 +55,18 @@ public:
      * Constructor. Build a GPIO object with a pin number.
      * @param pin The number of the pin to manage. 
      */
-    explicit GPIO(int pin) : pin(pin) {
+    explicit GPIO(int pin) : pin(pin), isopen(false) {
+        open();
+    }
 
+    ~GPIO() {
+        try {
+            close();
+        }
+        catch (...) {
+            // Already closed or it's not possible to close.
+            // Nothing we can do here...
+        }
     }
 
     /**
@@ -91,9 +101,23 @@ public:
      */
     void set_mode(Mode mode);
 
+    /**
+     * Is the GPIO open?
+     * @returns Whether or not the GPIO port is open
+     */
+    bool is_open();
+
+    /**
+     * Is the GPIO closed?
+     * @returns Whether or not the GPIO port is closed
+     */
+    bool is_closed();
+
 private:
 
     int pin;
+
+    bool isopen;
 
     static const std::string MODE_IN;
     static const std::string MODE_OUT;

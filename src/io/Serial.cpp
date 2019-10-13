@@ -53,26 +53,26 @@ void Serial::start() {
     status |= TIOCM_RTS; // Request to send
     ioctl(tty_fd, TIOCMSET, &status);
 
-    is_open = true;
+    isopen = true;
 }
 
 void Serial::stop() {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Serial port is not open");
     }
     close(tty_fd);
-    is_open = false;
+    isopen = false;
 }
 
 void Serial::flush() {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Serial port is not open");
     }
     tcflush(tty_fd, TCIOFLUSH);
 }
 
 void Serial::send(const std::vector<uint8_t>& buffer) {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Serial port is not open");
     }
     int write_count = write(tty_fd, buffer.data(), buffer.size() * sizeof(uint8_t));
@@ -82,7 +82,7 @@ void Serial::send(const std::vector<uint8_t>& buffer) {
 }
 
 uint8_t Serial::receive() {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Serial port is not open");
     }
     uint8_t res;
@@ -94,7 +94,7 @@ uint8_t Serial::receive() {
 }
 
 void Serial::receive(std::vector<uint8_t>& out, size_t size) {
-    if (!is_open) {
+    if (!isopen) {
         throw std::runtime_error("Serial port is not open");
     }
     out.reserve(out.size() + size);
@@ -222,4 +222,12 @@ uint32_t Serial::convert_parity(Parity parity) {
             break;
     }
     return res;
+}
+
+bool Serial::is_open() {
+    return isopen;
+}
+
+bool Serial::is_closed() {
+    return !isopen;
 }

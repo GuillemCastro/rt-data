@@ -19,12 +19,15 @@
 #include "HTTPWriter.h"
 
 std::atomic<bool> HTTPWriter::curl_init(false);
+std::atomic<unsigned int> HTTPWriter::curl_count(0);
 
 void HTTPWriter::open() {
     if (!curl_init) {
         curl_global_init(CURL_GLOBAL_ALL);
         curl_init = true;
     }
+    curl_count++;
+    isopen = true;
 }
 
 void HTTPWriter::write(std::shared_ptr<Data> data) {
@@ -54,18 +57,20 @@ void HTTPWriter::write(std::string topic, std::shared_ptr<Data> data) {
 }
 
 void HTTPWriter::close() {
-    if (curl_init) {
+    curl_count--;
+    if (curl_init && curl_count == 0) {
         curl_global_cleanup();
         curl_init = false;
     }
+    isopen = false;
 }
 
 bool HTTPWriter::is_open() {
-    return curl_init;
+    return curl_init && isopen;
 }
 
 bool HTTPWriter::is_closed() {
-    return !curl_init;
+    return !curl_init || !isopen;
 }
 
 void HTTPWriter::flush() {

@@ -33,6 +33,7 @@ void GPIO::open() {
 		throw std::runtime_error("Failed to open GPIO");
 	}
 	::close(fd);
+	isopen = true;
 }
 
 void GPIO::close() {
@@ -47,6 +48,7 @@ void GPIO::close() {
 		throw std::runtime_error("Failed to close GPIO");
 	}
 	::close(fd);
+	isopen = false;
 }
 
 PinStatus GPIO::read() {
@@ -94,4 +96,12 @@ void GPIO::set_mode(Mode mode) {
 		throw std::runtime_error("Failed to set GPIO mode");
 	}
 	::close(fd);
+}
+
+bool GPIO::is_open() {
+	return isopen;
+}
+
+bool GPIO::is_closed() {
+	return !isopen;
 }

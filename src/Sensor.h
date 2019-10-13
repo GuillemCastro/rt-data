@@ -40,7 +40,7 @@ public:
     /**
      * Default constructor
      */
-    Sensor() : name("unknown"), topic("default"), sampling_rate(10000), started(false), stopped(false) {
+    Sensor() : name("unknown"), topic("default"), sampling_rate(10000), started(false) {
 
     }
 
@@ -50,7 +50,7 @@ public:
      * @param topic The topic this sensor will publish its data to.
      * @param rate The rate in nanoseconds at which this sensor will be read.
      */
-    Sensor(const std::string& name, const std::string& topic, uint64_t rate) : name(name), topic(topic), sampling_rate(rate), started(false), stopped(false)  {
+    Sensor(const std::string& name, const std::string& topic, uint64_t rate) : name(name), topic(topic), sampling_rate(rate), started(false)  {
 
     }
 
@@ -62,8 +62,7 @@ public:
         name(config["name"].get<std::string>()),
         topic(config["topic"].get<std::string>()),
         sampling_rate(config["sampling_rate"].get<uint64_t>()),
-        started(false),
-        stopped(false) {
+        started(false) {
 
     }
 
@@ -188,7 +187,6 @@ private:
     void run();
 
     std::atomic<bool> started;
-    std::atomic<bool> stopped;
 
     Thread sensor_thread;
 

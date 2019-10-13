@@ -26,7 +26,6 @@ int main() {
     Timestamp time = Timestamp::now();
     HTTPWriter writer("127.0.0.1:5000");
     std::shared_ptr<Data> d = std::make_shared<Data>(time, origin);
-    writer.open();
     writer.write(d);
     writer.write(d);
 }

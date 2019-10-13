@@ -22,7 +22,6 @@
 
 int main() {
     I2C i2c(I2C::I2C_1);
-    i2c.open();
     i2c.write(0x1A, 'c');
     std::vector<uint8_t> out(4);
     i2c.read(0x1A, out, 4);

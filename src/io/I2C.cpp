@@ -102,3 +102,11 @@ void I2C::set_address(uint8_t address) {
         address_set = true;
     }
 }
+
+bool I2C::is_open() {
+    return this->started;
+}
+
+bool I2C::is_closed() {
+    return !this->started;
+}

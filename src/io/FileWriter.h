@@ -35,7 +35,18 @@ public:
      * @param file The name of the file to write to.
      */
     FileWriter(const std::string file) : filename(file) {
+        open();
+    }
 
+    ~FileWriter() {
+        try {
+            if (is_open()) {
+                close();
+            }
+        }
+        catch(...) {
+            // Nothing to do here...
+        }
     }
 
     /**
@@ -43,7 +54,7 @@ public:
      * @throws std::runtime_error if the file is already open
      */
     virtual void open() override {
-        if (isOpen()) {
+        if (is_open()) {
             throw std::runtime_error("Already open");
         }
         file.open(filename, std::ofstream::out | std::ofstream::binary | std::ofstream::ate);
@@ -54,7 +65,7 @@ public:
      * @throws std::runtime_error if the file is already closed
      */
     virtual void close() override {
-        if (isClosed()) {
+        if (is_closed()) {
             throw std::runtime_error("Already closed");
         }
         file.close();
@@ -76,13 +87,13 @@ public:
      * @throws std::runtime_error if the file is not open
      */
     virtual void write(std::string topic, std::shared_ptr<Data> data) override {
-        if (isClosed()) {
+        if (is_closed()) {
             throw std::runtime_error("FileWriter must be open before writing");
         }
         std::unique_lock<std::mutex> lck(mtx);
         SerializationClass serialized(topic);
         data->serialize(&serialized);
-        std::vector<uint8_t> bytes = serialized.getBytes();
+        std::vector<uint8_t> bytes = serialized.get_bytes();
         file.write((char *)bytes.data(), bytes.size());
     }
 
@@ -105,7 +116,7 @@ public:
      * Is the file closed?
      * @returns Whether or not the file is closed
      */
-    virtual bool is_open() override {
+    virtual bool is_closed() override {
         return !file.is_open();
     }
 

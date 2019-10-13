@@ -36,9 +36,9 @@ public:
     /**
      * Default constructor
      */
-    Broker() : started(false), stopped(false), 
+    Broker() : started(false), 
         pool(std::thread::hardware_concurrency() > 0? std::thread::hardware_concurrency() : 4) {
-
+            start();
     }
 
     /**
@@ -46,7 +46,9 @@ public:
      */
     ~Broker() {
         try {
-            stop();
+            if (is_started()) {
+                stop();
+            }
         }
         catch (std::runtime_error&) {
             //Already stopped
@@ -92,7 +94,7 @@ public:
 
 private:
 
-    std::atomic<bool> started, stopped;
+    std::atomic<bool> started;
 
     std::unordered_map<std::string, std::vector<std::shared_ptr<Listener>>> listeners;
 
