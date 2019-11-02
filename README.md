@@ -32,9 +32,23 @@ make
 
 ## Dependencies
 
-```
-sudo apt install libcurl4-gnutls-dev gpsd libqgpsmm23 libqgpsmm-dev libgps libgps-dev
-```
+### Mandatory
+
+* libcurl >= 7.64.1
+* libgps-dev >= 3.17
+* CMake >= 3.1
+
+### Optional
+
+* cppunit >= 1.15 - testing framework
+* g3log A fork is mantained [here](https://github.com/CosmicResearch/g3log) - logging
+
+### Included
+
+* sqlite
+* [SQLiteCpp](https://github.com/SRombauts/SQLiteCpp)
+* [JSON for Modern C++ (nlohmann/json)](https://github.com/nlohmann/json/)
+
 
 ## License
 
